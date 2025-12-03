@@ -12,10 +12,12 @@ export const Problem = () => {
         pedem e até mesmo comendo um pouco menos açúcar?
       </p>
       <p className="font-bold">Pois saiba que isso não é sua culpa.</p>
-      <Alert variant="destructive" className="bg-red-50 dark:bg-red-900/20 border-red-500">
-        <AlertTriangle className="h-5 w-5 text-red-600" />
-        <AlertTitle className="font-bold text-red-800 dark:text-red-200">Atenção</AlertTitle>
-        <AlertDescription className="text-red-700 dark:text-red-300">
+      <Alert className="bg-yellow-100 dark:bg-yellow-900/30 border-yellow-500 border-l-4 p-6">
+        <AlertTriangle className="h-7 w-7 text-yellow-600" />
+        <AlertTitle className="font-bold text-yellow-800 dark:text-yellow-200 text-2xl mb-2">
+          Atenção
+        </AlertTitle>
+        <AlertDescription className="text-yellow-700 dark:text-yellow-300 text-xl">
           Este pode ser o texto mais importante que você já leu sobre a Diabetes
           Tipo 2. O que você fará nos próximos 5 minutos pode decidir se você
           irá vencer essa doença silenciosa ou continuar rumo a amputações,
