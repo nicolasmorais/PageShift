@@ -3,7 +3,7 @@
 const testimonials = [
   {
     name: "João Oliveira, 62 anos",
-    text: "Recebi tudo no e-mail em 3 minutos! O vídeo é excelente. Comprei as folhas numa loja aqui perto, gastei R$ 45 para o mês inteiro. Em 2 semanas minha glicemia caiu de 240 para 130. Estou impressionado!",
+    text: "Recebi tudo no e-mail em 3 minutos! O vídeo é excelente. Comprei as folhas numa loja aqui perto, gastei R$ 5 Apenas. Em 2 semanas minha glicemia caiu de 240 para 130. Estou impressionado!",
     time: "há 2 horas",
   },
   {
