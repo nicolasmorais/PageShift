@@ -66,14 +66,19 @@ export const Pricing = () => {
         Compra 100% segura. Acesso liberado em até 5 minutos no seu e-mail.
       </p>
 
-      <div className="w-full mt-12 text-left space-y-4 text-gray-500 dark:text-gray-400 text-base">
+      <div className="w-full mt-16 text-left space-y-6 border-t pt-8">
+        <h3 className="text-2xl font-bold text-center mb-4 font-sans">
+          Perguntas Frequentes
+        </h3>
         {faqItems.map((item, index) => (
-          <p key={index} className="leading-relaxed">
-            <span className="font-semibold text-gray-600 dark:text-gray-300">
+          <div key={index}>
+            <p className="text-xl font-semibold text-gray-800 dark:text-gray-200">
               {item.question}
-            </span>{" "}
-            - {item.answer}
-          </p>
+            </p>
+            <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400 mt-2">
+              {item.answer}
+            </p>
+          </div>
         ))}
       </div>
     </section>
