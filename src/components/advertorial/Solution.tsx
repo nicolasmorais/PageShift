@@ -3,72 +3,67 @@
 import { Badge } from "@/components/ui/badge";
 import { Leaf, Dna, Globe, Check } from "lucide-react";
 
-export const  Solution = () => {
+export const Solution = () => {
   return (
-    <section className="my-12 space-y-8  text-xl leading-relaxed">
+    <section className="my-12 space-y-8 text-xl leading-relaxed">
       <div className="text-center">
-        <h2 className=" text-3xl font-bold font-sans">
-          O Pâncreas de um Diabético Tipo  2 Não Está Morto. Ele Está Adormecido.
+        <h2 className="text-3xl font-bold font-sans">
+          O Pâncreas de um Diabético Tipo 2 Não Está Morto. Ele Está Adormecido.
         </h2>
-        <p className="text-2 xl mt-2 text-gray-600 dark:text-gray-300">
-          E  sim: existe uma forma de estimular essas células a voltarem a
+        <p className="text-2xl mt-2 text-gray-600 dark:text-gray-300">
+          E sim: existe uma forma de estimular essas células a voltarem a
           funcionar.
         </p>
-       </div>
+      </div>
 
-      <div className="p- 6 border rounded-lg overflow-hidden">
-        <h3  className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
-           <Leaf className="h-7 w-7 text-green-600" />
-          Um Protocol o Natural, Validado pela Medicina Oriental
+      <div className="p-6 border rounded-lg overflow-hidden">
+        <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
+          <Leaf className="h-7 w-7 text-green-600" />
+          Um Protocolo Natural, Validado pela Medicina Oriental
         </h3>
         <p>
-          Dr. Yano descobriu que existe uma {" "}
+          Dr. Yano descobriu que existe uma{" "}
           <span className="font-bold">
             bebida medicinal japonesa ancestral
           </span>
-           , que age em três pontos-chave do organismo:
+          , que age em três pontos-chave do organismo:
         </p>
-        <ul className="list- disc list-inside space-y-2 my-4">
+        <ul className="list-disc list-inside space-y-2 my-4">
           <li>
-            Desinflama o tecido pancre ático, permitindo que as células beta
+            Desinflama o tecido pancreático, permitindo que as células beta
             voltem a se regenerar.
           </li>
           <li>
-             Reativa a produção natural de insulina, com efeito gradual e
+            Reativa a produção natural de insulina, com efeito gradual e
             duradouro.
           </li>
-           <li>
+          <li>
             Estabiliza os níveis de glicose no sangue, sem causar hipoglicemia
-            ou sobre carga dos rins e fígado.
+            ou sobrecarga dos rins e fígado.
           </li>
         </ul>
         <p className="font-bold">
-           Em 28 dias, os exames de Seu Manoel se normalizaram e sua glicose
-           estabilizou em 98 mg/dL.
+          Em 28 dias, os exames de Seu Manoel se normalizaram e sua glicose
+          estabilizou em 98 mg/dL.
         </p>
-        <img
-          src=" https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/9 9-MG-IgSMMgb2YR6xq6B4cwf1g3qVvwB4MM.jpeg"
-          alt="Bebida medicinal japonesa em uma xícara"
-          className=" w-auto h-auto mt-6 -mx-6 -mb-6"
-        />
       </div>
 
-      < div className="p-6 border rounded-lg">
-        <h3 className="text-2xl font-bold mb-4 font-sans flex items -center gap-2">
+      <div className="p-6 border rounded-lg">
+        <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
           <Dna className="h-7 w-7 text-blue-600" />A Validação Científica
         </h3>
-        < p>
+        <p>
           Pesquisas publicadas no{" "}
           <span className="italic">Journal of Medicinal Food </span> e no{" "}
           <span className="italic">
             International Journal of Endocrinology
-          </span>{" "} 
+          </span>{" "}
           apontam que o uso regular da combinação de ativos do chá:
         </p>
-        <ul className=" list-disc list-inside space-y-2 my-4">
-          <li>Reduz os marcadores infl amatórios no tecido pancreático.</li>
+        <ul className="list-disc list-inside space-y-2 my-4">
+          <li>Reduz os marcadores inflamatórios no tecido pancreático.</li>
           <li>Aumenta a sensibilidade à insulina.</li>
-          <li> Estimula a regeneração gradual das células beta danificadas.</li>
+          <li>Estimula a regeneração gradual das células beta danificadas.</li>
         </ul>
         <Badge
           variant="secondary"
