@@ -30,11 +30,16 @@ export const Problem = () => {
         </AlertDescription>
       </Alert>
       <p>
-        Um novo estudo conduzido por pesquisadores Japoneses na Universidade de
-        Tóquio (Bunkyō), foi recebido pela Universidade de São Paulo (USP) aqui
-        no brasil, e revelou que 7 em cada 10 pacientes diabéticos tipo 2 estão
-        seguindo um protocolo de tratamento ultrapassado, ineficaz — e em muitos
-        casos, perigoso.
+        <strong>
+          Um novo estudo conduzido por pesquisadores Japoneses
+        </strong>{" "}
+        na Universidade de Tóquio (Bunkyō), foi recebido pela Universidade de
+        São Paulo (USP) aqui no brasil, e{" "}
+        <strong>
+          revelou que 7 em cada 10 pacientes diabéticos tipo 2 estão seguindo um
+          protocolo de tratamento ultrapassado
+        </strong>
+        , ineficaz — e em muitos casos, perigoso.
       </p>
       <img
         src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/1_20250716143121-jkwImCoFGKN9UfW8l7MpZ8MkwC7a2S.jpg"
