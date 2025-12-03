@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Zap, AlertTriangle } from "lucide-react";
+import { Zap, AlertTriangle, ShieldCheck } from "lucide-react";
 
 const faqItems = [
   {
@@ -46,30 +46,51 @@ export const Pricing = () => {
           menos de R$ 30 reais." - Dr. Yano
         </p>
       </div>
-      <div className="space-y-4">
-        <p className="text-lg">INVESTIMENTO ÚNICO DE APENAS:</p>
-        <p className="text-gray-500 line-through">De R$ 127,00</p>
-        <p className="text-7xl font-extrabold text-green-600">R$ 29,90</p>
-        <p className="font-semibold">✅ Pagamento único via PIX</p>
-        <p className="font-semibold">✅ Acesso imediato e vitalício</p>
+
+      {/* New Pricing Card */}
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-900 border-2 border-green-500 rounded-xl shadow-2xl p-8 space-y-6">
+        <p className="text-xl font-semibold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+          Investimento Único de Apenas:
+        </p>
+        <div className="flex items-baseline justify-center gap-4">
+          <p className="text-3xl text-gray-500 line-through">De R$ 127,00</p>
+          <p className="text-8xl font-extrabold text-green-600">R$ 29,90</p>
+        </div>
+        <div className="text-left max-w-sm mx-auto space-y-2 text-lg">
+          <p className="flex items-center gap-3">
+            <ShieldCheck className="h-6 w-6 text-green-500 flex-shrink-0" />
+            <span>
+              Pagamento <span className="font-bold">único via PIX</span>
+            </span>
+          </p>
+          <p className="flex items-center gap-3">
+            <ShieldCheck className="h-6 w-6 text-green-500 flex-shrink-0" />
+            <span>
+              Acesso <span className="font-bold">imediato e vitalício</span>
+            </span>
+          </p>
+        </div>
+
+        <Button
+          size="lg"
+          className="w-full h-24 text-3xl font-bold animate-pulse bg-green-600 hover:bg-green-700 text-white shadow-lg rounded-lg"
+          onClick={() => {
+            /* Ação de clique */
+          }}
+        >
+          <Zap className="mr-4 h-9 w-9" />
+          ADQUIRIR MEU ACESSO
+        </Button>
+
+        <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
+          <ShieldCheck className="h-4 w-4" />
+          Compra 100% segura. Acesso liberado em até 5 minutos no seu e-mail.
+        </p>
       </div>
-      <Button
-        size="lg"
-        className="w-full max-w-2xl mx-auto h-20 text-2xl font-bold animate-pulse bg-green-600 hover:bg-green-700 text-white"
-        onClick={() => {
-          /* Ação de clique */
-        }}
-      >
-        <Zap className="mr-3 h-8 w-8" />
-        QUERO ACESSO IMEDIATO AO PROTOCOLO COMPLETO!
-      </Button>
-      <p className="text-sm text-gray-500">
-        Compra 100% segura. Acesso liberado em até 5 minutos no seu e-mail.
-      </p>
 
       <Alert
         variant="destructive"
-        className="bg-red-50 dark:bg-red-900/20 border-red-500 text-left mt-8"
+        className="bg-red-50 dark:bg-red-900/20 border-red-500 text-left mt-12"
       >
         <AlertTriangle className="h-5 w-5 text-red-600" />
         <AlertTitle className="font-bold text-red-800 dark:text-red-200">
