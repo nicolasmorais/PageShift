@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, BookOpen, Video, FileText, Calendar, Gift } from "lucide-react";
+import { BookOpen, Video, FileText, Calendar } from "lucide-react";
 
 const productItems = [
   {
@@ -33,14 +33,6 @@ const productItems = [
     description:
       "Um plano estruturado, dia a dia, mostrando exatamente o que fazer em cada fase do tratamento.",
   },
-];
-
-const bonusItems = [
-  "Áudio de Meditação Guiada Anti-Estresse (MP3 - 15 min)",
-  "Checklist Visual de Sintomas da Diabetes (PDF)",
-  "Guia Ilustrado de Exercícios para Diabéticos (PDF - 22 páginas)",
-  "Tabela de Índice Glicêmico de 200 Alimentos (PDF)",
-  'Vídeo "Como Conversar com seu Médico sobre o Protocolo" (12 min)',
 ];
 
 export const Offer = () => {
@@ -78,21 +70,6 @@ export const Offer = () => {
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="p-6 border rounded-lg bg-yellow-50 dark:bg-yellow-900/20">
-        <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
-          <Gift className="h-7 w-7" />
-          BÔNUS EXCLUSIVOS (Liberados Imediatamente):
-        </h3>
-        <ul className="space-y-2">
-          {bonusItems.map((bonus, i) => (
-            <li key={i} className="flex items-center gap-3">
-              <Check className="h-6 w-6 text-green-600" />
-              <span>{bonus}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );
