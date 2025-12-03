@@ -6,7 +6,6 @@ import { Offer } from "@/components/advertorial/Offer";
 import { Pricing } from "@/components/advertorial/Pricing";
 import { Guarantee } from "@/components/advertorial/Guarantee";
 import { Testimonials } from "@/components/advertorial/Testimonials";
-import { Comparison } from "@/components/advertorial/Comparison";
 import { Footer } from "@/components/advertorial/Footer";
 
 export default function Home() {
@@ -21,7 +20,6 @@ export default function Home() {
         <Pricing />
         <Guarantee />
         <Testimonials />
-        <Comparison />
       </main>
       <Footer />
     </div>
