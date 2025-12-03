@@ -36,6 +36,11 @@ export const Problem = () => {
         seguindo um protocolo de tratamento ultrapassado, ineficaz — e em muitos
         casos, perigoso.
       </p>
+      <img
+        src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/1_20250716143121-jkwImCoFGKN9UfW8l7MpZ8MkwC7a2S.jpg"
+        alt="Gráfico mostrando a ineficácia de tratamentos convencionais para diabetes tipo 2"
+        className="w-full h-auto rounded-lg my-6 shadow-md"
+      />
       <h2 className="text-3xl font-bold text-center py-4 font-sans">
         O nome disso? Erro médico sistemático.
       </h2>
