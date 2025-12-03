@@ -1,118 +1,98 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  AlertTriangle,
-  Check,
-  Leaf,
-  Package,
-  Star,
-  Zap,
-} from "lucide-react";
+import { Check, BookOpen, Video, FileText, Calendar, Gift } from "lucide-react";
 
-const ingredients = [
-  { name: "Chlorella Vulgaris", desc: "Desinflama e regenera o pâncreas." },
-  { name: "Feno Grego", desc: "Aumenta a sensibilidade à insulina." },
-  { name: "Fibra de Beterraba", desc: "Retarda a absorção de carboidratos." },
-  { name: "Picolinato de Cromo", desc: "Reduz a compulsão por doces." },
-  { name: "Laranja Moro", desc: "Reduz a gordura visceral." },
-  { name: "Vitamina D3", desc: "Estimula a produção de insulina." },
+const productItems = [
+  {
+    icon: BookOpen,
+    title: "MANUAL COMPLETO DO CHÁ JAPONÊS (E-book PDF - 58 páginas)",
+    description:
+      "A fórmula secreta completa revelada, métodos de preparo, onde comprar os ingredientes e muito mais.",
+  },
+  {
+    icon: Video,
+    title: "VÍDEO-AULA EXCLUSIVA: Preparo Tradicional Japonês (22 minutos)",
+    description:
+      "Dr. Yano mostra na prática o passo a passo do ritual de preparo do chá medicinal.",
+  },
+  {
+    icon: FileText,
+    title: "DIÁRIO DE CONTROLE GLICÊMICO (PDF Editável)",
+    description:
+      "Acompanhe sua evolução diária e veja sua glicose baixando semana após semana.",
+  },
+  {
+    icon: BookOpen,
+    title: "GUIA ALIMENTAR SINÉRGICO (E-book PDF - 34 páginas)",
+    description:
+      "Lista de alimentos que potencializam o efeito do chá, cardápio sugestivo e receitas.",
+  },
+  {
+    icon: Calendar,
+    title: "PROTOCOLO DE 90 DIAS (Cronograma Completo)",
+    description:
+      "Um plano estruturado, dia a dia, mostrando exatamente o que fazer em cada fase do tratamento.",
+  },
+];
+
+const bonusItems = [
+  "Áudio de Meditação Guiada Anti-Estresse (MP3 - 15 min)",
+  "Checklist Visual de Sintomas da Diabetes (PDF)",
+  "Guia Ilustrado de Exercícios para Diabéticos (PDF - 22 páginas)",
+  "Tabela de Índice Glicêmico de 200 Alimentos (PDF)",
+  'Vídeo "Como Conversar com seu Médico sobre o Protocolo" (12 min)',
 ];
 
 export const Offer = () => {
   return (
-    <section id="offer" className="mb-12 space-y-8">
-      <div className="text-center p-6 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-        <h3 className="text-3xl font-extrabold">
-          O Protocolo Natural Agora Está Disponível no Brasil
-        </h3>
-        <p className="text-xl mt-2">
-          Em cápsulas prontas para uso diário:
+    <section
+      id="offer"
+      className="my-12 space-y-8 text-xl leading-relaxed"
+    >
+      <div className="text-center p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <h2 className="text-3xl font-extrabold font-sans">
+          O Protocolo do Chá Japonês agora está disponível em formato digital
+        </h2>
+        <p className="text-2xl mt-2">
+          Acesso imediato por apenas R$ 29,90
         </p>
-        <p className="text-5xl font-bold text-blue-600 dark:text-blue-400 mt-4">
-          Glicelidina
+        <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mt-4 font-sans">
+          Protocolo do Chá Japonês Regenerativo
         </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Leaf className="h-6 w-6 text-green-600" />
-            6 Ativos Naturais em Sinergia
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {ingredients.map((ing, i) => (
-            <div key={i} className="flex items-start gap-2">
-              <Check className="h-5 w-5 text-green-500 mt-1" />
+      <div className="p-6 border rounded-lg">
+        <h3 className="text-2xl font-bold mb-6 font-sans text-center">
+          O QUE VOCÊ RECEBE IMEDIATAMENTE:
+        </h3>
+        <div className="space-y-6">
+          {productItems.map((item, i) => (
+            <div key={i} className="flex items-start gap-4">
+              <item.icon className="h-8 w-8 text-blue-500 mt-1 flex-shrink-0" />
               <div>
-                <p className="font-bold">{ing.name}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {ing.desc}
+                <p className="font-bold font-sans">{item.title}</p>
+                <p className="text-lg text-gray-600 dark:text-gray-300">
+                  {item.description}
                 </p>
               </div>
             </div>
           ))}
-        </CardContent>
-      </Card>
-
-      <div className="text-center">
-        <h3 className="text-3xl font-bold">Escolha o Seu Tratamento</h3>
-        <p className="text-lg mt-2">
-          O tempo de exposição aos ativos é o que permite a reversão
-          progressiva dos danos.
-        </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader className="text-center">
-            <Package className="h-10 w-10 mx-auto text-gray-500" />
-            <CardTitle>KIT INICIAL</CardTitle>
-            <p className="font-bold text-lg">Leve 3, Pague 2</p>
-            <p className="text-sm text-gray-500">Duração: 3 meses</p>
-          </CardHeader>
-          <CardContent className="text-center">
-            <p className="text-3xl font-bold">R$ 197</p>
-            <Button className="w-full mt-4">Comprar Agora</Button>
-          </CardContent>
-        </Card>
-        <Card className="border-2 border-yellow-500 relative">
-          <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">
-            <Star className="h-4 w-4 mr-1" /> Mais Vendido
-          </Badge>
-          <CardHeader className="text-center">
-            <Package className="h-10 w-10 mx-auto text-yellow-500" />
-            <CardTitle>KIT INTENSIVO</CardTitle>
-            <p className="font-bold text-lg">Leve 6, Pague 3</p>
-            <p className="text-sm text-gray-500">Duração: 6 meses</p>
-          </CardHeader>
-          <CardContent className="text-center">
-            <p className="text-3xl font-bold">R$ 297</p>
-            <Button variant="default" className="w-full mt-4 bg-yellow-500 hover:bg-yellow-600">
-              Comprar Agora
-            </Button>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="text-center">
-            <Zap className="h-10 w-10 mx-auto text-blue-500" />
-            <CardTitle>KIT AVANÇADO</CardTitle>
-            <p className="font-bold text-lg">Leve 10, Pague 5</p>
-            <p className="text-sm text-gray-500">Duração: 10 meses</p>
-          </CardHeader>
-          <CardContent className="text-center">
-            <p className="text-3xl font-bold">R$ 397</p>
-            <Button className="w-full mt-4">Comprar Agora</Button>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="text-center">
-        <Button size="lg" className="h-14 text-xl font-bold">
-          QUERO ESCOLHER MEU KIT AGORA!
-        </Button>
+      <div className="p-6 border rounded-lg bg-yellow-50 dark:bg-yellow-900/20">
+        <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
+          <Gift className="h-7 w-7" />
+          BÔNUS EXCLUSIVOS (Liberados Imediatamente):
+        </h3>
+        <ul className="space-y-2">
+          {bonusItems.map((bonus, i) => (
+            <li key={i} className="flex items-center gap-3">
+              <Check className="h-6 w-6 text-green-600" />
+              <span>{bonus}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

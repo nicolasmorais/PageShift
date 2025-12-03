@@ -9,40 +9,45 @@ import {
 
 const faqItems = [
   {
-    question: "É seguro para quem já toma insulina ou Metformina?",
+    question: "Como recebo o material após o pagamento?",
     answer:
-      "Sim! O Glicelidina não tem contraindicações e pode ser usado em conjunto com medicamentos tradicionais. A recomendação médica nunca deve ser ignorada, porém temos muitos casos pacientes relatam redução ou até eliminação da dependência de metformina ou até mesmo insulina.",
+      "Assim que o PIX for confirmado (geralmente em 1 a 5 minutos), você recebe automaticamente no seu e-mail um link de acesso para baixar todo o conteúdo. Você pode salvar no seu celular, tablet ou computador.",
   },
   {
-    question: "Quanto tempo até eu ver resultados?",
+    question: "Onde encontro os ingredientes do chá?",
     answer:
-      "Alguns pacientes relatam melhora já nos primeiros 7 dias, com mais energia, menos sede e glicemia mais estável. Os efeitos são cumulativos — o Glicelidina atua em regeneração celular e metabólica, por isso quanto mais completo o tratamento, melhores os resultados.",
+      "Todos os ingredientes estão disponíveis em lojas de produtos naturais, farmácias de manipulação ou pela internet. No e-book, você recebe uma lista detalhada com sugestões de onde comprar.",
   },
   {
-    question: "Como usar o Glicelidina?",
+    question: "Preciso parar meus medicamentos?",
     answer:
-      "Basta tomar 1 cápsula por dia, de preferência no mesmo horário — recomendamos o período da manhã, com um copo de água, logo após o café.",
+      "NUNCA pare seus medicamentos por conta própria! Use o protocolo junto com seu tratamento atual. Conforme você melhorar, seu médico é quem decidirá sobre reduzir as doses.",
   },
   {
-    question: "Tem garantia mesmo? Como funciona?",
+    question: "É complicado preparar o chá?",
     answer:
-      "Sim! Você tem 90 dias de garantia incondicional. Se não sentir qualquer progresso, devolvemos 100% do seu dinheiro. Sem perguntas. Sem burocracia. Simples assim.",
+      "NÃO! É tão simples quanto fazer um chá comum. O vídeo mostra cada passo de forma clara. Se você consegue ferver água, você consegue fazer o protocolo.",
+  },
+  {
+    question: "Quanto tempo até ver resultados?",
+    answer:
+      "A maioria dos usuários relata melhoras nos primeiros 7 a 14 dias. A glicemia começa a baixar já na primeira semana. O protocolo completo é de 90 dias para resultados consolidados.",
   },
 ];
 
 export const Faq = () => {
   return (
-    <section className="mb-12">
-      <h3 className="text-3xl font-bold text-center mb-8">
-        Tire Todas as Suas Dúvidas Antes de Comprar
-      </h3>
+    <section className="my-12">
+      <h2 className="text-3xl font-bold text-center mb-8 font-sans">
+        Perguntas Frequentes
+      </h2>
       <Accordion type="single" collapsible className="w-full">
         {faqItems.map((item, index) => (
           <AccordionItem value={`item-${index}`} key={index}>
-            <AccordionTrigger className="text-lg text-left">
+            <AccordionTrigger className="text-xl text-left font-semibold">
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className="text-base">
+            <AccordionContent className="text-lg leading-relaxed">
               {item.answer}
             </AccordionContent>
           </AccordionItem>
