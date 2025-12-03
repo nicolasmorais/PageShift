@@ -72,7 +72,7 @@ export const Solution = () => {
         </ul>
         <Badge
           variant="secondary"
-          className="text-base p-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200"
+          className="text-lg p-4 font-bold w-full text-center bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200"
         >
           Em estudos de campo, mais de 82% dos pacientes apresentaram
           estabilização glicêmica abaixo de 100 mg/dL nas primeiras 3 semanas.
