@@ -17,6 +17,11 @@ export const Solution = () => {
       </div>
 
       <div className="p-6 border rounded-lg overflow-hidden">
+        <img
+          src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2020_24_07-CegP8MFAadFJUCgpK40pYN2w5o7Ilv.png"
+          alt="Bebida medicinal japonesa em uma xícara com ingredientes ao redor"
+          className="w-full h-auto -m-6 mb-6"
+        />
         <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
           <Leaf className="h-7 w-7 text-green-600" />
           Um Protocolo Natural, Validado pela Medicina Oriental
@@ -46,11 +51,6 @@ export const Solution = () => {
           Em 28 dias, os exames de Seu Manoel se normalizaram e sua glicose
           estabilizou em 98 mg/dL.
         </p>
-        <img
-          src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2020_24_07-CegP8MFAadFJUCgpK40pYN2w5o7Ilv.png"
-          alt="Bebida medicinal japonesa em uma xícara com ingredientes ao redor"
-          className="w-full h-auto mt-6 -mx-6 -mb-6"
-        />
       </div>
 
       <div className="p-6 border rounded-lg">
@@ -107,7 +107,7 @@ export const Solution = () => {
             <Check className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
             <span>
               <span className="font-bold">84% tiveram melhora</span> expressiva
-              na cicatrização e controle da pressão arterial.
+              na cicatração e controle da pressão arterial.
             </span>
           </li>
         </ul>
