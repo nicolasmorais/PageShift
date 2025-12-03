@@ -6,7 +6,7 @@ import { AlertTriangle } from "lucide-react";
 
 export const FinalCta = () => {
   return (
-    <section className="text-center py-12 space-y-8">
+    <section className="text-center py-12">
       <Alert variant="destructive" className="max-w-3xl mx-auto">
         <AlertTriangle className="h-4 w-4" />
         <AlertTitle className="font-bold">
