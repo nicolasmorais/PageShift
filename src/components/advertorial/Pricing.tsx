@@ -2,12 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Zap } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 const faqItems = [
   {
@@ -72,18 +66,21 @@ export const Pricing = () => {
         Compra 100% segura. Acesso liberado em até 5 minutos no seu e-mail.
       </p>
 
-      <Accordion type="single" collapsible className="w-full mt-16 text-left">
+      <div className="w-full mt-16 text-left space-y-6 border-t pt-8">
+        <h3 className="text-2xl font-bold text-center mb-4 font-sans">
+          Perguntas Frequentes
+        </h3>
         {faqItems.map((item, index) => (
-          <AccordionItem value={`item-${index}`} key={index}>
-            <AccordionTrigger className="text-xl text-left font-semibold hover:no-underline">
+          <div key={index}>
+            <p className="text-xl font-semibold text-gray-800 dark:text-gray-200">
               {item.question}
-            </AccordionTrigger>
-            <AccordionContent className="text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+            </p>
+            <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400 mt-2">
               {item.answer}
-            </AccordionContent>
-          </AccordionItem>
+            </p>
+          </div>
         ))}
-      </Accordion>
+      </div>
     </section>
   );
 };
