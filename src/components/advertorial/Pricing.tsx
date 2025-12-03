@@ -37,20 +37,23 @@ export const Pricing = () => {
     <section className="my-12 text-center space-y-8">
       <div className="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
         <h3 className="text-2xl font-bold font-sans">
-          Por que esse preço tão acessível?
+          Por que esse valor de contribuição?
         </h3>
         <p className="text-xl leading-relaxed mt-4">
-          "Eu poderia vender esse protocolo por R$ 297, R$ 497 ou até mais. Mas
-          meu objetivo não é ganhar dinheiro com a sua dor. Meu objetivo é
-          salvar vidas. Por isso, decidi oferecer por um valor simbólico de
-          menos de R$ 30 reais." - Dr. Yano
+          "Uma pesquisa séria como esta, que envolveu anos de estudo e mais de
+          R$ 200.000,00 em investimentos, tem um custo elevado. Para que este
+          conhecimento transformador possa alcançar o maior número de pessoas,
+          estabeleci um valor de contribuição simbólico. Com ele, você não está
+          apenas adquirindo o protocolo, mas também ajudando a cobrir os custos
+          da pesquisa e a levar esta esperança para mais brasileiros." - Dr.
+          Yano
         </p>
       </div>
 
       {/* New Pricing Card */}
       <div className="max-w-3xl mx-auto bg-white dark:bg-gray-900 border-2 border-green-500 rounded-xl shadow-2xl p-8 space-y-6">
         <p className="text-xl font-semibold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-          Investimento Único de Apenas:
+          Sua Contribuição Para o Acesso:
         </p>
         <div className="flex items-baseline justify-center gap-4">
           <p className="text-8xl font-extrabold text-green-600">R$ 29,90</p>
@@ -78,7 +81,7 @@ export const Pricing = () => {
           }}
         >
           <Zap className="mr-4 h-9 w-9" />
-          ADQUIRIR MEU ACESSO
+          QUERO CONTRIBUIR E ACESSAR
         </Button>
 
         <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
