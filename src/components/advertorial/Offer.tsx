@@ -42,6 +42,11 @@ export const Offer = () => {
       className="my-12 space-y-8 text-xl leading-relaxed"
     >
       <div className="text-center p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <img
+          src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png"
+          alt="Visualização do conteúdo do Protocolo do Chá Japonês"
+          className="w-full max-w-lg mx-auto rounded-lg shadow-xl mb-8"
+        />
         <h2 className="text-3xl font-extrabold font-sans">
           O Protocolo do Chá Japonês agora está disponível em formato digital
         </h2>
