@@ -2,6 +2,40 @@
 
 import { Button } from "@/components/ui/button";
 import { Zap } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const faqItems = [
+  {
+    question: "Como recebo o material após o pagamento?",
+    answer:
+      "Assim que o PIX for confirmado (geralmente em 1 a 5 minutos), você recebe automaticamente no seu e-mail um link de acesso para baixar todo o conteúdo. Você pode salvar no seu celular, tablet ou computador.",
+  },
+  {
+    question: "Onde encontro os ingredientes do chá?",
+    answer:
+      "Todos os ingredientes estão disponíveis em lojas de produtos naturais, farmácias de manipulação ou pela internet. No e-book, você recebe uma lista detalhada com sugestões de onde comprar.",
+  },
+  {
+    question: "Preciso parar meus medicamentos?",
+    answer:
+      "NUNCA pare seus medicamentos por conta própria! Use o protocolo junto com seu tratamento atual. Conforme você melhorar, seu médico é quem decidirá sobre reduzir as doses.",
+  },
+  {
+    question: "É complicado preparar o chá?",
+    answer:
+      "NÃO! É tão simples quanto fazer um chá comum. O vídeo mostra cada passo de forma clara. Se você consegue ferver água, você consegue fazer o protocolo.",
+  },
+  {
+    question: "Quanto tempo até ver resultados?",
+    answer:
+      "A maioria dos usuários relata melhoras nos primeiros 7 a 14 dias. A glicemia começa a baixar já na primeira semana. O protocolo completo é de 90 dias para resultados consolidados.",
+  },
+];
 
 export const Pricing = () => {
   return (
@@ -37,6 +71,19 @@ export const Pricing = () => {
       <p className="text-sm text-gray-500">
         Compra 100% segura. Acesso liberado em até 5 minutos no seu e-mail.
       </p>
+
+      <Accordion type="single" collapsible className="w-full mt-16 text-left">
+        {faqItems.map((item, index) => (
+          <AccordionItem value={`item-${index}`} key={index}>
+            <AccordionTrigger className="text-xl text-left font-semibold hover:no-underline">
+              {item.question}
+            </AccordionTrigger>
+            <AccordionContent className="text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+              {item.answer}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </section>
   );
 };

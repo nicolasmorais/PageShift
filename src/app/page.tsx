@@ -7,7 +7,6 @@ import { Pricing } from "@/components/advertorial/Pricing";
 import { Guarantee } from "@/components/advertorial/Guarantee";
 import { Testimonials } from "@/components/advertorial/Testimonials";
 import { Comparison } from "@/components/advertorial/Comparison";
-import { Faq } from "@/components/advertorial/Faq";
 import { Footer } from "@/components/advertorial/Footer";
 
 export default function Home() {
@@ -23,7 +22,6 @@ export default function Home() {
         <Guarantee />
         <Testimonials />
         <Comparison />
-        <Faq />
       </main>
       <Footer />
     </div>
