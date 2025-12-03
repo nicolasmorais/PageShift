@@ -51,6 +51,11 @@ export const CaseStudy = () => {
           não tivesse conhecido um outro caminho, estaria fazendo hemodiálise. A
           sorte é que ele foi salvo no limite!
         </p>
+        <img
+          src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/qualidade-vida-paciente-hemodialise-q0ctIYihvARlrqUtGTp18yGq0z4hLk.jpg"
+          alt="Paciente em máquina de hemodiálise"
+          className="w-full h-auto rounded-lg my-6 shadow-md"
+        />
         <blockquote className="border-l-4 border-gray-500 pl-4 italic mt-6 bg-white dark:bg-gray-800 p-4 rounded-r-lg">
           <p>
             “O seu corpo ainda é capaz de controlar a glicose naturalmente. O que
