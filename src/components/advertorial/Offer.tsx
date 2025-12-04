@@ -45,9 +45,6 @@ export const Offer = () => {
         <h2 className="text-3xl font-extrabold font-sans">
           O Protocolo do Chá Japonês agora está disponível em formato digital
         </h2>
-        <p className="text-2xl mt-2">
-          Acesso imediato por apenas R$ 29,90
-        </p>
         <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mt-4 font-sans">
           Protocolo do Chá Japonês Regenerativo
         </p>
