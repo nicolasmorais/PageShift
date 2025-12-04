@@ -53,7 +53,12 @@ export const Solution = () => {
         </p>
       </div>
 
-      <div className="p-6 border rounded-lg">
+      <div className="p-6 border rounded-lg overflow-hidden">
+        <img
+          src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2021_10_34-NTd4IPZ5iz7r2y4Z8tthkLa05ZVN6Y.png"
+          alt="Gráfico mostrando a estabilização da glicose ao longo do tempo"
+          className="w-full h-auto -m-6 mb-6"
+        />
         <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
           <Dna className="h-7 w-7 text-blue-600" />A Validação Científica
         </h3>
