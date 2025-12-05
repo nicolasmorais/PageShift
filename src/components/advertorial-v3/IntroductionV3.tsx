@@ -3,6 +3,11 @@
 export const IntroductionV3 = () => {
   return (
     <section className="space-y-6 text-xl leading-relaxed border-b pb-8">
+      <img
+        src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2020_24_07-CegP8MFAadFJUCgpK40pYN2w5o7Ilv.png"
+        alt="Chá de ervas em uma xícara japonesa"
+        className="w-full h-auto rounded-lg shadow-md"
+      />
       <p className="text-base text-gray-500 dark:text-gray-400">
         Por Redação Especial — Conteúdo Informativo
       </p>
