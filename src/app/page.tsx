@@ -1,3 +1,6 @@
+import { redirect } from 'next/navigation';
+import { getDb } from '@/lib/database';
+
 import { Header } from "@/components/advertorial/Header";
 import { Problem } from "@/components/advertorial/Problem";
 import { CaseStudy } from "@/components/advertorial/CaseStudy";
@@ -7,7 +10,16 @@ import { Pricing } from "@/components/advertorial/Pricing";
 import { Testimonials } from "@/components/advertorial/Testimonials";
 import { Footer } from "@/components/advertorial/Footer";
 
-export default function Home() {
+export default async function Home() {
+  const db = await getDb();
+  const mainPage = db.data.settings?.mainPage || '/';
+
+  // If a different main page is selected, redirect to it.
+  if (mainPage !== '/') {
+    redirect(mainPage);
+  }
+
+  // Otherwise, render the default V1 page content.
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       <div className="bg-gray-100 dark:bg-gray-800 text-center py-2">
