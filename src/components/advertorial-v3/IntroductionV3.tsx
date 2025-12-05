@@ -11,10 +11,9 @@ export const IntroductionV3 = () => {
         Japão.
       </p>
       <p>
-        A popularidade desse ritual cresceu após o médico e pesquisador Dr.
-        Roberto Yano, conhecido por divulgar conteúdos educativos sobre saúde
-        integrativa, lançar um guia digital explicando como essa prática pode
-        ser incorporada no dia a dia de forma acessível.
+        A popularidade desse ritual cresceu após um dedicado estudante de
+        plantas medicinais lançar um guia digital, explicando como essa prática
+        pode ser incorporada no dia a dia de forma acessível.
       </p>
     </section>
   );

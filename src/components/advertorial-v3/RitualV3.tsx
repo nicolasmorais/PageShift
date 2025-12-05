@@ -12,9 +12,9 @@ export const RitualV3 = () => {
         prazeroso e cuidadoso.
       </p>
       <p>
-        O material criado pelo Dr. Yano apresenta esse processo em detalhes —
-        incluindo lista de ingredientes, modo de preparo e sugestões de como
-        inserir o ritual na rotina diária.
+        O material apresenta esse processo em detalhes — incluindo lista de
+        ingredientes, modo de preparo e sugestões de como inserir o ritual na
+        rotina diária.
       </p>
     </section>
   );

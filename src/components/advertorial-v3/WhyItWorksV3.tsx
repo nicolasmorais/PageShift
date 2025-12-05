@@ -23,8 +23,7 @@ export const WhyItWorksV3 = () => {
         próprio corpo.
       </p>
       <p className="text-xl leading-relaxed mb-6 font-semibold">
-        O guia criado pelo Dr. Yano reúne orientações culturais e práticas para
-        quem deseja:
+        O guia reúne orientações culturais e práticas para quem deseja:
       </p>
       <div className="space-y-4">
         {reasons.map((item, index) => (
