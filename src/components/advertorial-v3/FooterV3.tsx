@@ -15,131 +15,77 @@ export const FooterV3 = () => {
       title: "Termos e Condições",
       trigger: "Termos e Condições",
       content: (
-        <>
-          <p className="mb-4">
-            <strong>Última atualização: [Data]</strong>
-          </p>
-          <p className="mb-4">
-            Bem-vindo aos nossos Termos e Condições. Ao acessar nosso site e
-            adquirir nossos produtos, você concorda em cumprir os seguintes
-            termos. Leia-os com atenção.
-          </p>
-          <h3 className="font-bold text-lg mb-2">1. Uso do Site</h3>
-          <p className="mb-4">
-            Este site destina-se a fornecer informações sobre nossos produtos e
-            permitir a sua compra. O conteúdo é para fins informativos e não
-            substitui o conselho médico profissional.
-          </p>
-          <h3 className="font-bold text-lg mb-2">2. Produtos</h3>
-          <p className="mb-4">
-            Nossos produtos são guias digitais e materiais informativos. Eles
-            são entregues eletronicamente. Os resultados do uso de nossos guias
-            podem variar de pessoa para pessoa.
-          </p>
-          <h3 className="font-bold text-lg mb-2">3. Pagamento</h3>
-          <p className="mb-4">
-            Todos os pagamentos são processados através de uma plataforma segura.
-            Ao fornecer suas informações de pagamento, você declara que tem o
-            direito de usar o método de pagamento selecionado.
-          </p>
-          <h3 className="font-bold text-lg mb-2">4. Propriedade Intelectual</h3>
-          <p className="mb-4">
-            Todo o conteúdo deste site, incluindo textos, gráficos e logos, é
-            de nossa propriedade e protegido por leis de direitos autorais.
+        <div className="space-y-4">
+          <p>
+            Ao acessar este site, o usuário concorda que todo o conteúdo
+            exibido — incluindo textos, imagens, vídeos e informações — possui
+            caráter exclusivamente informativo.
           </p>
           <p>
-            <em>
-              [Este é um texto de exemplo. Substitua pelo seus Termos e
-              Condições oficiais.]
-            </em>
+            Os produtos apresentados não substituem consultas, diagnósticos ou
+            recomendações de profissionais da saúde.
           </p>
-        </>
+          <p>
+            As informações sobre preços, disponibilidade, frete e políticas
+            comerciais podem ser modificadas a qualquer momento, sem aviso
+            prévio.
+          </p>
+          <p>
+            O uso dos produtos adquiridos é de responsabilidade do consumidor,
+            que deve sempre seguir as orientações descritas na embalagem ou no
+            material que acompanha o produto.
+          </p>
+        </div>
       ),
     },
     {
       title: "Política de Privacidade",
       trigger: "Política de Privacidade",
       content: (
-        <>
-          <p className="mb-4">
-            <strong>Última atualização: [Data]</strong>
-          </p>
-          <p className="mb-4">
-            A sua privacidade é importante para nós. Esta política explica como
-            coletamos, usamos e protegemos suas informações pessoais.
-          </p>
-          <h3 className="font-bold text-lg mb-2">1. Coleta de Informações</h3>
-          <p className="mb-4">
-            Coletamos informações que você nos fornece durante a compra, como
-            nome, e-mail e informações de pagamento. Também podemos coletar
-            dados de navegação para melhorar sua experiência.
-          </p>
-          <h3 className="font-bold text-lg mb-2">2. Uso das Informações</h3>
-          <p className="mb-4">
-            Usamos suas informações para processar seu pedido, entregar o
-            produto digital, enviar comunicações importantes e melhorar nossos
-            serviços.
-          </p>
-          <h3 className="font-bold text-lg mb-2">3. Compartilhamento</h3>
-          <p className="mb-4">
-            Não vendemos ou alugamos suas informações pessoais a terceiros.
-            Podemos compartilhar dados com provedores de serviços que nos
-            ajudam a operar nosso negócio (ex: processadores de pagamento).
-          </p>
-          <h3 className="font-bold text-lg mb-2">4. Segurança</h3>
-          <p className="mb-4">
-            Implementamos medidas de segurança para proteger suas informações
-            pessoais contra acesso não autorizado.
+        <div className="space-y-4">
+          <p>
+            Valorizamos sua privacidade. Todas as informações fornecidas
+            voluntariamente pelo usuário — como nome, e-mail ou dados inseridos
+            em formulários — são utilizadas apenas para fins de atendimento,
+            envio de comunicações solicitadas ou suporte relacionado aos
+            produtos oferecidos.
           </p>
           <p>
-            <em>
-              [Este é um texto de exemplo. Substitua pela sua Política de
-              Privacidade oficial.]
-            </em>
+            Não compartilhamos, vendemos ou divulgamos dados a terceiros sem
+            autorização do usuário, exceto quando exigido por lei.
           </p>
-        </>
+          <p>
+            O usuário pode solicitar a remoção ou alteração de seus dados a
+            qualquer momento por meio de nossos canais de suporte. Consulte
+            esta página regularmente, pois nossa Política de Privacidade pode
+            ser atualizada conforme necessário.
+          </p>
+        </div>
       ),
     },
     {
       title: "Política de Trocas e Devoluções",
       trigger: "Trocas e Devoluções",
       content: (
-        <>
-          <p className="mb-4">
-            <strong>Última atualização: [Data]</strong>
-          </p>
-          <p className="mb-4">
-            Entenda nossa política para trocas e devoluções de produtos
-            digitais.
-          </p>
-          <h3 className="font-bold text-lg mb-2">1. Produtos Digitais</h3>
-          <p className="mb-4">
-            Devido à natureza dos produtos digitais (e-books, guias em PDF),
-            que são entregues instantaneamente e não podem ser devolvidos
-            fisicamente, nossa política de reembolso é baseada no Código de
-            Defesa do Consumidor para compras online.
-          </p>
-          <h3 className="font-bold text-lg mb-2">2. Direito de Arrependimento</h3>
-          <p className="mb-4">
-            Você tem o direito de solicitar o reembolso total do valor pago em
-            até 7 (sete) dias corridos após a confirmação da compra. Para
-            solicitar, entre em contato com nosso suporte através do e-mail{" "}
-            <strong>suporte@oneconversion.pro</strong> com o assunto "Solicitação
-            de Reembolso".
-          </p>
-          <h3 className="font-bold text-lg mb-2">3. Processamento</h3>
-          <p className="mb-4">
-            Após a solicitação, o reembolso será processado pela plataforma de
-            pagamento e o valor será estornado de acordo com os prazos da sua
-            operadora de cartão ou método de pagamento utilizado.
+        <div className="space-y-4">
+          <p>
+            Em conformidade com o Código de Defesa do Consumidor, o cliente tem
+            o direito de solicitar devolução ou reembolso em até 7 dias
+            corridos após o recebimento do produto.
           </p>
           <p>
-            <em>
-              [Este é um texto de exemplo. Substitua pela sua Política de
-              Trocas e Devoluções oficial.]
-            </em>
+            Para iniciar o processo, basta entrar em contato com nossa equipe
+            de suporte informando o número do pedido e o motivo da solicitação.
           </p>
-        </>
+          <p>
+            O produto deve ser devolvido em condições adequadas, e o reembolso
+            será processado após a conferência do item.
+          </p>
+          <p>
+            Nosso objetivo é garantir uma experiência segura, transparente e
+            satisfatória em todas as etapas da compra.
+          </p>
+        </div>
       ),
     },
   ];
