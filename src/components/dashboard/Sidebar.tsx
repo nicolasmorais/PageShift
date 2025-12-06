@@ -29,9 +29,9 @@ export const Sidebar = () => {
       <div className="flex h-20 items-center justify-center border-b border-zinc-800 px-6">
         <Link href="/dashboard">
           <img
-            src="/logo.svg"
+            src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f-zzhjEezm98VoMWqEUpkxkCiEYvH7rp.png"
             alt="PageShift Logo"
-            className="h-10"
+            className="h-12"
           />
         </Link>
       </div>
