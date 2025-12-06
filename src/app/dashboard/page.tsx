@@ -68,31 +68,31 @@ export default function DashboardPage() {
   return (
     <>
       <Toaster richColors />
-      <Card>
+      <Card className="bg-zinc-900/50 border-zinc-800 text-white">
         <CardHeader>
           <CardTitle>Gerenciamento de Rotas</CardTitle>
-          <CardDescription>
+          <CardDescription className="text-zinc-400">
             Controle qual conteúdo é exibido para cada rota (URL) do seu site.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Nome da Rota</TableHead>
-                <TableHead>Caminho (URL)</TableHead>
-                <TableHead>Conteúdo Atribuído</TableHead>
-                <TableHead className="text-right">Ações</TableHead>
+              <TableRow className="border-zinc-800 hover:bg-zinc-900">
+                <TableHead className="text-zinc-400">Nome da Rota</TableHead>
+                <TableHead className="text-zinc-400">Caminho (URL)</TableHead>
+                <TableHead className="text-zinc-400">Conteúdo Atribuído</TableHead>
+                <TableHead className="text-right text-zinc-400">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 Array.from({ length: 4 }).map((_, i) => (
-                  <TableRow key={i}>
-                    <TableCell><Skeleton className="h-5 w-3/4" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-1/2" /></TableCell>
-                    <TableCell><Skeleton className="h-10 w-full" /></TableCell>
-                    <TableCell className="text-right"><Skeleton className="h-10 w-20" /></TableCell>
+                  <TableRow key={i} className="border-zinc-800">
+                    <TableCell><Skeleton className="h-5 w-3/4 bg-zinc-800" /></TableCell>
+                    <TableCell><Skeleton className="h-5 w-1/2 bg-zinc-800" /></TableCell>
+                    <TableCell><Skeleton className="h-10 w-full bg-zinc-800" /></TableCell>
+                    <TableCell className="text-right"><Skeleton className="h-10 w-20 bg-zinc-800" /></TableCell>
                   </TableRow>
                 ))
               ) : (

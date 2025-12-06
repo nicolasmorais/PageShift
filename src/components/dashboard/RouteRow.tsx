@@ -40,21 +40,23 @@ export function RouteRow({ route, onSave }: RouteRowProps) {
   };
 
   return (
-    <TableRow>
+    <TableRow className="border-zinc-800 hover:bg-zinc-900">
       <TableCell>
         <div className="font-medium">{route.name}</div>
       </TableCell>
       <TableCell>
-        <code className="bg-muted px-2 py-1 rounded-md text-sm">{route.path}</code>
+        <code className="bg-zinc-800 text-zinc-300 px-2 py-1 rounded-md text-sm">{route.path}</code>
       </TableCell>
       <TableCell>
         <Select value={selectedContent} onValueChange={setSelectedContent}>
-          <SelectTrigger>
+          <SelectTrigger className="bg-zinc-800 border-zinc-700">
             <SelectValue placeholder="Selecione o conteúdo" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-zinc-900 text-white border-zinc-800">
             {contentOptions.map(opt => (
-              <SelectItem key={opt.id} value={opt.id}>{opt.name}</SelectItem>
+              <SelectItem key={opt.id} value={opt.id} className="focus:bg-zinc-800">
+                {opt.name}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
