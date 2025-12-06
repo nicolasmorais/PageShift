@@ -1,3 +1,48 @@
 {
-  "examples": []
+  "examples": [],
+  "routes": [
+    {
+      "path": "/",
+      "name": "Main Page",
+      "contentId": "v1"
+    },
+    {
+      "path": "/v1",
+      "name": "Advertorial V1 Path",
+      "contentId": "v1"
+    },
+    {
+      "path": "/v2",
+      "name": "Advertorial V2 Path",
+      "contentId": "v2"
+    },
+    {
+      "path": "/v3",
+      "name": "Advertorial V3 Path",
+      "contentId": "v3"
+    }
+  ],
+  "approvalPageContent": {
+    "header": {
+      "preTitle": "Bem-Estar e Saúde",
+      "title": "Um Guia Para Uma Rotina Mais Saudável"
+    },
+    "content": {
+      "intro": "Descubra práticas e dicas que podem ser incorporadas no seu dia a dia para promover mais equilíbrio e bem-estar. Uma rotina bem estruturada é o primeiro passo para uma vida mais saudável.",
+      "pillarsTitle": "Pilares do Bem-Estar",
+      "pillars": [
+        "Alimentação Consciente",
+        "Hidratação Adequada",
+        "Movimento e Atividade Física",
+        "Descanso e Recuperação",
+        "Novo Pilar",
+        "Novo Pilar"
+      ],
+      "outro": "Nosso guia oferece um olhar aprofundado sobre como pequenas mudanças podem gerar grandes resultados na sua saúde e disposição diária."
+    },
+    "footer": {
+      "disclaimer": "AVISO LEGAL: Este conteúdo é informativo. Sempre consulte um profissional da saúde para tratar de assuntos relativos à sua saúde.",
+      "copyright": "Todos os direitos reservados © 2024"
+    }
+  }
 }
