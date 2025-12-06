@@ -55,10 +55,18 @@ export default function ApprovalPageEditor() {
     });
   };
 
-  const handleArrayChange = <T extends object>(section: keyof ApprovalPageContent, arrayName: keyof ApprovalPageContent[keyof ApprovalPageContent], index: number, field: keyof T, value: string) => {
+  // Corrigindo a tipagem para arrays aninhados dentro de 'footer'
+  const handleArrayChange = <T extends object>(
+    section: 'footer', 
+    arrayName: 'disclaimers' | 'policies', 
+    index: number, 
+    field: keyof T, 
+    value: string
+  ) => {
     setContent(prev => {
         if (!prev) return null;
         const newContent = { ...prev };
+        // Acessamos o array dentro do footer e atualizamos o item
         ((newContent[section] as any)[arrayName] as T[])[index][field] = value as any;
         return newContent;
     });
