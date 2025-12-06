@@ -6,15 +6,6 @@ import { V2Page } from '@/components/page-versions/V2Page';
 import { V3Page } from '@/components/page-versions/V3Page';
 import { APPage } from '@/components/page-versions/APPage';
 
-// Define o tipo de props esperado pelo Next.js
-interface DynamicPageProps {
-  params: {
-    slug?: string[];
-  };
-  // Adicionando searchParams para corresponder à estrutura PageProps do Next.js
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
 // This component maps a contentId to the actual Page Component
 function ContentSwitcher({ contentId }: { contentId: string }) {
   switch (contentId) {
@@ -32,7 +23,13 @@ function ContentSwitcher({ contentId }: { contentId: string }) {
   }
 }
 
-export default async function DynamicPage({ params }: DynamicPageProps) {
+export default async function DynamicPage({ 
+  params, 
+  searchParams 
+}: { 
+  params: { slug?: string[] }; 
+  searchParams?: { [key: string]: string | string[] | undefined }; 
+}) {
   // Construct the path from the slug segments.
   // If slug is undefined or empty, it's the root path '/'.
   const path = params.slug ? `/${params.slug.join('/')}` : '/';
