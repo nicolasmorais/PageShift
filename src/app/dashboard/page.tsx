@@ -31,7 +31,7 @@ const contentOptions = [
   { id: 'v1', name: 'Advertorial V1' },
   { id: 'v2', name: 'Advertorial V2' },
   { id: 'v3', name: 'Advertorial V3' },
-  { id: 'ap', name: 'Approval Page' },
+  { id: 'ap', name: 'Página de Aprovação' },
 ];
 
 function RouteCard({ route, onSave }: { route: RouteMapping, onSave: (path: string, contentId: string) => Promise<void> }) {
@@ -48,13 +48,13 @@ function RouteCard({ route, onSave }: { route: RouteMapping, onSave: (path: stri
     <Card>
       <CardHeader>
         <CardTitle>{route.name}</CardTitle>
-        <CardDescription>URL Path: <code>{route.path}</code></CardDescription>
+        <CardDescription>Caminho da URL: <code>{route.path}</code></CardDescription>
       </CardHeader>
       <CardContent>
-        <Label htmlFor={`content-for-${route.path}`}>Displayed Content</Label>
+        <Label htmlFor={`content-for-${route.path}`}>Conteúdo Exibido</Label>
         <Select value={selectedContent} onValueChange={setSelectedContent}>
           <SelectTrigger id={`content-for-${route.path}`}>
-            <SelectValue placeholder="Select content" />
+            <SelectValue placeholder="Selecione o conteúdo" />
           </SelectTrigger>
           <SelectContent>
             {contentOptions.map(opt => (
@@ -65,7 +65,7 @@ function RouteCard({ route, onSave }: { route: RouteMapping, onSave: (path: stri
       </CardContent>
       <CardFooter className="flex justify-end">
         <Button onClick={handleSave} disabled={isSaving || selectedContent === route.contentId}>
-          {isSaving ? "Saving..." : "Save"}
+          {isSaving ? "Salvando..." : "Salvar"}
         </Button>
       </CardFooter>
     </Card>
@@ -84,7 +84,7 @@ export default function DashboardPage() {
         setRoutes(data);
       })
       .catch(() => {
-        toast.error("Failed to load routes.");
+        toast.error("Falha ao carregar as rotas.");
       })
       .finally(() => {
         setIsLoading(false);
@@ -103,10 +103,10 @@ export default function DashboardPage() {
         body: JSON.stringify({ path, contentId }),
       });
       if (!response.ok) throw new Error('Failed to save');
-      toast.success(`Route ${path} updated successfully!`);
+      toast.success(`Rota ${path} atualizada com sucesso!`);
       fetchRoutes(); // Refresh data after save
     } catch (error) {
-      toast.error(`Failed to update route ${path}.`);
+      toast.error(`Falha ao atualizar a rota ${path}.`);
     }
   };
 
@@ -114,9 +114,9 @@ export default function DashboardPage() {
     <>
       <Toaster richColors />
       <div className="space-y-4">
-        <h1 className="text-2xl font-bold">Route Management</h1>
+        <h1 className="text-2xl font-bold">Gerenciamento de Rotas</h1>
         <p className="text-muted-foreground">
-          Control which content is displayed for each URL path.
+          Controle qual conteúdo é exibido para cada rota (URL).
         </p>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {isLoading ? (

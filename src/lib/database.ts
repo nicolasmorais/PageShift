@@ -79,10 +79,10 @@ export async function getDb(): Promise<Low<DbSchema>> {
     dbInstance = new Low<DbSchema>(adapter, { 
       examples: [],
       routes: [
-        { path: '/', name: 'Main Page', contentId: 'v1' },
-        { path: '/v1', name: 'Advertorial V1 Path', contentId: 'v1' },
-        { path: '/v2', name: 'Advertorial V2 Path', contentId: 'v2' },
-        { path: '/v3', name: 'Advertorial V3 Path', contentId: 'v3' },
+        { path: '/', name: 'Página Principal', contentId: 'v1' },
+        { path: '/v1', name: 'Rota do Advertorial V1', contentId: 'v1' },
+        { path: '/v2', name: 'Rota do Advertorial V2', contentId: 'v2' },
+        { path: '/v3', name: 'Rota do Advertorial V3', contentId: 'v3' },
       ],
       approvalPageContent: defaultApprovalPageContent,
     });

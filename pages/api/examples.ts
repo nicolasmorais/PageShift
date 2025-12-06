@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Handle POST requests to create a new example
       const { name } = req.body;
       if (!name) {
-        return res.status(400).json({ message: 'Name is required' });
+        return res.status(400).json({ message: 'O nome é obrigatório' });
       }
 
       // Generate a simple ID (lowdb doesn't auto-increment like SQL dbs)
@@ -37,10 +37,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } else {
       // Method Not Allowed for other HTTP methods
       res.setHeader('Allow', ['GET', 'POST']);
-      return res.status(405).end(`Method ${req.method} Not Allowed`);
+      return res.status(405).end(`Método ${req.method} não permitido`);
     }
   } catch (error: any) {
     console.error('Database operation failed:', error.message || error);
-    return res.status(500).json({ message: 'Internal server error', error: error.message || 'Unknown error' });
+    return res.status(500).json({ message: 'Erro interno do servidor', error: error.message || 'Unknown error' });
   }
 }

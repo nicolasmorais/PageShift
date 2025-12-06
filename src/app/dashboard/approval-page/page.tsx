@@ -51,7 +51,7 @@ export default function ApprovalPageEditor() {
         setIsLoading(false);
       })
       .catch(() => {
-        toast.error("Failed to load page content.");
+        toast.error("Falha ao carregar o conteúdo da página.");
         setIsLoading(false);
       });
   }, []);
@@ -75,7 +75,7 @@ export default function ApprovalPageEditor() {
   const addPillar = () => {
     setContent(prev => {
       if (!prev) return null;
-      return { ...prev, content: { ...prev.content, pillars: [...prev.content.pillars, "New Pillar"] } };
+      return { ...prev, content: { ...prev.content, pillars: [...prev.content.pillars, "Novo Pilar"] } };
     });
   };
 
@@ -97,16 +97,16 @@ export default function ApprovalPageEditor() {
         body: JSON.stringify(content),
       });
       if (!response.ok) throw new Error('Failed to save');
-      toast.success("Content saved successfully!");
+      toast.success("Conteúdo salvo com sucesso!");
     } catch (error) {
-      toast.error("Failed to save content.");
+      toast.error("Falha ao salvar o conteúdo.");
     } finally {
       setIsSaving(false);
     }
   };
 
   if (isLoading) return <LoadingSkeleton />;
-  if (!content) return <p>Could not load content. Please try refreshing.</p>;
+  if (!content) return <p>Não foi possível carregar o conteúdo. Por favor, tente atualizar a página.</p>;
 
   return (
     <>
@@ -114,41 +114,41 @@ export default function ApprovalPageEditor() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">Approval Page Editor</h1>
-            <p className="text-muted-foreground">Modify the content displayed on the approval page.</p>
+            <h1 className="text-2xl font-bold">Editor da Página de Aprovação</h1>
+            <p className="text-muted-foreground">Modifique o conteúdo exibido na página de aprovação.</p>
           </div>
           <Button onClick={handleSave} disabled={isSaving}>
-            {isSaving ? "Saving..." : "Save Changes"}
+            {isSaving ? "Salvando..." : "Salvar Alterações"}
           </Button>
         </div>
 
         <Card>
-          <CardHeader><CardTitle>Header</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Cabeçalho</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label>Pre-Title</Label>
+              <Label>Pré-Título</Label>
               <Input value={content.header.preTitle} onChange={e => handleInputChange('header', 'preTitle', e.target.value)} />
             </div>
             <div>
-              <Label>Main Title</Label>
+              <Label>Título Principal</Label>
               <Input value={content.header.title} onChange={e => handleInputChange('header', 'title', e.target.value)} />
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader><CardTitle>Main Content</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Conteúdo Principal</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label>Intro Paragraph</Label>
+              <Label>Parágrafo de Introdução</Label>
               <Textarea value={content.content.intro} onChange={e => handleInputChange('content', 'intro', e.target.value)} rows={3} />
             </div>
             <div>
-              <Label>Pillars Section Title</Label>
+              <Label>Título da Seção de Pilares</Label>
               <Input value={content.content.pillarsTitle} onChange={e => handleInputChange('content', 'pillarsTitle', e.target.value)} />
             </div>
             <div>
-              <Label>Pillars</Label>
+              <Label>Pilares</Label>
               <div className="space-y-2">
                 {content.content.pillars.map((pillar, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -157,30 +157,30 @@ export default function ApprovalPageEditor() {
                   </div>
                 ))}
               </div>
-              <Button variant="outline" size="sm" onClick={addPillar} className="mt-2">Add Pillar</Button>
+              <Button variant="outline" size="sm" onClick={addPillar} className="mt-2">Adicionar Pilar</Button>
             </div>
             <div>
-              <Label>Outro Paragraph</Label>
+              <Label>Parágrafo de Conclusão</Label>
               <Textarea value={content.content.outro} onChange={e => handleInputChange('content', 'outro', e.target.value)} rows={3} />
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader><CardTitle>Footer</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Rodapé</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label>Disclaimer</Label>
+              <Label>Aviso Legal</Label>
               <Input value={content.footer.disclaimer} onChange={e => handleInputChange('footer', 'disclaimer', e.target.value)} />
             </div>
             <div>
-              <Label>Copyright</Label>
+              <Label>Direitos Autorais</Label>
               <Input value={content.footer.copyright} onChange={e => handleInputChange('footer', 'copyright', e.target.value)} />
             </div>
           </CardContent>
           <CardFooter className="flex justify-end">
              <Button onClick={handleSave} disabled={isSaving}>
-                {isSaving ? "Saving..." : "Save Changes"}
+                {isSaving ? "Salvando..." : "Salvar Alterações"}
             </Button>
           </CardFooter>
         </Card>
