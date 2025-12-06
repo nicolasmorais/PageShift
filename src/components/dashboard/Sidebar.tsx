@@ -27,13 +27,12 @@ export const Sidebar = () => {
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r border-zinc-800 bg-zinc-900 text-white sm:flex">
       <div className="flex h-20 items-center justify-center border-b border-zinc-800 px-6">
-        <Link href="/dashboard" className="flex items-center gap-3 font-semibold">
+        <Link href="/dashboard" className="flex items-center justify-center font-semibold">
           <img
             src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f-zzhjEezm98VoMWqEUpkxkCiEYvH7rp.png"
             alt="Logo"
-            className="h-8 w-8"
+            className="h-10 w-10"
           />
-          <span>Painel de Controle</span>
         </Link>
       </div>
       <nav className="flex-1 space-y-4 p-4">

@@ -10,7 +10,7 @@ export default {
   theme: {
   	extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)"],
+        sans: ["var(--font-space-grotesk)"],
         mono: ["var(--font-geist-mono)"],
         merriweather: ["var(--font-merriweather)"],
       },
