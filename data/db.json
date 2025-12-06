@@ -30,12 +30,12 @@
   "approvalPageContent": {
     "header": {
       "preTitle": "Bem-Estar e Saúde",
-      "title": "Um Guia Para Uma Rotina Mais Saudável",
+      "title": "Dr. Roberto Yano afirma: 7 em cada 10 diabéticos tipo 2 estão sendo tratados de forma errada no Brasil.",
       "subheadline": "Uma nova abordagem para o seu bem-estar diário."
     },
     "body": {
       "imageUrl1": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png",
-      "advertorialText": "Este é o espaço para o texto principal do seu advertorial. Fale sobre os benefícios, a história e tudo o que for relevante para convencer o leitor.\n\nVocê pode usar múltiplos parágrafos.\n\noiii\n\noii\n\noii",
+      "advertorialText": "Este é o espaço para o texto principal do seu advertorial. Fale sobre os *benefícios*, a história e tudo o que for relevante para convencer o leitor.\n\nVocê pode usar múltiplos parágrafos.\n\n*oiii*\n\noii\n\noii",
       "imageUrl2": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2020_24_07-CegP8MFAadFJUCgpK40pYN2w5o7Ilv.png",
       "guaranteeText": "Garantia de satisfação de 7 dias. Se você não ficar satisfeito, devolvemos o seu dinheiro sem burocracia."
     },
