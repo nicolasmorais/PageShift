@@ -1,6 +1,6 @@
 import { HeaderAP } from "@/components/advertorial-ap/HeaderAP";
 import { ContentAP } from "@/components/advertorial-ap/ContentAP";
-import { FooterAP } from "@/components/advertorial-ap/FooterAP";
+import { FooterV3 } from "@/components/advertorial-v3/FooterV3";
 import { getDb } from "@/lib/database";
 
 export async function APPage() {
@@ -13,7 +13,7 @@ export async function APPage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 font-merriweather">
         <ContentAP {...content.content} />
       </main>
-      <FooterAP {...content.footer} />
+      <FooterV3 />
     </div>
   );
 }
