@@ -1,53 +1,87 @@
 "use client";
 
 import Link from "next/link";
-import { Settings, FileCheck } from "lucide-react";
+import {
+  Home,
+  ShoppingCart,
+  Package,
+  Megaphone,
+  Target,
+  Wand2,
+  Settings,
+  Activity,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+
+const mainNavItems = [
+  { href: "/dashboard", icon: Home, label: "Visão Geral" },
+  { href: "/dashboard/sales", icon: ShoppingCart, label: "Vendas" },
+  { href: "/dashboard/products", icon: Package, label: "Produtos" },
+  { href: "/dashboard/marketing", icon: Megaphone, label: "Marketing" },
+  { href: "/dashboard/roi", icon: Target, label: "ROI de Anúncios" },
+];
+
+const settingsNavItems = [
+  { href: "/dashboard/approval-page", icon: Wand2, label: "Personalização" },
+  { href: "/dashboard/settings", icon: Settings, label: "Configurações" },
+  { href: "/dashboard/status", icon: Activity, label: "Status do Sistema" },
+];
 
 export const Sidebar = () => {
   const pathname = usePathname();
 
-  const navItems = [
-    {
-      href: "/dashboard",
-      icon: Settings,
-      label: "Configurações de Rota",
-    },
-    {
-      href: "/dashboard/approval-page",
-      icon: FileCheck,
-      label: "Editor da Página",
-    },
-  ];
-
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r border-gray-700 bg-[#242527] sm:flex">
-      <div className="flex h-16 items-center border-b border-gray-700 px-4">
-        <Link href="/dashboard" className="flex items-center gap-3 font-semibold text-white">
+    <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r border-zinc-800 bg-zinc-900 text-white sm:flex">
+      <div className="flex h-20 items-center justify-center border-b border-zinc-800 px-6">
+        <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
           <img
-            src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f-zzhjEezm98VoMWqEUpkxkCiEYvH7rp.png"
-            alt="Logo"
-            className="h-8 w-8"
+            src="https://oneconversion.pro/wp-content/uploads/2023/10/oneconversion-logo-white.svg"
+            alt="One Conversion Logo"
+            className="h-10"
           />
-          <span>Painel de Controle</span>
         </Link>
       </div>
-      <nav className="flex-grow px-4 py-4">
-        <div className="flex flex-col gap-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-400 transition-all hover:bg-gray-700 hover:text-white",
-                pathname === item.href && "bg-gray-800 text-white"
-              )}
-            >
-              <item.icon className="h-5 w-5" />
-              {item.label}
-            </Link>
-          ))}
+      <nav className="flex-1 space-y-4 p-4">
+        <div>
+          <h3 className="mb-2 px-3 text-xs font-semibold uppercase text-zinc-400">
+            Principal
+          </h3>
+          <div className="space-y-1">
+            {mainNavItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-zinc-400 transition-all hover:bg-zinc-800 hover:text-zinc-50",
+                  pathname === item.href && "bg-zinc-800 text-zinc-50"
+                )}
+              >
+                <item.icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h3 className="mb-2 px-3 text-xs font-semibold uppercase text-zinc-400">
+            Configurações
+          </h3>
+          <div className="space-y-1">
+            {settingsNavItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-zinc-400 transition-all hover:bg-zinc-800 hover:text-zinc-50",
+                  pathname === item.href && "bg-zinc-800 text-zinc-50"
+                )}
+              >
+                <item.icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </nav>
     </aside>
