@@ -19,86 +19,128 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Toaster, toast } from "sonner";
+import { Skeleton } from '@/components/ui/skeleton';
 
-export default function DashboardPage() {
-  const [selectedPage, setSelectedPage] = useState('/');
-  const [isLoading, setIsLoading] = useState(true);
+interface RouteMapping {
+  path: string;
+  contentId: string;
+  name: string;
+}
+
+const contentOptions = [
+  { id: 'v1', name: 'Advertorial V1' },
+  { id: 'v2', name: 'Advertorial V2' },
+  { id: 'v3', name: 'Advertorial V3' },
+  { id: 'ap', name: 'Approval Page' },
+];
+
+function RouteCard({ route, onSave }: { route: RouteMapping, onSave: (path: string, contentId: string) => Promise<void> }) {
+  const [selectedContent, setSelectedContent] = useState(route.contentId);
   const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    fetch('/api/settings')
+  const handleSave = async () => {
+    setIsSaving(true);
+    await onSave(route.path, selectedContent);
+    setIsSaving(false);
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{route.name}</CardTitle>
+        <CardDescription>URL Path: <code>{route.path}</code></CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Label htmlFor={`content-for-${route.path}`}>Displayed Content</Label>
+        <Select value={selectedContent} onValueChange={setSelectedContent}>
+          <SelectTrigger id={`content-for-${route.path}`}>
+            <SelectValue placeholder="Select content" />
+          </SelectTrigger>
+          <SelectContent>
+            {contentOptions.map(opt => (
+              <SelectItem key={opt.id} value={opt.id}>{opt.name}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </CardContent>
+      <CardFooter className="flex justify-end">
+        <Button onClick={handleSave} disabled={isSaving || selectedContent === route.contentId}>
+          {isSaving ? "Saving..." : "Save"}
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
+export default function DashboardPage() {
+  const [routes, setRoutes] = useState<RouteMapping[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchRoutes = () => {
+    setIsLoading(true);
+    fetch('/api/routes')
       .then((res) => res.json())
       .then((data) => {
-        setSelectedPage(data.mainPage || '/');
+        setRoutes(data);
       })
       .catch(() => {
-        toast.error("Failed to load current settings.");
+        toast.error("Failed to load routes.");
       })
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchRoutes();
   }, []);
 
-  const handleSave = async () => {
-    setIsSaving(true);
+  const handleSaveRoute = async (path: string, contentId: string) => {
     try {
-      const response = await fetch('/api/settings', {
+      const response = await fetch('/api/routes', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ mainPage: selectedPage }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path, contentId }),
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to save settings');
-      }
-
-      toast.success("Main page updated successfully!");
+      if (!response.ok) throw new Error('Failed to save');
+      toast.success(`Route ${path} updated successfully!`);
+      fetchRoutes(); // Refresh data after save
     } catch (error) {
-      toast.error("An error occurred while saving.");
-    } finally {
-      setIsSaving(false);
+      toast.error(`Failed to update route ${path}.`);
     }
   };
 
   return (
     <>
       <Toaster richColors />
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Page Settings</CardTitle>
-          <CardDescription>
-            Select which page will be displayed as the main page of your website.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="main-page">Main Page</Label>
-              {isLoading ? (
-                <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-md animate-pulse" />
-              ) : (
-                <Select value={selectedPage} onValue-change={setSelectedPage}>
-                  <SelectTrigger id="main-page">
-                    <SelectValue placeholder="Select a page" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="/">Advertorial V1</SelectItem>
-                    <SelectItem value="/v2">Advertorial V2</SelectItem>
-                    <SelectItem value="/v3">Advertorial V3</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter className="flex justify-end">
-          <Button onClick={handleSave} disabled={isLoading || isSaving}>
-            {isSaving ? "Saving..." : "Save"}
-          </Button>
-        </CardFooter>
-      </Card>
+      <div className="space-y-4">
+        <h1 className="text-2xl font-bold">Route Management</h1>
+        <p className="text-muted-foreground">
+          Control which content is displayed for each URL path.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {isLoading ? (
+            Array.from({ length: 4 }).map((_, i) => (
+              <Card key={i}>
+                <CardHeader>
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-10 w-full" />
+                </CardContent>
+                <CardFooter className="flex justify-end">
+                  <Skeleton className="h-10 w-20" />
+                </CardFooter>
+              </Card>
+            ))
+          ) : (
+            routes.map(route => (
+              <RouteCard key={route.path} route={route} onSave={handleSaveRoute} />
+            ))
+          )}
+        </div>
+      </div>
     </>
   );
 }

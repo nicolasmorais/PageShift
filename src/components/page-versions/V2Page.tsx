@@ -6,7 +6,7 @@ import { PricingV2 } from "@/components/advertorial-v2/PricingV2";
 import { DisclaimerV2 } from "@/components/advertorial-v2/DisclaimerV2";
 import { FooterV2 } from "@/components/advertorial-v2/FooterV2";
 
-export default function V2Page() {
+export function V2Page() {
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       <div className="bg-gray-100 dark:bg-gray-800 text-center py-2">

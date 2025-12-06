@@ -8,7 +8,7 @@ import { PricingV3 } from "@/components/advertorial-v3/PricingV3";
 import { DisclaimerV3 } from "@/components/advertorial-v3/DisclaimerV3";
 import { FooterV3 } from "@/components/advertorial-v3/FooterV3";
 
-export default function V3Page() {
+export function V3Page() {
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       <HeaderV3 />
