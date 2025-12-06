@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Settings, Wand2, FileSymlink } from "lucide-react";
+import { Settings, Wand2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -26,10 +26,13 @@ export const Sidebar = () => {
 
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r border-zinc-800 bg-zinc-900 text-white sm:flex">
-      <div className="flex h-20 items-center border-b border-zinc-800 px-6">
-        <Link href="/dashboard" className="flex items-center gap-3 font-semibold text-lg">
-          <FileSymlink className="h-6 w-6" />
-          <span>PageShift</span>
+      <div className="flex h-20 items-center justify-center border-b border-zinc-800 px-6">
+        <Link href="/dashboard">
+          <img
+            src="/logo.svg"
+            alt="PageShift Logo"
+            className="h-10"
+          />
         </Link>
       </div>
       <nav className="flex-1 space-y-4 p-4">
