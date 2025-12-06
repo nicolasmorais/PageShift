@@ -58,7 +58,7 @@ export default function AdvertorialEditorPage() {
     } catch (error) {
       toast.error("Ocorreu um erro ao salvar. Tente novamente.");
     } finally {
-      setIsSaving(isSaving);
+      setIsSaving(false);
     }
   };
 
