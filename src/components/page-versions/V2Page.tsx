@@ -8,9 +8,9 @@ import { FooterV2 } from "@/components/advertorial-v2/FooterV2";
 
 export function V2Page() {
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-merriweather">
-      <div className="bg-gray-100 dark:bg-gray-800 text-center py-2">
-        <p className="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+    <div className="bg-white text-gray-800 font-merriweather">
+      <div className="bg-gray-100 text-center py-2">
+        <p className="text-sm font-semibold uppercase tracking-wider text-gray-600">
           Advertorial
         </p>
       </div>
