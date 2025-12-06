@@ -3,6 +3,16 @@ import { ContentAP } from "@/components/advertorial-ap/ContentAP";
 import { PricingAP } from "@/components/advertorial-ap/PricingAP";
 import { FooterAP } from "@/components/advertorial-ap/FooterAP";
 import { getDb } from "@/lib/database";
+import type { Metadata } from "next";
+
+// Função para gerar metadados dinamicamente
+export async function generateMetadata(): Promise<Metadata> {
+  const db = await getDb();
+  const content = db.data.approvalPageContent;
+  return {
+    title: content.header.title || "Página de Aprovação",
+  };
+}
 
 export async function APPage() {
   const db = await getDb();

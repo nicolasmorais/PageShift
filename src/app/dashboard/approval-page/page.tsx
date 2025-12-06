@@ -8,6 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Dashboard - Editor da Página",
+};
 
 interface Policy { title: string; trigger: string; content: string; }
 interface Disclaimer { title: string; text: string; }

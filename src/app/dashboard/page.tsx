@@ -19,6 +19,11 @@ import {
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
 import { RouteRow } from '@/components/dashboard/RouteRow';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Dashboard - Gerenciamento de Rotas",
+};
 
 interface RouteMapping {
   path: string;

@@ -6,6 +6,11 @@ import { Offer } from "@/components/advertorial/Offer";
 import { Pricing } from "@/components/advertorial/Pricing";
 import { Testimonials } from "@/components/advertorial/Testimonials";
 import { Footer } from "@/components/advertorial/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Advertorial - V1",
+};
 
 export function V1Page() {
   return (
