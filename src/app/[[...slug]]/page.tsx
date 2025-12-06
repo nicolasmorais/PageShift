@@ -24,11 +24,9 @@ function ContentSwitcher({ contentId }: { contentId: string }) {
 }
 
 export default async function DynamicPage({ 
-  params, 
-  searchParams 
+  params,
 }: { 
-  params: { slug?: string[] }; 
-  searchParams?: { [key: string]: string | string[] | undefined }; 
+  params: { slug?: string[] };
 }) {
   // Construct the path from the slug segments.
   // If slug is undefined or empty, it's the root path '/'.
