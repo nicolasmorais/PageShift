@@ -1,4 +1,11 @@
-import WysiwygEditor from "@/components/editor/WysiwygEditor";
+"use client";
+
+import dynamic from "next/dynamic";
+
+const WysiwygEditor = dynamic(
+  () => import("@/components/editor/WysiwygEditor"),
+  { ssr: false }
+);
 
 export default function HomePage() {
   return (
