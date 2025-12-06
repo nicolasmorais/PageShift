@@ -26,10 +26,17 @@ interface ApprovalPageContent {
   };
 }
 
+interface CustomAdvertorial {
+  id: string;
+  name: string;
+  content: string; // HTML content
+}
+
 interface DbSchema {
   examples: { id: number; name: string; createdAt: string }[];
   routes: RouteMapping[];
   approvalPageContent: ApprovalPageContent;
+  customAdvertorials: CustomAdvertorial[];
 }
 
 const DB_FILE_NAME = 'db.json';
@@ -85,6 +92,7 @@ export async function getDb(): Promise<Low<DbSchema>> {
         { path: '/v3', name: 'Rota do Advertorial V3', contentId: 'v3' },
       ],
       approvalPageContent: defaultApprovalPageContent,
+      customAdvertorials: [],
     });
 
     await dbInstance.read();
@@ -95,6 +103,9 @@ export async function getDb(): Promise<Low<DbSchema>> {
     }
     if (!dbInstance.data.approvalPageContent) {
       dbInstance.data.approvalPageContent = defaultApprovalPageContent;
+    }
+    if (!dbInstance.data.customAdvertorials) {
+      dbInstance.data.customAdvertorials = [];
     }
     
     await dbInstance.write();
