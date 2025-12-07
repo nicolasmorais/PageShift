@@ -26,27 +26,55 @@ interface RouteMapping {
   name: string;
 }
 
+interface ContentOption {
+  id: string;
+  name: string;
+}
+
 export default function DashboardPage() {
   const [routes, setRoutes] = useState<RouteMapping[]>([]);
+  const [contentOptions, setContentOptions] = useState<ContentOption[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchRoutes = () => {
+  const baseOptions: ContentOption[] = [
+    { id: 'v1', name: 'Advertorial V1' },
+    { id: 'v2', name: 'Advertorial V2' },
+    { id: 'v3', name: 'Advertorial V3' },
+    { id: 'ap', name: 'Página de Aprovação (AP)' },
+  ];
+
+  const fetchRoutesAndContent = async () => {
     setIsLoading(true);
-    fetch('/api/routes')
-      .then((res) => res.json())
-      .then((data) => {
-        setRoutes(data);
-      })
-      .catch(() => {
-        toast.error("Falha ao carregar as rotas.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const [routesRes, customAdvRes] = await Promise.all([
+        fetch('/api/routes'),
+        fetch('/api/custom-advertorials'),
+      ]);
+
+      if (!routesRes.ok || !customAdvRes.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      const routesData = await routesRes.json();
+      const customAdvData: { id: string, name: string }[] = await customAdvRes.json();
+
+      const dynamicOptions: ContentOption[] = customAdvData.map(adv => ({
+        id: adv.id,
+        name: `Dinâmico: ${adv.name}`,
+      }));
+
+      setRoutes(routesData);
+      setContentOptions([...baseOptions, ...dynamicOptions]);
+
+    } catch (error) {
+      toast.error("Falha ao carregar rotas ou conteúdos.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchRoutes();
+    fetchRoutesAndContent();
   }, []);
 
   const handleSaveRoute = async (path: string, contentId: string) => {
@@ -58,8 +86,8 @@ export default function DashboardPage() {
       });
       if (!response.ok) throw new Error('Failed to save');
       toast.success(`Rota ${path} atualizada com sucesso!`);
-      // We need to refetch to update the "original" state in each row
-      fetchRoutes();
+      // Refetch all data to ensure consistency
+      fetchRoutesAndContent();
     } catch (error) {
       toast.error(`Falha ao atualizar a rota ${path}.`);
     }
@@ -97,7 +125,12 @@ export default function DashboardPage() {
                 ))
               ) : (
                 routes.map(route => (
-                  <RouteRow key={route.path} route={route} onSave={handleSaveRoute} />
+                  <RouteRow 
+                    key={route.path} 
+                    route={route} 
+                    onSave={handleSaveRoute} 
+                    contentOptions={contentOptions}
+                  />
                 ))
               )}
             </TableBody>

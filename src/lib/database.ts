@@ -57,10 +57,47 @@ interface ApprovalPageContent {
   footer: ApprovalPageFooter;
 }
 
+// --- NEW INTERFACES FOR CUSTOM ADVERTORIALS ---
+
+export interface CustomAdvertorialHeader {
+  preTitle: string;
+  title: string;
+  subheadline: string;
+}
+
+export type BlockType = 'text' | 'image' | 'alert' | 'pricing';
+
+export interface ContentBlock {
+  id: string;
+  type: BlockType;
+  // Common fields
+  value: string; // Main content (text, URL, etc.)
+  // Specific fields for 'alert'
+  alertTitle?: string;
+  alertVariant?: 'default' | 'destructive';
+  // Specific fields for 'pricing'
+  price?: string;
+  buttonText?: string;
+  buttonUrl?: string;
+  prePriceText?: string;
+  paymentType?: string;
+  postButtonText?: string;
+}
+
+export interface CustomAdvertorial {
+  id: string;
+  name: string;
+  header: CustomAdvertorialHeader;
+  blocks: ContentBlock[];
+}
+
+// ----------------------------------------------
+
 interface DbSchema {
   examples: { id: number; name: string; createdAt: string }[];
   routes: RouteMapping[];
   approvalPageContent: ApprovalPageContent;
+  customAdvertorials: CustomAdvertorial[]; // NEW
 }
 
 const DB_FILE_NAME = 'db.json';
@@ -136,6 +173,7 @@ export async function getDb(): Promise<Low<DbSchema>> {
         { path: '/aprovado', name: 'Página de Aprovação (Preview)', contentId: 'ap' },
       ],
       approvalPageContent: defaultApprovalPageContent,
+      customAdvertorials: [], // Initialize new collection
     });
 
     await dbInstance.read();
@@ -145,7 +183,8 @@ export async function getDb(): Promise<Low<DbSchema>> {
       dbInstance.data = {
         examples: [],
         routes: [],
-        approvalPageContent: defaultApprovalPageContent
+        approvalPageContent: defaultApprovalPageContent,
+        customAdvertorials: [],
       };
     }
     if (!dbInstance.data.routes) {
@@ -153,6 +192,9 @@ export async function getDb(): Promise<Low<DbSchema>> {
     }
     if (!dbInstance.data.approvalPageContent || !dbInstance.data.approvalPageContent.body) {
       dbInstance.data.approvalPageContent = defaultApprovalPageContent;
+    }
+    if (!dbInstance.data.customAdvertorials) {
+        dbInstance.data.customAdvertorials = [];
     }
     
     await dbInstance.write();

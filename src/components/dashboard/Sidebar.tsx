@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Settings, Wand2 } from "lucide-react";
+import { Settings, Wand2, LayoutGrid } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +17,12 @@ const pagesNavItems = [
   {
     href: "/dashboard/approval-page",
     icon: Wand2,
-    label: "Editor da Página",
+    label: "Editor da Página AP",
+  },
+  {
+    href: "/dashboard/custom-advertorials",
+    icon: LayoutGrid,
+    label: "Advertoriais Dinâmicos",
   },
 ];
 

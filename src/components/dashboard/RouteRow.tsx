@@ -17,19 +17,18 @@ interface RouteMapping {
   name: string;
 }
 
-const contentOptions = [
-  { id: 'v1', name: 'Advertorial V1' },
-  { id: 'v2', name: 'Advertorial V2' },
-  { id: 'v3', name: 'Advertorial V3' },
-  { id: 'ap', name: 'Página de Aprovação' },
-];
+interface ContentOption {
+  id: string;
+  name: string;
+}
 
 interface RouteRowProps {
   route: RouteMapping;
   onSave: (path: string, contentId: string) => Promise<void>;
+  contentOptions: ContentOption[];
 }
 
-export function RouteRow({ route, onSave }: RouteRowProps) {
+export function RouteRow({ route, onSave, contentOptions }: RouteRowProps) {
   const [selectedContent, setSelectedContent] = useState(route.contentId);
   const [isSaving, setIsSaving] = useState(false);
 

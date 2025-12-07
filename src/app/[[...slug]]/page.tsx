@@ -5,6 +5,7 @@ import { V1Page } from '@/components/page-versions/V1Page';
 import { V2Page } from '@/components/page-versions/V2Page';
 import { V3Page } from '@/components/page-versions/V3Page';
 import { APPage } from '@/components/page-versions/APPage';
+import { CustomAdvertorialPage } from '@/components/page-versions/CustomAdvertorialPage';
 
 // This component maps a contentId to the actual Page Component
 function ContentSwitcher({ contentId }: { contentId: string }) {
@@ -18,8 +19,9 @@ function ContentSwitcher({ contentId }: { contentId: string }) {
     case 'ap':
       return <APPage />;
     default:
-      // Render a default or a not found component if the id is unknown
-      return notFound();
+      // If the contentId is not a fixed version, assume it's a Custom Advertorial ID
+      // The CustomAdvertorialPage component will handle fetching the content by ID
+      return <CustomAdvertorialPage advertorialId={contentId} />;
   }
 }
 
@@ -43,7 +45,16 @@ export default function DynamicPage({
     const route = db.data.routes.find(r => r.path === path);
 
     if (!route) {
-      // If no route mapping is found in the database, return a 404.
+      // If no route mapping is found in the database, check if the path itself is a Custom Advertorial ID
+      const potentialId = path.substring(1); // Remove leading '/'
+      const customAdvertorial = db.data.customAdvertorials.find(a => a.id === potentialId);
+      
+      if (customAdvertorial) {
+        // If the path matches a custom advertorial ID, render it directly
+        return <ContentSwitcher contentId={potentialId} />;
+      }
+      
+      // If neither a mapped route nor a custom ID is found, return a 404.
       return notFound();
     }
 
