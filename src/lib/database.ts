@@ -82,6 +82,7 @@ export interface ContentBlock {
   value: string; // Main content (text, URL, etc.)
   fontSize?: string; // Font size for text blocks (e.g., 'xl', '2xl', '16px')
   fontFamily?: string;
+  caption?: string; // NEW: Caption for images
   // Specific fields for 'alert'
   alertTitle?: string;
   alertVariant?: 'default' | 'destructive' | 'warning';

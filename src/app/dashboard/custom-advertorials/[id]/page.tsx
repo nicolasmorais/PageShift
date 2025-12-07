@@ -33,7 +33,7 @@ const getDefaultBlock = (type: BlockType): ContentBlock => {
         case 'text':
             return { id, type, value: "Novo parágrafo de texto. Use **asteriscos** para negrito.", fontSize: 'xl' };
         case 'image':
-            return { id, type, value: "https://via.placeholder.com/800x400.png?text=Nova+Imagem" };
+            return { id, type, value: "https://via.placeholder.com/800x400.png?text=Nova+Imagem", caption: "Imagem ilustrativa." };
         case 'alert':
             return { id, type, value: "Este é o texto do alerta.", alertTitle: "Atenção!", alertVariant: 'destructive' };
         case 'pricing':
@@ -102,6 +102,18 @@ const BlockEditor = ({ block, index, onUpdate, onDelete }: { block: ContentBlock
                 </div>
             )}
             
+            {/* Image Specific Fields (Caption) */}
+            {block.type === 'image' && (
+                <div>
+                    <Label className="text-zinc-400">Legenda da Imagem (Opcional)</Label>
+                    <Input 
+                        className="bg-zinc-900 border-zinc-700 text-white" 
+                        value={block.caption || ''} 
+                        onChange={e => handleValueChange('caption', e.target.value)} 
+                    />
+                </div>
+            )}
+
             {/* Text Specific Fields (Font Size) */}
             {block.type === 'text' && (
                 <div>

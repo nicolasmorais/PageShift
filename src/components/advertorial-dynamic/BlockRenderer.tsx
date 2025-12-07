@@ -33,13 +33,20 @@ const TextBlock = ({ value, fontSize }: { value: string, fontSize?: string }) =>
     );
 };
 
-const ImageBlock = ({ value }: { value: string }) => {
+const ImageBlock = ({ value, caption }: { value: string, caption?: string }) => {
     return (
-        <img
-            src={value}
-            alt="Imagem do advertorial"
-            className="w-full h-auto rounded-lg my-6 shadow-md"
-        />
+        <figure className="my-6">
+            <img
+                src={value}
+                alt={caption || "Imagem do advertorial"}
+                className="w-full h-auto rounded-lg shadow-md"
+            />
+            {caption && (
+                <figcaption className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400 italic">
+                    {caption}
+                </figcaption>
+            )}
+        </figure>
     );
 };
 
@@ -135,7 +142,7 @@ export function BlockRenderer({ block }: BlockRendererProps) {
       // Passamos apenas fontSize, a família de fonte será herdada
       return <TextBlock value={block.value} fontSize={block.fontSize} />;
     case 'image':
-      return <ImageBlock value={block.value} />;
+      return <ImageBlock value={block.value} caption={block.caption} />;
     case 'alert':
       return <AlertBlock block={block} />;
     case 'pricing':
