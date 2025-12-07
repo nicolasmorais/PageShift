@@ -8,7 +8,7 @@ interface HeaderAPProps {
 
 export const HeaderAP = ({ preTitle, title, subheadline }: HeaderAPProps) => {
   return (
-    <header className="text-center py-10 border-b border-gray-200">
+    <header className="text-center pt-10 pb-6">
       <div className="max-w-4xl mx-auto px-4">
         <p className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
           {preTitle}
