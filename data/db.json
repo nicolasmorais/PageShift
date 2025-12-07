@@ -91,7 +91,7 @@
   "customAdvertorials": [
     {
       "id": "2f4d841b-3d43-4cfb-9ba7-cdc00128e230",
-      "name": "Novo Advertorial Dinâmico",
+      "name": "AD1",
       "header": {
         "preTitle": "Reportagem Especial",
         "title": "Título do Novo Advertorial",
@@ -102,17 +102,6 @@
           "id": "pfromsy",
           "type": "text",
           "value": "Novo parágrafo de texto. Use **asteriscos** para negrito."
-        },
-        {
-          "id": "erndhb5",
-          "type": "pricing",
-          "value": "R$ 29,90",
-          "price": "R$ 29,90",
-          "buttonText": "COMPRAR AGORA",
-          "buttonUrl": "#",
-          "prePriceText": "OFERTA ESPECIAL",
-          "paymentType": "Pagamento Único",
-          "postButtonText": "Acesso imediato."
         }
       ]
     },

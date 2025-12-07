@@ -257,7 +257,7 @@ export default function CustomAdvertorialEditor() {
                     <div className="flex space-x-2">
                         {!isNew && (
                             <Link href={`/${advertorialId}`} target="_blank">
-                                <Button variant="outline" className="border-zinc-700 hover:bg-zinc-800">
+                                <Button variant="outline" className="border-zinc-700 hover:bg-zinc-800 text-white">
                                     Visualizar Rota
                                 </Button>
                             </Link>
@@ -282,10 +282,10 @@ export default function CustomAdvertorialEditor() {
                     <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle>Blocos de Conteúdo ({blocks.length})</CardTitle>
                         <div className="flex space-x-2">
-                            <Button size="sm" variant="outline" onClick={() => handleAddBlock('text')} className="border-zinc-700 hover:bg-zinc-800"><Text className="h-4 w-4 mr-2" /> Texto</Button>
-                            <Button size="sm" variant="outline" onClick={() => handleAddBlock('image')} className="border-zinc-700 hover:bg-zinc-800"><Image className="h-4 w-4 mr-2" /> Imagem</Button>
-                            <Button size="sm" variant="outline" onClick={() => handleAddBlock('alert')} className="border-zinc-700 hover:bg-zinc-800"><AlertTriangle className="h-4 w-4 mr-2" /> Alerta</Button>
-                            <Button size="sm" variant="outline" onClick={() => handleAddBlock('pricing')} className="border-zinc-700 hover:bg-zinc-800"><DollarSign className="h-4 w-4 mr-2" /> Preço</Button>
+                            <Button size="sm" variant="secondary" onClick={() => handleAddBlock('text')} className="text-white bg-zinc-700 hover:bg-zinc-600"><Text className="h-4 w-4 mr-2" /> Texto</Button>
+                            <Button size="sm" variant="secondary" onClick={() => handleAddBlock('image')} className="text-white bg-zinc-700 hover:bg-zinc-600"><Image className="h-4 w-4 mr-2" /> Imagem</Button>
+                            <Button size="sm" variant="secondary" onClick={() => handleAddBlock('alert')} className="text-white bg-zinc-700 hover:bg-zinc-600"><AlertTriangle className="h-4 w-4 mr-2" /> Alerta</Button>
+                            <Button size="sm" variant="secondary" onClick={() => handleAddBlock('pricing')} className="text-white bg-zinc-700 hover:bg-zinc-600"><DollarSign className="h-4 w-4 mr-2" /> Preço</Button>
                         </div>
                     </CardHeader>
                     <CardContent>
