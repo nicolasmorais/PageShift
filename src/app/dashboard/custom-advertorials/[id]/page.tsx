@@ -162,7 +162,9 @@ const BlockEditor = ({ block, index, onUpdate, onDelete }: { block: ContentBlock
 export default function CustomAdvertorialEditor() {
     const params = useParams();
     const router = useRouter();
-    const advertorialId = params.id as string;
+    
+    // FIX 2: Ensure params is not null before accessing id
+    const advertorialId = (params?.id as string) || 'new';
     const isNew = advertorialId === 'new';
 
     const [advertorial, setAdvertorial] = useState<CustomAdvertorial | null>(null);
@@ -242,39 +244,18 @@ export default function CustomAdvertorialEditor() {
         }
     }, [advertorialId, isNew, router, defaultFooter]);
 
-    const handleHeaderChange = (field: keyof CustomAdvertorialHeader, value: string) => {
-        setHeader(prev => ({ ...prev, [field]: value }));
-    };
-
-    const handleBlockUpdate = (index: number, newBlock: ContentBlock) => {
-        setBlocks(prev => prev.map((b, i) => (i === index ? newBlock : b)));
-    };
-
-    const handleBlockDelete = (index: number) => {
-        setBlocks(prev => prev.filter((_, i) => i !== index));
-    };
-
-    const handleAddBlock = (type: BlockType) => {
-        setBlocks(prev => [...prev, getDefaultBlock(type)]);
-    };
-
-    const onDragEnd = (result: DropResult) => {
-        if (!result.destination) return;
-        const items = Array.from(blocks);
-        const [reorderedItem] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reorderedItem);
-        setBlocks(items);
-    };
-
-    const handleFooterChange = (section: keyof CustomAdvertorialFooter, field: string, value: any) => {
+    // FIX 3, 4, 5, 6: Correcting handleFooterChange signature and logic
+    const handleFooterChange = (section: keyof CustomAdvertorialFooter | 'copyright' | 'hideDisclaimers' | 'hideCompanyInfo' | 'hidePolicies', field: string, value: any) => {
         setFooter(prev => {
             if (!prev) return null;
             const newFooter = { ...prev };
             
-            if (field === 'copyright' || field.startsWith('hide')) {
-                (newFooter as any)[field] = value;
-            } else if (section === 'companyInfo') {
+            if (section === 'companyInfo') {
                 newFooter.companyInfo = { ...newFooter.companyInfo, [field]: value };
+            } else if (section === 'copyright') {
+                newFooter.copyright = value;
+            } else if (section.startsWith('hide')) {
+                (newFooter as any)[section] = value;
             }
             return newFooter;
         });
@@ -480,21 +461,21 @@ export default function CustomAdvertorialEditor() {
                                 <Label className="text-zinc-300">Ocultar Avisos/Isenções</Label>
                                 <Switch 
                                     checked={footer.hideDisclaimers} 
-                                    onCheckedChange={(checked) => handleFooterChange('footer', 'hideDisclaimers', checked)}
+                                    onCheckedChange={(checked) => handleFooterChange('hideDisclaimers', 'hideDisclaimers', checked)}
                                 />
                             </div>
                             <div className="flex items-center justify-between">
                                 <Label className="text-zinc-300">Ocultar Informações da Empresa</Label>
                                 <Switch 
                                     checked={footer.hideCompanyInfo} 
-                                    onCheckedChange={(checked) => handleFooterChange('footer', 'hideCompanyInfo', checked)}
+                                    onCheckedChange={(checked) => handleFooterChange('hideCompanyInfo', 'hideCompanyInfo', checked)}
                                 />
                             </div>
                             <div className="flex items-center justify-between">
                                 <Label className="text-zinc-300">Ocultar Links de Políticas</Label>
                                 <Switch 
                                     checked={footer.hidePolicies} 
-                                    onCheckedChange={(checked) => handleFooterChange('footer', 'hidePolicies', checked)}
+                                    onCheckedChange={(checked) => handleFooterChange('hidePolicies', 'hidePolicies', checked)}
                                 />
                             </div>
                         </div>
@@ -540,7 +521,7 @@ export default function CustomAdvertorialEditor() {
                         </div>
                         
                         {/* Copyright */}
-                        <div><Label className="text-zinc-300">Direitos Autorais</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.copyright} onChange={e => handleFooterChange('footer', 'copyright', e.target.value)} /></div>
+                        <div><Label className="text-zinc-300">Direitos Autorais</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.copyright} onChange={e => handleFooterChange('copyright', 'copyright', e.target.value)} /></div>
                     </CardContent>
                     <CardFooter className="flex justify-end">
                         <Button onClick={handleSave} disabled={isSaving || !name}>
