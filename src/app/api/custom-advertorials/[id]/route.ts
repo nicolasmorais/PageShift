@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/database';
+import { CustomAdvertorial } from '@/lib/advertorial-types'; // NEW: Import type from here
 
 // GET: Fetch a single custom advertorial by ID
 export async function GET(request: Request, { params }: { params: { id: string } }) {
@@ -21,7 +22,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 // DELETE: Delete a custom advertorial by ID
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
-    const db = await getDb();
+    const db = await await getDb();
     const initialLength = db.data.customAdvertorials.length;
     
     db.data.customAdvertorials = db.data.customAdvertorials.filter(a => a.id !== params.id);

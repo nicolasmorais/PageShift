@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, Image, Text, DollarSign, GripVertical } from 'lucide-react';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-import { ContentBlock, BlockType } from '@/lib/database';
+import { ContentBlock, BlockType } from '@/lib/advertorial-types'; // NEW: Import types from here
 import { BlockEditorComponent } from './BlockEditorComponent';
 import { getDefaultBlock } from '@/lib/advertorial-utils';
 

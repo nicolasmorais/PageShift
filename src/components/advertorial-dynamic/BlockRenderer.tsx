@@ -1,6 +1,6 @@
 "use client";
 
-import { ContentBlock } from '@/lib/database';
+import { ContentBlock } from '@/lib/advertorial-types'; // NEW: Import type from here
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertTriangle, Zap, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';

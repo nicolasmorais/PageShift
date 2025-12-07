@@ -1,4 +1,5 @@
-import { getDb, CustomAdvertorial } from '@/lib/database';
+import { getDb } from '@/lib/database';
+import { CustomAdvertorial } from '@/lib/advertorial-types'; // NEW: Import type from here
 import { BlockRenderer } from '@/components/advertorial-dynamic/BlockRenderer';
 import { FooterAP } from '@/components/advertorial-ap/FooterAP'; // Reusing the dynamic footer
 import { notFound } from 'next/navigation';

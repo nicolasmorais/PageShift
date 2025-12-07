@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from 'react';
-import { ContentBlock } from '@/lib/database';
+import { ContentBlock } from '@/lib/advertorial-types'; // NEW: Import type from here
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from '@/components/ui/textarea';

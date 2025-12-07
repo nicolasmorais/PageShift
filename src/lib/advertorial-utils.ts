@@ -1,4 +1,4 @@
-import { ContentBlock, BlockType } from './database';
+import { ContentBlock, BlockType } from './advertorial-types';
 
 // Helper function to generate unique IDs
 export const generateId = () => Math.random().toString(36).substring(2, 9);

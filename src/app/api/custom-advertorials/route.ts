@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getDb, CustomAdvertorial } from '@/lib/database';
+import { getDb } from '@/lib/database';
+import { CustomAdvertorial } from '@/lib/advertorial-types'; // NEW: Import type from here
 import { v4 as uuidv4 } from 'uuid';
 
 // GET: Fetch all custom advertorials

@@ -5,7 +5,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, CustomAdvertorialFooter, defaultCustomAdvertorialFooter, BlockType, Policy, Disclaimer } from '@/lib/database';
+import { defaultCustomAdvertorialFooter } from '@/lib/database'; // Keep this for default value
+import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, CustomAdvertorialFooter, BlockType, Policy, Disclaimer } from '@/lib/advertorial-types'; // NEW: Import types from here
 import Link from 'next/link';
 import { getDefaultBlock } from '@/lib/advertorial-utils';
 

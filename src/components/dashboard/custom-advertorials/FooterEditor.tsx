@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Settings, Plus, MinusCircle } from 'lucide-react';
-import { CustomAdvertorialFooter, Policy, Disclaimer } from '@/lib/database';
+import { CustomAdvertorialFooter, Policy, Disclaimer } from '@/lib/advertorial-types'; // NEW: Import types from here
 
 interface FooterEditorProps {
     footer: CustomAdvertorialFooter;
