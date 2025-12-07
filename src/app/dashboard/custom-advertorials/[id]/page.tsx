@@ -5,8 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { defaultCustomAdvertorialFooter } from '@/lib/database'; // Keep this for default value
-import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, CustomAdvertorialFooter, BlockType, Policy, Disclaimer } from '@/lib/advertorial-types'; // NEW: Import types from here
+import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, CustomAdvertorialFooter, BlockType, Policy, Disclaimer, defaultCustomAdvertorialFooter } from '@/lib/advertorial-types'; // NEW: Import defaultCustomAdvertorialFooter from types
 import Link from 'next/link';
 import { getDefaultBlock } from '@/lib/advertorial-utils';
 
@@ -30,7 +29,7 @@ export default function CustomAdvertorialEditor() {
     const [blocks, setBlocks] = useState<ContentBlock[]>([]);
     const [footer, setFooter] = useState<CustomAdvertorialFooter | null>(null);
 
-    // Use the default footer structure from database.ts
+    // Use the default footer structure from advertorial-types.ts
     const defaultFooter = useMemo(() => defaultCustomAdvertorialFooter, []);
 
 
