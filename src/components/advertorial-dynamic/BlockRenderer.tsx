@@ -19,7 +19,7 @@ const TextBlock = ({ value, fontSize, fontFamily }: { value: string, fontSize?: 
     // Define a classe de tamanho de fonte padrão ou usa a fornecida
     const sizeClass = fontSize ? `text-${fontSize}` : 'text-xl';
     
-    // Define a classe de família de fonte
+    // Define a classe de família de fonte, usando 'font-merriweather' como fallback se não houver 'fontFamily'
     const fontClass = fontFamily ? `font-${fontFamily}` : 'font-merriweather';
 
     // Se o valor for um tamanho em px (ex: '16px'), usamos style, senão usamos a classe Tailwind

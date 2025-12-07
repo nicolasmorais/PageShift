@@ -203,7 +203,8 @@ export default function CustomAdvertorialEditor() {
                     setName(data.name);
                     // Ensure fontFamily defaults if missing in old data
                     setHeader({ ...data.header, fontFamily: data.header.fontFamily || 'sans' });
-                    setBlocks(data.blocks.map((b: ContentBlock) => ({ ...b, fontFamily: b.fontFamily || 'merriweather' })));
+                    // Ensure fontFamily defaults for blocks if missing in old data
+                    setBlocks(data.blocks.map((b: ContentBlock) => ({ ...b, fontFamily: b.fontFamily || (b.type === 'text' ? 'merriweather' : undefined) })));
                 })
                 .catch(() => {
                     toast.error("Advertorial não encontrado ou falha ao carregar.");

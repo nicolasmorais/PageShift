@@ -95,26 +95,30 @@
       "header": {
         "preTitle": "Reportagem Especial",
         "title": "Título do Novo Advertorial",
-        "subheadline": "Subtítulo chamativo aqui."
+        "subheadline": "Subtítulo chamativo aqui.",
+        "fontFamily": "open-sans"
       },
       "blocks": [
         {
           "id": "v0fut0p",
           "type": "image",
-          "value": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png"
+          "value": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png",
+          "fontFamily": "merriweather"
         },
         {
           "id": "pfromsy",
           "type": "text",
           "value": "Novo parágrafo de texto. Use *asteriscos* para negrito.",
-          "fontSize": "25px"
+          "fontSize": "25px",
+          "fontFamily": "open-sans"
         },
         {
           "id": "850ksge",
           "type": "alert",
           "value": "Este é o texto do alerta.",
           "alertTitle": "Atenção!",
-          "alertVariant": "warning"
+          "alertVariant": "warning",
+          "fontFamily": "merriweather"
         },
         {
           "id": "58lfwne",
@@ -125,19 +129,22 @@
           "buttonUrl": "#",
           "prePriceText": "OFERTA ESPECIAL",
           "paymentType": "Pagamento Único Via Pix",
-          "postButtonText": "Acesso imediato, Compra Segura"
+          "postButtonText": "Acesso imediato, Compra Segura",
+          "fontFamily": "merriweather"
         },
         {
           "id": "3hfw6du",
           "type": "alert",
           "value": "Preço Unico",
           "alertTitle": "Somente Hoje!",
-          "alertVariant": "warning"
+          "alertVariant": "warning",
+          "fontFamily": "merriweather"
         },
         {
           "id": "d6yq8ke",
           "type": "image",
-          "value": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png"
+          "value": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png",
+          "fontFamily": "merriweather"
         }
       ]
     },
