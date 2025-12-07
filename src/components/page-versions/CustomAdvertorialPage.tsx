@@ -26,8 +26,8 @@ export async function generateMetadata({ advertorialId }: CustomAdvertorialPageP
 
 // Component to render the header
 const DynamicHeader = ({ preTitle, title, subheadline, fontFamily }: CustomAdvertorial["header"]) => (
-    // Removemos a classe de fonte daqui, ela será aplicada no container principal
-    <header className="text-center pt-10 pb-6 border-b border-gray-200 dark:border-gray-700">
+    // Removendo a borda inferior (border-b)
+    <header className="text-center pt-10 pb-6">
         <div className="max-w-4xl mx-auto px-4">
             <p className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
                 {preTitle}
