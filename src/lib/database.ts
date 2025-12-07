@@ -63,6 +63,7 @@ export interface CustomAdvertorialHeader {
   preTitle: string;
   title: string;
   subheadline: string;
+  fontFamily?: string; // NEW
 }
 
 export type BlockType = 'text' | 'image' | 'alert' | 'pricing';
@@ -72,7 +73,8 @@ export interface ContentBlock {
   type: BlockType;
   // Common fields
   value: string; // Main content (text, URL, etc.)
-  fontSize?: string; // NEW: Font size for text blocks (e.g., 'xl', '2xl', '16px')
+  fontSize?: string; // Font size for text blocks (e.g., 'xl', '2xl', '16px')
+  fontFamily?: string; // NEW
   // Specific fields for 'alert'
   alertTitle?: string;
   alertVariant?: 'default' | 'destructive' | 'warning';

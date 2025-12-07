@@ -3,6 +3,7 @@ import { BlockRenderer } from '@/components/advertorial-dynamic/BlockRenderer';
 import { FooterAP } from '@/components/advertorial-ap/FooterAP'; // Reusing the dynamic footer
 import { notFound } from 'next/navigation';
 import type { Metadata } from "next";
+import { cn } from '@/lib/utils';
 
 interface CustomAdvertorialPageProps {
     advertorialId: string;
@@ -24,8 +25,8 @@ export async function generateMetadata({ advertorialId }: CustomAdvertorialPageP
 }
 
 // Component to render the header
-const DynamicHeader = ({ preTitle, title, subheadline }: CustomAdvertorial["header"]) => (
-    <header className="text-center pt-10 pb-6 border-b border-gray-200 dark:border-gray-700">
+const DynamicHeader = ({ preTitle, title, subheadline, fontFamily }: CustomAdvertorial["header"]) => (
+    <header className={cn("text-center pt-10 pb-6 border-b border-gray-200 dark:border-gray-700", fontFamily && `font-${fontFamily}`)}>
         <div className="max-w-4xl mx-auto px-4">
             <p className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
                 {preTitle}

@@ -13,6 +13,8 @@ export default {
         sans: ["var(--font-space-grotesk)"],
         mono: ["var(--font-geist-mono)"],
         merriweather: ["var(--font-merriweather)"],
+        roboto: ["var(--font-roboto)"], // NEW
+        'open-sans': ["var(--font-open-sans)"], // NEW
       },
   		colors: {
   			background: 'hsl(var(--background))',
