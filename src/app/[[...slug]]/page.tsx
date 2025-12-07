@@ -6,14 +6,6 @@ import { V2Page } from '@/components/page-versions/V2Page';
 import { V3Page } from '@/components/page-versions/V3Page';
 import { APPage } from '@/components/page-versions/APPage';
 
-// Define o tipo de props esperado pelo Next.js
-interface DynamicPageProps {
-  params: {
-    slug?: string[];
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
 // This component maps a contentId to the actual Page Component
 function ContentSwitcher({ contentId }: { contentId: string }) {
   switch (contentId) {
@@ -31,19 +23,31 @@ function ContentSwitcher({ contentId }: { contentId: string }) {
   }
 }
 
-export default async function DynamicPage({ params, searchParams }: DynamicPageProps) {
+interface DynamicPageProps {
+  params: {
+    slug?: string[];
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+export default function DynamicPage({ 
+  params, 
+  searchParams 
+}: DynamicPageProps): Promise<JSX.Element> {
   // Construct the path from the slug segments.
   // If slug is undefined or empty, it's the root path '/'.
   const path = params.slug ? `/${params.slug.join('/')}` : '/';
 
-  const db = await getDb();
-  const route = db.data.routes.find(r => r.path === path);
+  // Refactored to use Promise chaining to avoid Next.js type conflict with async keyword
+  return getDb().then(db => {
+    const route = db.data.routes.find(r => r.path === path);
 
-  if (!route) {
-    // If no route mapping is found in the database, return a 404.
-    return notFound();
-  }
+    if (!route) {
+      // If no route mapping is found in the database, return a 404.
+      return notFound();
+    }
 
-  // Render the component corresponding to the contentId found in the database.
-  return <ContentSwitcher contentId={route.contentId} />;
+    // Render the component corresponding to the contentId found in the database.
+    return <ContentSwitcher contentId={route.contentId} />;
+  });
 }
