@@ -63,7 +63,14 @@ export interface CustomAdvertorialHeader {
   preTitle: string;
   title: string;
   subheadline: string;
-  fontFamily?: string; // NEW
+  fontFamily?: string;
+}
+
+export interface CustomAdvertorialFooter extends ApprovalPageFooter {
+  // Visibility controls
+  hideDisclaimers?: boolean;
+  hideCompanyInfo?: boolean;
+  hidePolicies?: boolean;
 }
 
 export type BlockType = 'text' | 'image' | 'alert' | 'pricing';
@@ -74,7 +81,7 @@ export interface ContentBlock {
   // Common fields
   value: string; // Main content (text, URL, etc.)
   fontSize?: string; // Font size for text blocks (e.g., 'xl', '2xl', '16px')
-  fontFamily?: string; // NEW
+  fontFamily?: string;
   // Specific fields for 'alert'
   alertTitle?: string;
   alertVariant?: 'default' | 'destructive' | 'warning';
@@ -92,6 +99,7 @@ export interface CustomAdvertorial {
   name: string;
   header: CustomAdvertorialHeader;
   blocks: ContentBlock[];
+  footer: CustomAdvertorialFooter; // NEW
 }
 
 // ----------------------------------------------
@@ -150,6 +158,15 @@ const defaultApprovalPageContent: ApprovalPageContent = {
   }
 };
 
+// Default footer content based on the existing approval page footer
+const defaultCustomAdvertorialFooter: CustomAdvertorialFooter = {
+    ...defaultApprovalPageContent.footer,
+    hideDisclaimers: false,
+    hideCompanyInfo: false,
+    hidePolicies: false,
+};
+
+
 export async function getDb(): Promise<Low<DbSchema>> {
   if (dbInstance) {
     if (dbInstance.data) {
@@ -200,6 +217,12 @@ export async function getDb(): Promise<Low<DbSchema>> {
         dbInstance.data.customAdvertorials = [];
     }
     
+    // Ensure existing custom advertorials have the new footer structure
+    dbInstance.data.customAdvertorials = dbInstance.data.customAdvertorials.map(adv => ({
+        ...adv,
+        footer: adv.footer || defaultCustomAdvertorialFooter,
+    }));
+
     await dbInstance.write();
 
     console.log(`Database initialized/loaded from: ${DB_FULL_PATH}`);

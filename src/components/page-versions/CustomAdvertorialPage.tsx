@@ -48,7 +48,6 @@ const DynamicHeader = ({ preTitle, title, subheadline, fontFamily }: CustomAdver
 export async function CustomAdvertorialPage({ advertorialId }: CustomAdvertorialPageProps) {
   const db = await getDb();
   const advertorial = db.data.customAdvertorials.find(a => a.id === advertorialId);
-  const approvalPageContent = db.data.approvalPageContent; // Fetching footer data
 
   if (!advertorial) {
     notFound();
@@ -73,8 +72,8 @@ export async function CustomAdvertorialPage({ advertorialId }: CustomAdvertorial
         ))}
       </main>
       
-      {/* Reusing the dynamic footer from the Approval Page */}
-      <FooterAP {...approvalPageContent.footer} />
+      {/* Using the custom footer from the advertorial object */}
+      <FooterAP {...advertorial.footer} />
     </div>
   );
 }

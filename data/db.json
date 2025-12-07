@@ -94,57 +94,40 @@
       "name": "AD1",
       "header": {
         "preTitle": "Reportagem Especial",
-        "title": "Título do Novo Advertorial",
-        "subheadline": "Subtítulo chamativo aqui.",
-        "fontFamily": "sans"
+        "title": "Chefe do Pentágono defende operação dos EUA contra barcos no Caribe",
+        "subheadline": "Em meio a questionamentos, Pete Hegseth afirmou que ações militares demonstram “a força da determinação americana”",
+        "fontFamily": "roboto"
       },
       "blocks": [
-        {
-          "id": "v0fut0p",
-          "type": "image",
-          "value": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png",
-          "fontFamily": "merriweather"
-        },
         {
           "id": "pfromsy",
           "type": "text",
           "value": "Novo parágrafo de texto. Use *asteriscos* para negrito.",
-          "fontSize": "25px",
-          "fontFamily": "sans"
+          "fontSize": "25px"
         },
         {
-          "id": "850ksge",
-          "type": "alert",
-          "value": "Este é o texto do alerta.",
-          "alertTitle": "Atenção!",
-          "alertVariant": "warning",
-          "fontFamily": "merriweather"
-        },
-        {
-          "id": "58lfwne",
-          "type": "pricing",
-          "value": "R$ 29,90",
-          "price": "R$ 49,90",
-          "buttonText": "QUERO MEU ACESSO",
-          "buttonUrl": "#",
-          "prePriceText": "OFERTA ESPECIAL",
-          "paymentType": "Pagamento Único Via Pix",
-          "postButtonText": "Acesso imediato, Compra Segura",
-          "fontFamily": "merriweather"
+          "id": "v0fut0p",
+          "type": "image",
+          "value": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png"
         },
         {
           "id": "3hfw6du",
           "type": "alert",
-          "value": "Preço Unico",
-          "alertTitle": "Somente Hoje!",
-          "alertVariant": "warning",
-          "fontFamily": "merriweather"
+          "value": "“Neste momento, o mundo está testemunhando a força da determinação americana em conter o fluxo de drogas letais para o nosso país”,",
+          "alertTitle": "",
+          "alertVariant": "destructive"
         },
         {
-          "id": "d6yq8ke",
-          "type": "image",
-          "value": "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2019_16_42-chAkYbYIm1134REeZ26ZWHwreF1Pdi.png",
-          "fontFamily": "merriweather"
+          "id": "r08h40o",
+          "type": "text",
+          "value": "Este conteúdo tem caráter exclusivamente informativo e educacional. Não oferece diagnóstico, *tratamento ou cura de condições de saúde. Os resultados podem variar de pessoa para pessoa. Sempre consulte um* profissional de saúde qualificado antes de iniciar qualquer mudança na dieta, no consumo de chás, suplementos ou rotina de bem-estar.",
+          "fontSize": "23px"
+        },
+        {
+          "id": "8otnyr1",
+          "type": "text",
+          "value": "Novo parágrafo de texto. Use **asteriscos** para negrito.",
+          "fontSize": "xl"
         }
       ]
     },

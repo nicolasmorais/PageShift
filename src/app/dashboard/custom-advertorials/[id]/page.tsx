@@ -8,12 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, BlockType } from '@/lib/database';
-import { Plus, Trash2, GripVertical, AlertTriangle, Image, Text, DollarSign } from 'lucide-react';
+import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, BlockType, CustomAdvertorialFooter } from '@/lib/database';
+import { Plus, Trash2, GripVertical, AlertTriangle, Image, Text, DollarSign, Settings, MinusCircle } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-import Link from 'next/link'; // Importação adicionada
+import Link from 'next/link';
+import { Switch } from '@/components/ui/switch'; // Importando Switch
 
 // Helper function to generate unique IDs
 const generateId = () => Math.random().toString(36).substring(2, 9);
@@ -30,7 +31,6 @@ const getDefaultBlock = (type: BlockType): ContentBlock => {
     const id = generateId();
     switch (type) {
         case 'text':
-            // Removendo fontFamily do default, pois será herdado
             return { id, type, value: "Novo parágrafo de texto. Use **asteriscos** para negrito.", fontSize: 'xl' };
         case 'image':
             return { id, type, value: "https://via.placeholder.com/800x400.png?text=Nova+Imagem" };
@@ -66,7 +66,6 @@ const BlockEditor = ({ block, index, onUpdate, onDelete }: { block: ContentBlock
     }, [block.type]);
 
     const handleValueChange = (field: keyof ContentBlock, value: string) => {
-        // Se o campo for fontFamily, ele será ignorado aqui, pois o controle é global
         onUpdate(index, { ...block, [field]: value });
     };
 
@@ -172,6 +171,32 @@ export default function CustomAdvertorialEditor() {
     const [name, setName] = useState('');
     const [header, setHeader] = useState<CustomAdvertorialHeader>({ preTitle: '', title: '', subheadline: '', fontFamily: 'sans' });
     const [blocks, setBlocks] = useState<ContentBlock[]>([]);
+    const [footer, setFooter] = useState<CustomAdvertorialFooter | null>(null);
+
+    // Default footer structure (copied from database.ts default)
+    const defaultFooter: CustomAdvertorialFooter = useMemo(() => ({
+        disclaimers: [
+            { title: "Isenção de Responsabilidade", text: "Este conteúdo tem caráter exclusivamente informativo e educacional. Não oferece diagnóstico, tratamento ou cura de condições de saúde. Os resultados podem variar de pessoa para pessoa. Sempre consulte um profissional de saúde qualificado antes de iniciar qualquer mudança na dieta, no consumo de chás, suplementos ou rotina de bem-estar." },
+            { title: "Declaração de Risco", text: "O uso de qualquer produto natural deve ser feito com responsabilidade. Pessoas com condições médicas pré-existentes, gestantes, lactantes ou usuários de medicamentos devem buscar orientação profissional antes do consumo." },
+            { title: "Aviso de Idade", text: "Conteúdo destinado a maiores de 18 anos." }
+        ],
+        companyInfo: {
+            name: "OneConversion Soluções Digitais",
+            address: "Av. Digital, 123, Sala 4, Aparecida de Goiania - GO",
+            cnpj: "60.357.932/0001-18",
+            contact: "suporte@oneconversion.pro"
+        },
+        policies: [
+            { title: "Termos e Condições", trigger: "Termos e Condições", content: "Ao acessar este site, o usuário concorda que todo o conteúdo exibido — incluindo textos, imagens, vídeos e informações — possui caráter exclusivamente informativo. Os produtos apresentados não substituem consultas, diagnósticos ou recomendações de profissionais da saúde. As informações sobre preços, disponibilidade, frete e políticas comerciais podem ser modificadas a qualquer momento, sem aviso prévio. O uso dos produtos adquiridos é de responsabilidade do consumidor, que deve sempre seguir as orientações descritas na embalagem ou no material que acompanha o produto." },
+            { title: "Política de Privacidade", trigger: "Política de Privacidade", content: "Valorizamos sua privacidade. Todas as informações fornecidas voluntariamente pelo usuário — como nome, e-mail ou dados inseridos em formulários — são utilizadas apenas para fins de atendimento, envio de comunicações solicitadas ou suporte relacionado aos produtos oferecidos. Não compartilhamos, vendemos ou divulgamos dados a terceiros sem autorização do usuário, exceto quando exigido por lei. O usuário pode solicitar a remoção ou alteração de seus dados a qualquer momento por meio de nossos canais de suporte. Consulte esta página regularmente, pois nossa Política de Privacidade pode ser atualizada conforme necessário." },
+            { title: "Política de Reembolso", trigger: "Política de Reembolso", content: "Por se tratar de um produto digital, o acesso ao conteúdo é liberado imediatamente após a confirmação do pagamento. Ainda assim, oferecemos uma política de reembolso transparente para garantir a satisfação do cliente. Você pode solicitar o reembolso em até 7 dias corridos após a compra, conforme o Código de Defesa do Consumidor..." }
+        ],
+        copyright: "Todos os direitos reservados © 2024 - OneConversion Soluções Digitais",
+        hideDisclaimers: false,
+        hideCompanyInfo: false,
+        hidePolicies: false,
+    }), []);
+
 
     useEffect(() => {
         if (!isNew) {
@@ -183,13 +208,19 @@ export default function CustomAdvertorialEditor() {
                 .then(data => {
                     setAdvertorial(data);
                     setName(data.name);
-                    // Ensure fontFamily defaults if missing in old data
                     setHeader({ ...data.header, fontFamily: data.header.fontFamily || 'sans' });
-                    // Remove individual block font family if it exists, as control is now global
                     setBlocks(data.blocks.map((b: ContentBlock) => {
                         const { fontFamily, ...rest } = b;
                         return rest;
                     }));
+                    // Initialize footer, merging existing data with defaults/toggles
+                    setFooter({
+                        ...defaultFooter,
+                        ...(data.footer || {}),
+                        hideDisclaimers: data.footer?.hideDisclaimers ?? false,
+                        hideCompanyInfo: data.footer?.hideCompanyInfo ?? false,
+                        hidePolicies: data.footer?.hidePolicies ?? false,
+                    });
                 })
                 .catch(() => {
                     toast.error("Advertorial não encontrado ou falha ao carregar.");
@@ -206,9 +237,10 @@ export default function CustomAdvertorialEditor() {
                 fontFamily: 'sans'
             });
             setBlocks([getDefaultBlock('text'), getDefaultBlock('pricing')]);
+            setFooter(defaultFooter);
             setIsLoading(false);
         }
-    }, [advertorialId, isNew, router]);
+    }, [advertorialId, isNew, router, defaultFooter]);
 
     const handleHeaderChange = (field: keyof CustomAdvertorialHeader, value: string) => {
         setHeader(prev => ({ ...prev, [field]: value }));
@@ -234,9 +266,61 @@ export default function CustomAdvertorialEditor() {
         setBlocks(items);
     };
 
+    const handleFooterChange = (section: keyof CustomAdvertorialFooter, field: string, value: any) => {
+        setFooter(prev => {
+            if (!prev) return null;
+            const newFooter = { ...prev };
+            
+            if (field === 'copyright' || field.startsWith('hide')) {
+                (newFooter as any)[field] = value;
+            } else if (section === 'companyInfo') {
+                newFooter.companyInfo = { ...newFooter.companyInfo, [field]: value };
+            }
+            return newFooter;
+        });
+    };
+
+    const handleFooterArrayChange = <T extends object>(
+        arrayName: 'disclaimers' | 'policies', 
+        index: number, 
+        field: keyof T, 
+        value: string
+    ) => {
+        setFooter(prev => {
+            if (!prev) return null;
+            const newFooter = { ...prev };
+            const array = (newFooter as any)[arrayName] as T[];
+            array[index] = { ...array[index], [field]: value };
+            return newFooter;
+        });
+    };
+
+    const handleAddFooterItem = (arrayName: 'disclaimers' | 'policies') => {
+        setFooter(prev => {
+            if (!prev) return null;
+            const newFooter = { ...prev };
+            if (arrayName === 'disclaimers') {
+                newFooter.disclaimers.push({ title: `Novo Aviso ${newFooter.disclaimers.length + 1}`, text: 'Texto do novo aviso.' });
+            } else if (arrayName === 'policies') {
+                newFooter.policies.push({ title: `Nova Política ${newFooter.policies.length + 1}`, trigger: `Política ${newFooter.policies.length + 1}`, content: 'Conteúdo da nova política.' });
+            }
+            return newFooter;
+        });
+    };
+
+    const handleRemoveFooterItem = (arrayName: 'disclaimers' | 'policies', index: number) => {
+        setFooter(prev => {
+            if (!prev) return null;
+            const newFooter = { ...prev };
+            (newFooter as any)[arrayName] = (newFooter as any)[arrayName].filter((_: any, i: number) => i !== index);
+            return newFooter;
+        });
+    };
+
+
     const handleSave = async () => {
-        if (!name || blocks.length === 0) {
-            toast.error("O nome e pelo menos um bloco de conteúdo são obrigatórios.");
+        if (!name || blocks.length === 0 || !footer) {
+            toast.error("O nome, blocos de conteúdo e rodapé são obrigatórios.");
             return;
         }
 
@@ -246,6 +330,7 @@ export default function CustomAdvertorialEditor() {
             name,
             header,
             blocks,
+            footer,
         };
 
         try {
@@ -271,7 +356,7 @@ export default function CustomAdvertorialEditor() {
         }
     };
 
-    if (isLoading) return <Skeleton className="h-screen w-full bg-zinc-900" />;
+    if (isLoading || !footer) return <Skeleton className="h-screen w-full bg-zinc-900" />;
 
     return (
         <>
@@ -296,6 +381,7 @@ export default function CustomAdvertorialEditor() {
                     </div>
                 </div>
 
+                {/* HEADER CARD */}
                 <Card className="bg-zinc-900/50 border-zinc-800 text-white">
                     <CardHeader><CardTitle>Informações Básicas</CardTitle></CardHeader>
                     <CardContent className="space-y-4">
@@ -327,6 +413,7 @@ export default function CustomAdvertorialEditor() {
                     </CardContent>
                 </Card>
 
+                {/* BLOCKS CARD */}
                 <Card className="bg-zinc-900/50 border-zinc-800 text-white">
                     <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle>Blocos de Conteúdo ({blocks.length})</CardTitle>
@@ -373,6 +460,87 @@ export default function CustomAdvertorialEditor() {
                         {blocks.length === 0 && (
                             <p className="text-center text-zinc-500 mt-4">Adicione o primeiro bloco de conteúdo.</p>
                         )}
+                    </CardContent>
+                    <CardFooter className="flex justify-end">
+                        <Button onClick={handleSave} disabled={isSaving || !name}>
+                            {isSaving ? "Salvando..." : "Salvar Alterações"}
+                        </Button>
+                    </CardFooter>
+                </Card>
+
+                {/* FOOTER CARD */}
+                <Card className="bg-zinc-900/50 border-zinc-800 text-white">
+                    <CardHeader><CardTitle className="flex items-center gap-2"><Settings className="h-5 w-5" /> Configurações do Rodapé</CardTitle></CardHeader>
+                    <CardContent className="space-y-6">
+                        
+                        {/* Visibility Toggles */}
+                        <div className="space-y-3 p-4 border border-zinc-700 rounded-md">
+                            <h3 className="font-semibold text-lg">Visibilidade das Seções</h3>
+                            <div className="flex items-center justify-between">
+                                <Label className="text-zinc-300">Ocultar Avisos/Isenções</Label>
+                                <Switch 
+                                    checked={footer.hideDisclaimers} 
+                                    onCheckedChange={(checked) => handleFooterChange('footer', 'hideDisclaimers', checked)}
+                                />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <Label className="text-zinc-300">Ocultar Informações da Empresa</Label>
+                                <Switch 
+                                    checked={footer.hideCompanyInfo} 
+                                    onCheckedChange={(checked) => handleFooterChange('footer', 'hideCompanyInfo', checked)}
+                                />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <Label className="text-zinc-300">Ocultar Links de Políticas</Label>
+                                <Switch 
+                                    checked={footer.hidePolicies} 
+                                    onCheckedChange={(checked) => handleFooterChange('footer', 'hidePolicies', checked)}
+                                />
+                            </div>
+                        </div>
+
+                        {/* Company Info */}
+                        <div className="space-y-4 p-4 border border-zinc-700 rounded-md">
+                            <h3 className="font-semibold text-lg">Informações da Empresa</h3>
+                            <div><Label className="text-zinc-300">Nome da Empresa</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.companyInfo.name} onChange={e => handleFooterChange('companyInfo', 'name', e.target.value)} /></div>
+                            <div><Label className="text-zinc-300">Endereço</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.companyInfo.address} onChange={e => handleFooterChange('companyInfo', 'address', e.target.value)} /></div>
+                            <div><Label className="text-zinc-300">CNPJ</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.companyInfo.cnpj} onChange={e => handleFooterChange('companyInfo', 'cnpj', e.target.value)} /></div>
+                            <div><Label className="text-zinc-300">Contato</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.companyInfo.contact} onChange={e => handleFooterChange('companyInfo', 'contact', e.target.value)} /></div>
+                        </div>
+
+                        {/* Disclaimers */}
+                        <div className="space-y-4 p-4 border border-zinc-700 rounded-md">
+                            <h3 className="font-semibold text-lg flex items-center justify-between">
+                                Avisos e Isenções
+                                <Button size="sm" onClick={() => handleAddFooterItem('disclaimers')}><Plus className="h-4 w-4 mr-2" /> Adicionar Aviso</Button>
+                            </h3>
+                            {footer.disclaimers.map((disclaimer, index) => (
+                                <div key={index} className="space-y-2 p-2 border border-zinc-800 rounded-md relative">
+                                    <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => handleRemoveFooterItem('disclaimers', index)}><MinusCircle className="h-4 w-4" /></Button>
+                                    <div><Label className="text-zinc-300">Título do Aviso {index + 1}</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={disclaimer.title} onChange={e => handleFooterArrayChange<{ title: string, text: string }>('disclaimers', index, 'title', e.target.value)} /></div>
+                                    <div><Label className="text-zinc-300">Texto do Aviso {index + 1}</Label><Textarea className="bg-zinc-800 border-zinc-700 text-white" value={disclaimer.text} onChange={e => handleFooterArrayChange<{ title: string, text: string }>('disclaimers', index, 'text', e.target.value)} rows={3} /></div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Policies */}
+                        <div className="space-y-4 p-4 border border-zinc-700 rounded-md">
+                            <h3 className="font-semibold text-lg flex items-center justify-between">
+                                Políticas (Links Modais)
+                                <Button size="sm" onClick={() => handleAddFooterItem('policies')}><Plus className="h-4 w-4 mr-2" /> Adicionar Política</Button>
+                            </h3>
+                            {footer.policies.map((policy, index) => (
+                                <div key={index} className="space-y-2 p-2 border border-zinc-800 rounded-md relative">
+                                    <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => handleRemoveFooterItem('policies', index)}><MinusCircle className="h-4 w-4" /></Button>
+                                    <div><Label className="text-zinc-300">Título da Política {index + 1}</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={policy.title} onChange={e => handleFooterArrayChange<{ title: string, trigger: string, content: string }>('policies', index, 'title', e.target.value)} /></div>
+                                    <div><Label className="text-zinc-300">Texto do Gatilho (Link) {index + 1}</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={policy.trigger} onChange={e => handleFooterArrayChange<{ title: string, trigger: string, content: string }>('policies', index, 'trigger', e.target.value)} /></div>
+                                    <div><Label className="text-zinc-300">Conteúdo da Política {index + 1}</Label><Textarea className="bg-zinc-800 border-zinc-700 text-white" value={policy.content} onChange={e => handleFooterArrayChange<{ title: string, trigger: string, content: string }>('policies', index, 'content', e.target.value)} rows={8} /></div>
+                                </div>
+                            ))}
+                        </div>
+                        
+                        {/* Copyright */}
+                        <div><Label className="text-zinc-300">Direitos Autorais</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.copyright} onChange={e => handleFooterChange('footer', 'copyright', e.target.value)} /></div>
                     </CardContent>
                     <CardFooter className="flex justify-end">
                         <Button onClick={handleSave} disabled={isSaving || !name}>
