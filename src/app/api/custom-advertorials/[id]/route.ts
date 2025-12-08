@@ -2,9 +2,14 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/database';
 import { CustomAdvertorial } from '@/lib/advertorial-types'; // NEW: Import type from here
 
+interface RouteContext {
+  params: { id: string };
+}
+
 // GET: Fetch a single custom advertorial by ID
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, context: Promise<RouteContext>) {
   try {
+    const { params } = await context;
     const db = await getDb();
     const advertorial = db.data.customAdvertorials.find(a => a.id === params.id);
 
@@ -20,8 +25,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
 }
 
 // DELETE: Delete a custom advertorial by ID
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, context: Promise<RouteContext>) {
   try {
+    const { params } = await context;
     const db = await await getDb();
     const initialLength = db.data.customAdvertorials.length;
     
