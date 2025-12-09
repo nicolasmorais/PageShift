@@ -24,6 +24,13 @@ export interface ApprovalPageFooter {
   copyright: string;
 }
 
+// Route mapping interface
+export interface RouteMapping {
+  path: string;
+  name: string;
+  contentId: string;
+}
+
 // Interfaces for Custom Advertorials
 export interface CustomAdvertorialHeader {
   preTitle: string;
