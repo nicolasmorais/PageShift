@@ -35,11 +35,6 @@ export async function getDb(): Promise<Low<DbSchema>> {
   }
 
   try {
-    // Check if we're in a PostgreSQL environment
-    if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgresql://')) {
-      console.log('PostgreSQL detected, but using JSON database for compatibility');
-    }
-
     // Ensure the directory exists
     const dir = path.dirname(DB_FULL_PATH);
     if (!fs.existsSync(dir)) {
@@ -108,7 +103,6 @@ export async function getDb(): Promise<Low<DbSchema>> {
     console.error('Database path:', DB_FULL_PATH);
     console.error('Database directory:', DB_DIR_PATH);
     console.error('Environment variables:', {
-      DATABASE_URL: process.env.DATABASE_URL,
       DATABASE_DIR: process.env.DATABASE_DIR,
       NODE_ENV: process.env.NODE_ENV
     });
