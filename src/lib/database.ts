@@ -35,54 +35,59 @@ export async function getDb(): Promise<Low<DbSchema>> {
   }
 
   try {
+    // Ensure the directory exists
     const dir = path.dirname(DB_FULL_PATH);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
 
-    const adapter = new JSONFile<DbSchema>(DB_FULL_PATH);
-    dbInstance = new Low<DbSchema>(adapter, { 
+    const defaultData = {
       examples: [],
       routes: defaultDbData.routes,
       approvalPageContent: defaultDbData.approvalPageContent,
       customAdvertorials: defaultDbData.customAdvertorials,
-    });
+    };
+
+    const adapter = new JSONFile<DbSchema>(DB_FULL_PATH);
+    dbInstance = new Low<DbSchema>(adapter, defaultData);
 
     await dbInstance.read();
 
-    // Ensure default data exists if file was empty
-    if (!dbInstance.data) {
-      dbInstance.data = {
-        examples: [],
-        routes: defaultDbData.routes,
-        approvalPageContent: defaultDbData.approvalPageContent,
-        customAdvertorials: defaultDbData.customAdvertorials,
-      };
-    }
-    
-    // Ensure all collections exist and have defaults if missing
-    if (!dbInstance.data.routes) {
-      dbInstance.data.routes = defaultDbData.routes;
-    }
-    if (!dbInstance.data.approvalPageContent) {
-      dbInstance.data.approvalPageContent = defaultDbData.approvalPageContent;
-    }
-    if (!dbInstance.data.customAdvertorials) {
+    // Initialize with default data if file doesn't exist or is empty
+    if (!dbInstance.data || Object.keys(dbInstance.data).length === 0) {
+      dbInstance.data = defaultData;
+      await dbInstance.write();
+    } else {
+      // Ensure all collections exist and have defaults if missing
+      let needsUpdate = false;
+      
+      if (!dbInstance.data.routes) {
+        dbInstance.data.routes = defaultDbData.routes;
+        needsUpdate = true;
+      }
+      if (!dbInstance.data.approvalPageContent) {
+        dbInstance.data.approvalPageContent = defaultDbData.approvalPageContent;
+        needsUpdate = true;
+      }
+      if (!dbInstance.data.customAdvertorials) {
         dbInstance.data.customAdvertorials = defaultDbData.customAdvertorials;
-    }
-    
-    // Ensure existing custom advertorials have the new footer structure
-    dbInstance.data.customAdvertorials = dbInstance.data.customAdvertorials.map(adv => ({
+        needsUpdate = true;
+      }
+      
+      // Ensure existing custom advertorials have the new footer structure
+      dbInstance.data.customAdvertorials = dbInstance.data.customAdvertorials.map(adv => ({
         ...adv,
         footer: adv.footer || defaultCustomAdvertorialFooter,
-    }));
+      }));
 
-    await dbInstance.write();
-
-    console.log(`Database initialized/loaded from: ${DB_FULL_PATH}`);
+      if (needsUpdate) {
+        await dbInstance.write();
+      }
+    }
+    
     return dbInstance;
   } catch (error) {
-    console.error('Failed to initialize Lowdb database:', error);
+    console.error('Failed to initialize database:', error);
     throw error;
   }
 }
