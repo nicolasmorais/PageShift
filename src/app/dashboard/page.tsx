@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { RouteCard } from '@/components/dashboard/RouteCard'; // Importando o novo componente
+import { RouteCard } from '@/components/dashboard/RouteCard';
+import { CreateRouteDialog } from '@/components/dashboard/CreateRouteDialog'; // Importando o novo componente
 import { cn } from '@/lib/utils';
 import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -142,9 +143,15 @@ export default function DashboardPage() {
     <>
       <Toaster richColors />
       
-      <header className="mb-8 pt-4">
-        <h1 className="text-3xl font-bold text-white">Gerenciamento de Rotas</h1>
-        <p className="mt-1 text-zinc-400">Controle qual conteúdo é exibido para cada rota (URL) do seu site.</p>
+      <header className="mb-8 pt-4 flex items-center justify-between">
+        <div>
+            <h1 className="text-3xl font-bold text-white">Gerenciamento de Rotas</h1>
+            <p className="mt-1 text-zinc-400">Controle qual conteúdo é exibido para cada rota (URL) do seu site.</p>
+        </div>
+        <CreateRouteDialog 
+            contentOptions={contentOptions} 
+            onRouteCreated={fetchRoutesAndContent} 
+        />
       </header>
 
       {/* Filtros e Pesquisa */}
