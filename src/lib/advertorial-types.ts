@@ -100,6 +100,11 @@ export interface ApprovalPageContent {
   footer: ApprovalPageFooter;
 }
 
+// Auth Schema
+export interface AuthSchema {
+    passwordHash: string;
+}
+
 // Default content definitions (safe to export to client)
 const defaultApprovalPageContent: ApprovalPageContent = {
   header: {
@@ -160,4 +165,7 @@ export const defaultDbData = {
     ],
     approvalPageContent: defaultApprovalPageContent,
     customAdvertorials: [],
+    auth: {
+        passwordHash: '', // Hash will be generated on first run if empty
+    }
 };

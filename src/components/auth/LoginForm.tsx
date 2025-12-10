@@ -5,24 +5,39 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export const LoginForm = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulação de login
-    console.log('Attempting login with password:', password);
     
-    // Aqui você faria a chamada real à API de autenticação
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+
+      if (response.ok) {
+        toast.success("Login bem-sucedido!");
+        router.push('/dashboard');
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || "Senha incorreta.");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      toast.error("Erro de conexão. Tente novamente.");
+    } finally {
       setIsSubmitting(false);
-      // Redirecionar após o login (ex: para o dashboard)
-      // router.push('/dashboard');
-    }, 1500);
+    }
   };
 
   // Estilos baseados na imagem fornecida (fundo claro, texto escuro)

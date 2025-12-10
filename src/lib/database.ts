@@ -7,7 +7,8 @@ import {
   ApprovalPageContent, 
   CustomAdvertorial, 
   defaultCustomAdvertorialFooter,
-  defaultDbData
+  defaultDbData,
+  AuthSchema
 } from './advertorial-types';
 
 // ----------------------------------------------
@@ -17,6 +18,7 @@ interface DbSchema {
   routes: RouteMapping[];
   approvalPageContent: ApprovalPageContent;
   customAdvertorials: CustomAdvertorial[];
+  auth: AuthSchema; // NEW: Auth schema
 }
 
 const DB_FILE_NAME = 'db.json';
@@ -46,6 +48,7 @@ export async function getDb(): Promise<Low<DbSchema>> {
       routes: defaultDbData.routes,
       approvalPageContent: defaultDbData.approvalPageContent,
       customAdvertorials: defaultDbData.customAdvertorials,
+      auth: defaultDbData.auth, // Include auth default
     };
 
     const adapter = new JSONFile<DbSchema>(DB_FULL_PATH);
@@ -71,6 +74,10 @@ export async function getDb(): Promise<Low<DbSchema>> {
       }
       if (!dbInstance.data.customAdvertorials) {
         dbInstance.data.customAdvertorials = defaultDbData.customAdvertorials;
+        needsUpdate = true;
+      }
+      if (!dbInstance.data.auth) { // Check for new auth field
+        dbInstance.data.auth = defaultDbData.auth;
         needsUpdate = true;
       }
       
