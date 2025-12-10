@@ -30,13 +30,13 @@ export const LoginForm = () => {
 
   // Estilos baseados no novo HTML fornecido
   const inputClasses = "flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-blue-600/50 border border-slate-700 bg-[#0f172a] focus:border-blue-600 h-14 placeholder:text-slate-400 p-4 text-base font-normal leading-normal";
-  const labelTextClasses = "text-white text-base font-medium leading-normal pb-2";
+  // const labelTextClasses = "text-white text-base font-medium leading-normal pb-2"; // Não é mais necessário
 
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
       {/* Email Input */}
       <label className="flex flex-col w-full">
-        <p className={labelTextClasses}>Email</p>
+        {/* <p className={labelTextClasses}>Email</p> <-- REMOVIDO */}
         <div className="flex w-full flex-1 items-stretch rounded-lg">
           <Input
             className={inputClasses}
@@ -51,7 +51,7 @@ export const LoginForm = () => {
 
       {/* Password Input */}
       <label className="flex flex-col w-full">
-        <p className={labelTextClasses}>Senha</p>
+        {/* <p className={labelTextClasses}>Senha</p> <-- REMOVIDO */}
         <div className="flex w-full flex-1 items-stretch rounded-lg relative">
           <Input
             className={cn(inputClasses, "pr-12")}
