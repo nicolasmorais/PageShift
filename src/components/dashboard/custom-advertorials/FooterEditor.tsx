@@ -51,6 +51,8 @@ export const FooterEditor = ({
                         <Switch 
                             checked={footer.hideDisclaimers} 
                             onCheckedChange={(checked) => handleFooterChange('hideDisclaimers', 'hideDisclaimers', checked)}
+                            // Forçando o estilo do switch para o tema escuro
+                            className="data-[state=checked]:bg-[#0bc839] data-[state=unchecked]:bg-[#1e293b]"
                         />
                     </div>
                     <div className="flex items-center justify-between">
@@ -58,6 +60,7 @@ export const FooterEditor = ({
                         <Switch 
                             checked={footer.hideCompanyInfo} 
                             onCheckedChange={(checked) => handleFooterChange('hideCompanyInfo', 'hideCompanyInfo', checked)}
+                            className="data-[state=checked]:bg-[#0bc839] data-[state=unchecked]:bg-[#1e293b]"
                         />
                     </div>
                     <div className="flex items-center justify-between">
@@ -65,6 +68,7 @@ export const FooterEditor = ({
                         <Switch 
                             checked={footer.hidePolicies} 
                             onCheckedChange={(checked) => handleFooterChange('hidePolicies', 'hidePolicies', checked)}
+                            className="data-[state=checked]:bg-[#0bc839] data-[state=unchecked]:bg-[#1e293b]"
                         />
                     </div>
                 </div>
