@@ -13,7 +13,7 @@ export default function LoginPage() {
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#101622] font-sans">
       {/* Background Image with Blur and Dark Overlay */}
       <div 
-        className="absolute inset-0 z-0 h-full w-full bg-cover bg-center" 
+        className="absolute inset-0 z-0 h-full w-full bg-cover bg-center bg-[#101622]" // Adicionando bg-[#101622] aqui também
         style={{ 
           backgroundImage: `url('${backgroundImageUrl}')`, 
           filter: 'blur(32px) brightness(0.5)',
