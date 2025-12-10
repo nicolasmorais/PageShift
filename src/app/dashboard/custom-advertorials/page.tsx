@@ -73,7 +73,7 @@ export default function CustomAdvertorialsPage() {
   const hoverBg = 'hover:bg-[#1e293b]';
   const skeletonBg = 'bg-[#1e293b]';
   const primaryButtonClasses = 'bg-[#0bc839] hover:bg-[#09a82e] text-white';
-  const codeBg = 'bg-[#00030a]';
+  const codeBg = 'bg-[#1e293b]'; // Alterado para #1e293b
 
   return (
     <>

@@ -35,7 +35,7 @@ export const FooterEditor = ({
     // Cores ajustadas
     const cardBg = 'bg-[#0f172a]';
     const borderColor = 'border-[#1e293b]';
-    const inputBg = 'bg-[#00030a]';
+    const inputBg = 'bg-[#1e293b]'; // Alterado para #1e293b
     const primaryButtonClasses = 'bg-[#0bc839] hover:bg-[#09a82e] text-white';
 
     return (

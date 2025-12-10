@@ -32,11 +32,11 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
         onUpdate(index, { ...block, [field]: value });
     };
 
-    // Cores ajustadas
+    // Cores ajustadas: Fundo do Bloco #00030a, Input/Select BG #1e293b
     const blockBg = 'bg-[#00030a]';
-    const inputBg = 'bg-[#0f172a]';
+    const inputBg = 'bg-[#1e293b]'; // Alterado para #1e293b
     const borderColor = 'border-[#1e293b]';
-    const selectContentBg = 'bg-[#00030a]';
+    const selectContentBg = 'bg-[#1e293b]'; // Alterado para #1e293b
 
     return (
         <div className={cn("p-4 border rounded-md space-y-3", borderColor, blockBg)}>
