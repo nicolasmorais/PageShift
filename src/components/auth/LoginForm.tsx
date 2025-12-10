@@ -3,14 +3,11 @@
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Eye, EyeOff } from 'lucide-react';
-import Link from 'next/link';
+import { Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -18,7 +15,7 @@ export const LoginForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     // Simulação de login
-    console.log('Attempting login with:', { email, password });
+    console.log('Attempting login with password:', password);
     
     // Aqui você faria a chamada real à API de autenticação
     setTimeout(() => {
@@ -28,45 +25,28 @@ export const LoginForm = () => {
     }, 1500);
   };
 
-  // Estilos baseados no novo HTML fornecido
-  const inputClasses = "flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-2 focus:ring-blue-600/50 border border-slate-700 bg-[#0f172a] focus:border-blue-600 h-14 placeholder:text-slate-400 p-4 text-base font-normal leading-normal";
-  const labelTextClasses = "text-white text-base font-medium leading-normal pb-2";
+  // Estilos baseados na imagem fornecida (fundo claro, texto escuro)
+  const inputClasses = "flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-gray-900 focus:outline-0 focus:ring-2 focus:ring-blue-600/50 border-none bg-gray-200 focus:border-blue-600 h-16 placeholder:text-gray-500 p-4 text-xl font-normal leading-normal";
 
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-      {/* Email Input */}
-      <label className="flex flex-col w-full">
-        <p className={labelTextClasses}>Email</p>
-        <div className="flex w-full flex-1 items-stretch rounded-lg">
-          <Input
-            className={inputClasses}
-            placeholder="Digite seu email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-      </label>
-
       {/* Password Input */}
       <label className="flex flex-col w-full">
-        <p className={labelTextClasses}>Senha</p>
         <div className="flex w-full flex-1 items-stretch rounded-lg relative">
           <Input
             className={cn(inputClasses, "pr-12")}
-            placeholder="Digite sua senha"
+            placeholder="Senha"
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <div className="absolute inset-y-0 right-0 text-slate-400 flex items-center justify-center pr-4">
+          <div className="absolute inset-y-0 right-0 text-gray-500 flex items-center justify-center pr-4">
             <Button 
                 type="button" 
                 variant="ghost" 
                 size="icon" 
-                className="h-full w-full text-slate-400 hover:bg-transparent hover:text-white"
+                className="h-full w-full text-gray-500 hover:bg-transparent hover:text-gray-700"
                 onClick={() => setShowPassword(!showPassword)}
             >
                 {showPassword ? <EyeOff className="h-6 w-6" /> : <Eye className="h-6 w-6" />}
@@ -75,23 +55,19 @@ export const LoginForm = () => {
         </div>
       </label>
 
-      {/* Forgot Password */}
-      <div className="flex justify-end">
-        <Link href="#" className="text-blue-600 text-sm font-medium hover:underline">
-          Esqueceu sua senha?
-        </Link>
-      </div>
-
       {/* Submit Button */}
       <Button
         type="submit"
         className={cn(
-          "h-14 px-6 text-base font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#1e293b] focus:ring-blue-600",
+          "h-16 px-6 text-xl font-bold text-white bg-black hover:bg-gray-800 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#1e293b] focus:ring-black rounded-xl",
           isSubmitting && "opacity-70 cursor-not-allowed"
         )}
         disabled={isSubmitting}
       >
-        <span className="truncate">{isSubmitting ? 'Entrando...' : 'Entrar'}</span>
+        <span className="truncate flex items-center gap-2">
+            {isSubmitting ? 'Acessando...' : 'Acessar sua conta'}
+            {!isSubmitting && <ArrowRight className="h-5 w-5" />}
+        </span>
       </Button>
     </form>
   );

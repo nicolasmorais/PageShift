@@ -3,47 +3,40 @@ import { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Login - PageShift',
+  title: 'Acesso - PageShift',
 };
 
 export default function LoginPage() {
-  // Cores do novo design: background-dark: #0f172a, form-background: #1e293b
-  const sidebarBg = 'bg-[#0f172a]';
-  const formBg = 'bg-[#1e293b]';
+  // Cores do novo design: background-dark: #101622
+  const mainBg = 'bg-[#101622]';
+  const logoUrl = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f-zzhjEezm98VoMWqEUpkxkCiEYvH7rp.png"; // Usando o logo do sidebar como placeholder
 
   return (
-    <div className={cn("relative flex h-auto min-h-screen w-full flex-col overflow-hidden", sidebarBg)}>
-      <div className="flex flex-1 w-full h-full">
+    <div className={cn("relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden p-6", mainBg)}>
+      
+      {/* Main Content Container */}
+      <div className="w-full max-w-sm mx-auto space-y-8">
         
-        {/* Left Sidebar (Hidden on mobile, visible on large screens) */}
-        <div className={cn(
-          "hidden lg:flex flex-col flex-1 justify-center items-center p-12",
-          "bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] animate-gradient-move bg-[size:200%_200%]"
-        )}>
-          <div className="max-w-lg w-full text-left">
-            <h1 className="text-white tracking-light text-[32px] font-bold leading-tight">
-              Gerencie seus Advertoriais com Precisão.
-            </h1>
-            <p className="text-gray-400 text-lg font-normal leading-normal mt-4">
-              Acesse sua conta para continuar.
-            </p>
-          </div>
+        {/* Logo */}
+        <div className="mb-8">
+          <img
+            src={logoUrl}
+            alt="One Conversion Logo"
+            className="h-10 w-auto"
+          />
+        </div>
+
+        {/* Title and Subtitle */}
+        <div className="mb-8">
+          <h1 className="text-white text-4xl font-bold leading-tight tracking-[-0.015em] text-left">
+            Acesse sua conta
+          </h1>
+          <p className="text-gray-400 text-lg font-normal leading-normal mt-2">
+            Insira a senha para acessar o painel.
+          </p>
         </div>
         
-        {/* Right Form Area */}
-        <div className={cn(
-          "flex flex-1 flex-col justify-center items-center w-full lg:max-w-xl xl:max-w-2xl p-6 sm:p-12",
-          formBg
-        )}>
-          <div className="w-full max-w-sm mx-auto">
-            <div className="mb-8">
-              <h1 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] text-left">
-                Login
-              </h1>
-            </div>
-            <LoginForm />
-          </div>
-        </div>
+        <LoginForm />
       </div>
     </div>
   );
