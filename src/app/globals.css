@@ -148,6 +148,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    /* REMOVED: @apply bg-background text-foreground; */
+    @apply text-foreground;
   }
 }
