@@ -93,10 +93,16 @@ export default function DashboardPage() {
     }
   };
 
+  // Cores ajustadas: Card #0f172a, Borda #1e293b, Hover Tabela #1e293b
+  const cardBg = 'bg-[#0f172a]';
+  const borderColor = 'border-[#1e293b]';
+  const hoverBg = 'hover:bg-[#1e293b]';
+  const skeletonBg = 'bg-[#1e293b]';
+
   return (
     <>
       <Toaster richColors />
-      <Card className="bg-zinc-900/50 border-zinc-800 text-white">
+      <Card className={cn(cardBg, borderColor, "text-white")}>
         <CardHeader>
           <CardTitle>Gerenciamento de Rotas</CardTitle>
           <CardDescription className="text-zinc-400">
@@ -106,7 +112,7 @@ export default function DashboardPage() {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow className="border-zinc-800 hover:bg-zinc-900">
+              <TableRow className={cn(borderColor, hoverBg)}>
                 <TableHead className="text-zinc-400">Nome da Rota</TableHead>
                 <TableHead className="text-zinc-400">Caminho (URL)</TableHead>
                 <TableHead className="text-zinc-400">Conteúdo Atribuído</TableHead>
@@ -116,11 +122,11 @@ export default function DashboardPage() {
             <TableBody>
               {isLoading ? (
                 Array.from({ length: 4 }).map((_, i) => (
-                  <TableRow key={i} className="border-zinc-800">
-                    <TableCell><Skeleton className="h-5 w-3/4 bg-zinc-800" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-1/2 bg-zinc-800" /></TableCell>
-                    <TableCell><Skeleton className="h-10 w-full bg-zinc-800" /></TableCell>
-                    <TableCell className="text-right"><Skeleton className="h-10 w-20 bg-zinc-800" /></TableCell>
+                  <TableRow key={i} className={borderColor}>
+                    <TableCell><Skeleton className={cn("h-5 w-3/4", skeletonBg)} /></TableCell>
+                    <TableCell><Skeleton className={cn("h-5 w-1/2", skeletonBg)} /></TableCell>
+                    <TableCell><Skeleton className={cn("h-10 w-full", skeletonBg)} /></TableCell>
+                    <TableCell className="text-right"><Skeleton className={cn("h-10 w-20", skeletonBg)} /></TableCell>
                   </TableRow>
                 ))
               ) : (

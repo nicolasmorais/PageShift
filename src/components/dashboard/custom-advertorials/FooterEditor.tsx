@@ -8,7 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Settings, Plus, MinusCircle } from 'lucide-react';
-import { CustomAdvertorialFooter, Policy, Disclaimer } from '@/lib/advertorial-types'; // NEW: Import types from here
+import { CustomAdvertorialFooter, Policy, Disclaimer } from '@/lib/advertorial-types';
+import { cn } from '@/lib/utils';
 
 interface FooterEditorProps {
     footer: CustomAdvertorialFooter;
@@ -31,13 +32,19 @@ export const FooterEditor = ({
     isSaving,
     name
 }: FooterEditorProps) => {
+    // Cores ajustadas
+    const cardBg = 'bg-[#0f172a]';
+    const borderColor = 'border-[#1e293b]';
+    const inputBg = 'bg-[#00030a]';
+    const primaryButtonClasses = 'bg-[#0bc839] hover:bg-[#09a82e] text-white';
+
     return (
-        <Card className="bg-zinc-900/50 border-zinc-800 text-white">
+        <Card className={cn(cardBg, borderColor, "text-white")}>
             <CardHeader><CardTitle className="flex items-center gap-2"><Settings className="h-5 w-5" /> Configurações do Rodapé</CardTitle></CardHeader>
             <CardContent className="space-y-6">
                 
                 {/* Visibility Toggles */}
-                <div className="space-y-3 p-4 border border-zinc-700 rounded-md">
+                <div className={cn("space-y-3 p-4 rounded-md", borderColor, "border")}>
                     <h3 className="font-semibold text-lg">Visibilidade das Seções</h3>
                     <div className="flex items-center justify-between">
                         <Label className="text-zinc-300">Ocultar Avisos/Isenções</Label>
@@ -63,50 +70,50 @@ export const FooterEditor = ({
                 </div>
 
                 {/* Company Info */}
-                <div className="space-y-4 p-4 border border-zinc-700 rounded-md">
+                <div className={cn("space-y-4 p-4 rounded-md", borderColor, "border")}>
                     <h3 className="font-semibold text-lg">Informações da Empresa</h3>
-                    <div><Label className="text-zinc-300">Nome da Empresa</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.companyInfo.name} onChange={e => handleFooterChange('companyInfo', 'name', e.target.value)} /></div>
-                    <div><Label className="text-zinc-300">Endereço</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.companyInfo.address} onChange={e => handleFooterChange('companyInfo', 'address', e.target.value)} /></div>
-                    <div><Label className="text-zinc-300">CNPJ</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.companyInfo.cnpj} onChange={e => handleFooterChange('companyInfo', 'cnpj', e.target.value)} /></div>
-                    <div><Label className="text-zinc-300">Contato</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.companyInfo.contact} onChange={e => handleFooterChange('companyInfo', 'contact', e.target.value)} /></div>
+                    <div><Label className="text-zinc-300">Nome da Empresa</Label><Input className={cn(inputBg, borderColor, "text-white")} value={footer.companyInfo.name} onChange={e => handleFooterChange('companyInfo', 'name', e.target.value)} /></div>
+                    <div><Label className="text-zinc-300">Endereço</Label><Input className={cn(inputBg, borderColor, "text-white")} value={footer.companyInfo.address} onChange={e => handleFooterChange('companyInfo', 'address', e.target.value)} /></div>
+                    <div><Label className="text-zinc-300">CNPJ</Label><Input className={cn(inputBg, borderColor, "text-white")} value={footer.companyInfo.cnpj} onChange={e => handleFooterChange('companyInfo', 'cnpj', e.target.value)} /></div>
+                    <div><Label className="text-zinc-300">Contato</Label><Input className={cn(inputBg, borderColor, "text-white")} value={footer.companyInfo.contact} onChange={e => handleFooterChange('companyInfo', 'contact', e.target.value)} /></div>
                 </div>
 
                 {/* Disclaimers */}
-                <div className="space-y-4 p-4 border border-zinc-700 rounded-md">
+                <div className={cn("space-y-4 p-4 rounded-md", borderColor, "border")}>
                     <h3 className="font-semibold text-lg flex items-center justify-between">
                         Avisos e Isenções
-                        <Button size="sm" onClick={() => handleAddFooterItem('disclaimers')}><Plus className="h-4 w-4 mr-2" /> Adicionar Aviso</Button>
+                        <Button size="sm" onClick={() => handleAddFooterItem('disclaimers')} className={primaryButtonClasses}><Plus className="h-4 w-4 mr-2" /> Adicionar Aviso</Button>
                     </h3>
                     {footer.disclaimers.map((disclaimer, index) => (
-                        <div key={index} className="space-y-2 p-2 border border-zinc-800 rounded-md relative">
+                        <div key={index} className={cn("space-y-2 p-2 rounded-md relative", borderColor, "border")}>
                             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => handleRemoveFooterItem('disclaimers', index)}><MinusCircle className="h-4 w-4" /></Button>
-                            <div><Label className="text-zinc-300">Título do Aviso {index + 1}</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={disclaimer.title} onChange={e => handleFooterArrayChange<Disclaimer>('disclaimers', index, 'title', e.target.value)} /></div>
-                            <div><Label className="text-zinc-300">Texto do Aviso {index + 1}</Label><Textarea className="bg-zinc-800 border-zinc-700 text-white" value={disclaimer.text} onChange={e => handleFooterArrayChange<Disclaimer>('disclaimers', index, 'text', e.target.value)} rows={3} /></div>
+                            <div><Label className="text-zinc-300">Título do Aviso {index + 1}</Label><Input className={cn(inputBg, borderColor, "text-white")} value={disclaimer.title} onChange={e => handleFooterArrayChange<Disclaimer>('disclaimers', index, 'title', e.target.value)} /></div>
+                            <div><Label className="text-zinc-300">Texto do Aviso {index + 1}</Label><Textarea className={cn(inputBg, borderColor, "text-white")} value={disclaimer.text} onChange={e => handleFooterArrayChange<Disclaimer>('disclaimers', index, 'text', e.target.value)} rows={3} /></div>
                         </div>
                     ))}
                 </div>
 
                 {/* Policies */}
-                <div className="space-y-4 p-4 border border-zinc-700 rounded-md">
+                <div className={cn("space-y-4 p-4 rounded-md", borderColor, "border")}>
                     <h3 className="font-semibold text-lg flex items-center justify-between">
                         Políticas (Links Modais)
-                        <Button size="sm" onClick={() => handleAddFooterItem('policies')}><Plus className="h-4 w-4 mr-2" /> Adicionar Política</Button>
+                        <Button size="sm" onClick={() => handleAddFooterItem('policies')} className={primaryButtonClasses}><Plus className="h-4 w-4 mr-2" /> Adicionar Política</Button>
                     </h3>
                     {footer.policies.map((policy, index) => (
-                        <div key={index} className="space-y-2 p-2 border border-zinc-800 rounded-md relative">
+                        <div key={index} className={cn("space-y-2 p-2 rounded-md relative", borderColor, "border")}>
                             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => handleRemoveFooterItem('policies', index)}><MinusCircle className="h-4 w-4" /></Button>
-                            <div><Label className="text-zinc-300">Título da Política {index + 1}</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={policy.title} onChange={e => handleFooterArrayChange<Policy>('policies', index, 'title', e.target.value)} /></div>
-                            <div><Label className="text-zinc-300">Texto do Gatilho (Link) {index + 1}</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={policy.trigger} onChange={e => handleFooterArrayChange<Policy>('policies', index, 'trigger', e.target.value)} /></div>
-                            <div><Label className="text-zinc-300">Conteúdo da Política {index + 1}</Label><Textarea className="bg-zinc-800 border-zinc-700 text-white" value={policy.content} onChange={e => handleFooterArrayChange<Policy>('policies', index, 'content', e.target.value)} rows={8} /></div>
+                            <div><Label className="text-zinc-300">Título da Política {index + 1}</Label><Input className={cn(inputBg, borderColor, "text-white")} value={policy.title} onChange={e => handleFooterArrayChange<Policy>('policies', index, 'title', e.target.value)} /></div>
+                            <div><Label className="text-zinc-300">Texto do Gatilho (Link) {index + 1}</Label><Input className={cn(inputBg, borderColor, "text-white")} value={policy.trigger} onChange={e => handleFooterArrayChange<Policy>('policies', index, 'trigger', e.target.value)} /></div>
+                            <div><Label className="text-zinc-300">Conteúdo da Política {index + 1}</Label><Textarea className={cn(inputBg, borderColor, "text-white")} value={policy.content} onChange={e => handleFooterArrayChange<Policy>('policies', index, 'content', e.target.value)} rows={8} /></div>
                         </div>
                     ))}
                 </div>
                 
                 {/* Copyright */}
-                <div><Label className="text-zinc-300">Direitos Autorais</Label><Input className="bg-zinc-800 border-zinc-700 text-white" value={footer.copyright} onChange={e => handleFooterChange('copyright', 'copyright', e.target.value)} /></div>
+                <div><Label className="text-zinc-300">Direitos Autorais</Label><Input className={cn(inputBg, borderColor, "text-white")} value={footer.copyright} onChange={e => handleFooterChange('copyright', 'copyright', e.target.value)} /></div>
             </CardContent>
             <CardFooter className="flex justify-end">
-                <Button onClick={onSave} disabled={isSaving || !name}>
+                <Button onClick={onSave} disabled={isSaving || !name} className={primaryButtonClasses}>
                     {isSaving ? "Salvando..." : "Salvar Alterações"}
                 </Button>
             </CardFooter>

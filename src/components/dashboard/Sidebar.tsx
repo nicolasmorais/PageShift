@@ -29,9 +29,14 @@ const pagesNavItems = [
 export const Sidebar = () => {
   const pathname = usePathname();
 
+  // Cores ajustadas: Fundo #00030a, Hover/Ativo #0f172a, Borda #1e293b
+  const sidebarBg = 'bg-[#00030a]';
+  const hoverActiveBg = 'bg-[#0f172a]';
+  const borderColor = 'border-[#1e293b]';
+
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r border-zinc-800 bg-[#101010] text-white sm:flex">
-      <div className="flex h-20 items-center justify-center border-b border-zinc-800 px-6">
+    <aside className={cn("fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r text-white sm:flex", sidebarBg, borderColor)}>
+      <div className={cn("flex h-20 items-center justify-center border-b px-6", borderColor)}>
         <Link href="/dashboard">
           <img
             src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f-zzhjEezm98VoMWqEUpkxkCiEYvH7rp.png"
@@ -51,8 +56,9 @@ export const Sidebar = () => {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-zinc-400 transition-all hover:bg-zinc-800 hover:text-zinc-50",
-                  pathname === item.href && "bg-zinc-800 text-zinc-50"
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-zinc-400 transition-all hover:text-zinc-50",
+                  `hover:${hoverActiveBg}`,
+                  pathname === item.href && `${hoverActiveBg} text-zinc-50`
                 )}
               >
                 <item.icon className="h-4 w-4" />
@@ -71,8 +77,9 @@ export const Sidebar = () => {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-zinc-400 transition-all hover:bg-zinc-800 hover:text-zinc-50",
-                  pathname === item.href && "bg-zinc-800 text-zinc-50"
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-zinc-400 transition-all hover:text-zinc-50",
+                  `hover:${hoverActiveBg}`,
+                  pathname === item.href && `${hoverActiveBg} text-zinc-50`
                 )}
               >
                 <item.icon className="h-4 w-4" />

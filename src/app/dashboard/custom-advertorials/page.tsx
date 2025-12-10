@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
 import { Plus, Trash2, Edit, ExternalLink } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface CustomAdvertorial {
   id: string;
@@ -66,6 +67,14 @@ export default function CustomAdvertorialsPage() {
     }
   };
 
+  // Cores ajustadas
+  const cardBg = 'bg-[#0f172a]';
+  const borderColor = 'border-[#1e293b]';
+  const hoverBg = 'hover:bg-[#1e293b]';
+  const skeletonBg = 'bg-[#1e293b]';
+  const primaryButtonClasses = 'bg-[#0bc839] hover:bg-[#09a82e] text-white';
+  const codeBg = 'bg-[#00030a]';
+
   return (
     <>
       <Toaster richColors />
@@ -75,14 +84,14 @@ export default function CustomAdvertorialsPage() {
           <p className="text-zinc-400">Crie e gerencie conteúdos de página usando blocos dinâmicos.</p>
         </div>
         <Link href="/dashboard/custom-advertorials/new">
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className={primaryButtonClasses}>
             <Plus className="mr-2 h-4 w-4" />
             Novo Advertorial
           </Button>
         </Link>
       </div>
 
-      <Card className="bg-zinc-900/50 border-zinc-800 text-white">
+      <Card className={cn(cardBg, borderColor, "text-white")}>
         <CardHeader>
           <CardTitle>Advertoriais Criados</CardTitle>
           <CardDescription className="text-zinc-400">
@@ -92,7 +101,7 @@ export default function CustomAdvertorialsPage() {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow className="border-zinc-800 hover:bg-zinc-900">
+              <TableRow className={cn(borderColor, hoverBg)}>
                 <TableHead className="text-zinc-400">Nome</TableHead>
                 <TableHead className="text-zinc-400">ID de Conteúdo</TableHead>
                 <TableHead className="text-right text-zinc-400">Ações</TableHead>
@@ -101,36 +110,36 @@ export default function CustomAdvertorialsPage() {
             <TableBody>
               {isLoading ? (
                 Array.from({ length: 3 }).map((_, i) => (
-                  <TableRow key={i} className="border-zinc-800">
-                    <TableCell><Skeleton className="h-5 w-3/4 bg-zinc-800" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-1/2 bg-zinc-800" /></TableCell>
-                    <TableCell className="text-right"><Skeleton className="h-10 w-32 bg-zinc-800 ml-auto" /></TableCell>
+                  <TableRow key={i} className={borderColor}>
+                    <TableCell><Skeleton className={cn("h-5 w-3/4", skeletonBg)} /></TableCell>
+                    <TableCell><Skeleton className={cn("h-5 w-1/2", skeletonBg)} /></TableCell>
+                    <TableCell className="text-right"><Skeleton className={cn("h-10 w-32 ml-auto", skeletonBg)} /></TableCell>
                   </TableRow>
                 ))
               ) : advertorials.length === 0 ? (
-                <TableRow className="border-zinc-800">
+                <TableRow className={borderColor}>
                   <TableCell colSpan={3} className="text-center text-zinc-500">
                     Nenhum advertorial dinâmico encontrado. Crie um novo!
                   </TableCell>
                 </TableRow>
               ) : (
                 advertorials.map(adv => (
-                  <TableRow key={adv.id} className="border-zinc-800 hover:bg-zinc-900">
+                  <TableRow key={adv.id} className={cn(borderColor, hoverBg)}>
                     <TableCell>
                       <div className="font-medium">{adv.name}</div>
                     </TableCell>
                     <TableCell>
-                      <code className="bg-zinc-800 text-zinc-300 px-2 py-1 rounded-md text-sm">{adv.id}</code>
+                      <code className={cn(codeBg, "text-zinc-300 px-2 py-1 rounded-md text-sm")}>{adv.id}</code>
                     </TableCell>
                     <TableCell className="text-right space-x-2">
                       <Link href={`/dashboard/custom-advertorials/${adv.id}`}>
-                        <Button variant="outline" size="sm" className="border-zinc-700 hover:bg-zinc-800">
+                        <Button variant="outline" size="sm" className={cn(borderColor, "hover:bg-[#1e293b] text-white")}>
                           <Edit className="h-4 w-4 mr-2" />
                           Editar
                         </Button>
                       </Link>
                       <Link href={`/${adv.id}`} target="_blank">
-                        <Button variant="outline" size="sm" className="border-zinc-700 hover:bg-zinc-800">
+                        <Button variant="outline" size="sm" className={cn(borderColor, "hover:bg-[#1e293b] text-white")}>
                           <ExternalLink className="h-4 w-4" />
                         </Button>
                       </Link>

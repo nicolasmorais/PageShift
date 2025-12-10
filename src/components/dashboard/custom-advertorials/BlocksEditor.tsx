@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, Image, Text, DollarSign, GripVertical } from 'lucide-react';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-import { ContentBlock, BlockType } from '@/lib/advertorial-types'; // NEW: Import types from here
+import { ContentBlock, BlockType } from '@/lib/advertorial-types';
 import { BlockEditorComponent } from './BlockEditorComponent';
 import { getDefaultBlock } from '@/lib/advertorial-utils';
+import { cn } from '@/lib/utils';
 
 interface BlocksEditorProps {
     blocks: ContentBlock[];
@@ -39,15 +40,22 @@ export const BlocksEditor = ({ blocks, setBlocks, onSave, isSaving, name }: Bloc
         setBlocks(items);
     };
 
+    // Cores ajustadas
+    const cardBg = 'bg-[#0f172a]';
+    const borderColor = 'border-[#1e293b]';
+    const blockBg = 'bg-[#00030a]';
+    const secondaryButtonClasses = 'text-white bg-[#1e293b] hover:bg-[#2d3748]';
+    const primaryButtonClasses = 'bg-[#0bc839] hover:bg-[#09a82e] text-white';
+
     return (
-        <Card className="bg-zinc-900/50 border-zinc-800 text-white">
+        <Card className={cn(cardBg, borderColor, "text-white")}>
             <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Blocos de Conteúdo ({blocks.length})</CardTitle>
                 <div className="flex space-x-2">
-                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('text')} className="text-white bg-zinc-700 hover:bg-zinc-600"><Text className="h-4 w-4 mr-2" /> Texto</Button>
-                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('image')} className="text-white bg-zinc-700 hover:bg-zinc-600"><Image className="h-4 w-4 mr-2" /> Imagem</Button>
-                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('alert')} className="text-white bg-zinc-700 hover:bg-zinc-600"><AlertTriangle className="h-4 w-4 mr-2" /> Alerta</Button>
-                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('pricing')} className="text-white bg-zinc-700 hover:bg-zinc-600"><DollarSign className="h-4 w-4 mr-2" /> Preço</Button>
+                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('text')} className={secondaryButtonClasses}><Text className="h-4 w-4 mr-2" /> Texto</Button>
+                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('image')} className={secondaryButtonClasses}><Image className="h-4 w-4 mr-2" /> Imagem</Button>
+                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('alert')} className={secondaryButtonClasses}><AlertTriangle className="h-4 w-4 mr-2" /> Alerta</Button>
+                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('pricing')} className={secondaryButtonClasses}><DollarSign className="h-4 w-4 mr-2" /> Preço</Button>
                 </div>
             </CardHeader>
             <CardContent>
@@ -88,7 +96,7 @@ export const BlocksEditor = ({ blocks, setBlocks, onSave, isSaving, name }: Bloc
                 )}
             </CardContent>
             <CardFooter className="flex justify-end">
-                <Button onClick={onSave} disabled={isSaving || !name}>
+                <Button onClick={onSave} disabled={isSaving || !name} className={primaryButtonClasses}>
                     {isSaving ? "Salvando..." : "Salvar Alterações"}
                 </Button>
             </CardFooter>

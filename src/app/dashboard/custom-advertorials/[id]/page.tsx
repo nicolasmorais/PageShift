@@ -5,9 +5,10 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, CustomAdvertorialFooter, BlockType, Policy, Disclaimer, defaultCustomAdvertorialFooter } from '@/lib/advertorial-types'; // NEW: Import defaultCustomAdvertorialFooter from types
+import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, CustomAdvertorialFooter, BlockType, Policy, Disclaimer, defaultCustomAdvertorialFooter } from '@/lib/advertorial-types';
 import Link from 'next/link';
 import { getDefaultBlock } from '@/lib/advertorial-utils';
+import { cn } from '@/lib/utils';
 
 // Import modular components
 import { HeaderEditor } from '@/components/dashboard/custom-advertorials/HeaderEditor';
@@ -176,13 +177,17 @@ export default function CustomAdvertorialEditor() {
         }
     };
 
-    if (isLoading || !footer) return <Skeleton className="h-screen w-full bg-zinc-900" />;
+    // Cores ajustadas
+    const primaryButtonClasses = 'bg-[#0bc839] hover:bg-[#09a82e] text-white';
+    const skeletonBg = 'bg-[#0f172a]';
+
+    if (isLoading || !footer) return <Skeleton className={cn("h-screen w-full", skeletonBg)} />;
 
     return (
         <>
             <Toaster richColors />
             <div className="space-y-6">
-                <div className="flex items-center justify-between sticky top-0 z-20 py-4 bg-[#101010]">
+                <div className="flex items-center justify-between sticky top-0 z-20 py-4 bg-[#00030a]">
                     <div>
                         <h1 className="text-2xl font-bold text-white">{isNew ? "Criar Novo Advertorial" : `Editando: ${name}`}</h1>
                         <p className="text-zinc-400">ID: {isNew ? 'Novo' : advertorialId}</p>
@@ -190,12 +195,12 @@ export default function CustomAdvertorialEditor() {
                     <div className="flex space-x-2">
                         {!isNew && (
                             <Link href={`/${advertorialId}`} target="_blank">
-                                <Button variant="outline" className="border-zinc-700 hover:bg-zinc-800 text-white">
+                                <Button variant="outline" className="border-[#1e293b] hover:bg-[#0f172a] text-white">
                                     Visualizar Rota
                                 </Button>
                             </Link>
                         )}
-                        <Button onClick={handleSave} disabled={isSaving || !name}>
+                        <Button onClick={handleSave} disabled={isSaving || !name} className={primaryButtonClasses}>
                             {isSaving ? "Salvando..." : "Salvar Advertorial"}
                         </Button>
                     </div>

@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useMemo } from 'react';
-import { ContentBlock } from '@/lib/advertorial-types'; // NEW: Import type from here
+import { ContentBlock } from '@/lib/advertorial-types';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Trash2, AlertTriangle, Image, Text, DollarSign } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface BlockEditorComponentProps {
     block: ContentBlock;
@@ -31,8 +32,14 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
         onUpdate(index, { ...block, [field]: value });
     };
 
+    // Cores ajustadas
+    const blockBg = 'bg-[#00030a]';
+    const inputBg = 'bg-[#0f172a]';
+    const borderColor = 'border-[#1e293b]';
+    const selectContentBg = 'bg-[#00030a]';
+
     return (
-        <div className="p-4 border border-zinc-700 rounded-md bg-zinc-800/50 space-y-3">
+        <div className={cn("p-4 border rounded-md space-y-3", borderColor, blockBg)}>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-zinc-300">
                     <Icon className="h-5 w-5" />
@@ -49,14 +56,14 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
                     <Label className="text-zinc-400">Conteúdo Principal ({block.type === 'image' ? 'URL' : 'Texto'})</Label>
                     {block.type === 'text' || block.type === 'alert' ? (
                         <Textarea 
-                            className="bg-zinc-900 border-zinc-700 text-white" 
+                            className={cn(inputBg, borderColor, "text-white")} 
                             value={block.value} 
                             onChange={e => handleValueChange('value', e.target.value)} 
                             rows={4}
                         />
                     ) : (
                         <Input 
-                            className="bg-zinc-900 border-zinc-700 text-white" 
+                            className={cn(inputBg, borderColor, "text-white")} 
                             value={block.value} 
                             onChange={e => handleValueChange('value', e.target.value)} 
                         />
@@ -69,7 +76,7 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
                 <div>
                     <Label className="text-zinc-400">Legenda da Imagem (Opcional)</Label>
                     <Input 
-                        className="bg-zinc-900 border-zinc-700 text-white" 
+                        className={cn(inputBg, borderColor, "text-white")} 
                         value={block.caption || ''} 
                         onChange={e => handleValueChange('caption', e.target.value)} 
                     />
@@ -81,7 +88,7 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
                 <div>
                     <Label className="text-zinc-400">Tamanho da Fonte (ex: xl, 2xl, 16px)</Label>
                     <Input 
-                        className="bg-zinc-900 border-zinc-700 text-white" 
+                        className={cn(inputBg, borderColor, "text-white")} 
                         value={block.fontSize || 'xl'} 
                         onChange={e => handleValueChange('fontSize', e.target.value)} 
                     />
@@ -94,7 +101,7 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
                     <div>
                         <Label className="text-zinc-400">Título do Alerta</Label>
                         <Input 
-                            className="bg-zinc-900 border-zinc-700 text-white" 
+                            className={cn(inputBg, borderColor, "text-white")} 
                             value={block.alertTitle || ''} 
                             onChange={e => handleValueChange('alertTitle', e.target.value)} 
                         />
@@ -105,13 +112,13 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
                             value={block.alertVariant} 
                             onValueChange={(v) => handleValueChange('alertVariant', v)}
                         >
-                            <SelectTrigger className="bg-zinc-900 border-zinc-700 text-white">
+                            <SelectTrigger className={cn(inputBg, borderColor, "text-white")}>
                                 <SelectValue placeholder="Selecione a variante" />
                             </SelectTrigger>
-                            <SelectContent className="bg-zinc-900 text-white border-zinc-800">
-                                <SelectItem value="default">Padrão (Cinza/Azul)</SelectItem>
-                                <SelectItem value="destructive">Destrutivo (Vermelho)</SelectItem>
-                                <SelectItem value="warning">Aviso (Amarelo)</SelectItem>
+                            <SelectContent className={cn(selectContentBg, "text-white", borderColor)}>
+                                <SelectItem value="default" className="focus:bg-[#0f172a]">Padrão (Cinza/Azul)</SelectItem>
+                                <SelectItem value="destructive" className="focus:bg-[#0f172a]">Destrutivo (Vermelho)</SelectItem>
+                                <SelectItem value="warning" className="focus:bg-[#0f172a]">Aviso (Amarelo)</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -121,12 +128,12 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
             {/* Pricing Specific Fields */}
             {block.type === 'pricing' && (
                 <>
-                    <div><Label className="text-zinc-400">Texto Acima do Preço</Label><Input className="bg-zinc-900 border-zinc-700 text-white" value={block.prePriceText || ''} onChange={e => handleValueChange('prePriceText', e.target.value)} /></div>
-                    <div><Label className="text-zinc-400">Preço</Label><Input className="bg-zinc-900 border-zinc-700 text-white" value={block.price || ''} onChange={e => handleValueChange('price', e.target.value)} /></div>
-                    <div><Label className="text-zinc-400">Texto de Pagamento</Label><Input className="bg-zinc-900 border-zinc-700 text-white" value={block.paymentType || ''} onChange={e => handleValueChange('paymentType', e.target.value)} /></div>
-                    <div><Label className="text-zinc-400">Texto do Botão</Label><Input className="bg-zinc-900 border-zinc-700 text-white" value={block.buttonText || ''} onChange={e => handleValueChange('buttonText', e.target.value)} /></div>
-                    <div><Label className="text-zinc-400">URL do Botão</Label><Input className="bg-zinc-900 border-zinc-700 text-white" value={block.buttonUrl || ''} onChange={e => handleValueChange('buttonUrl', e.target.value)} /></div>
-                    <div><Label className="text-zinc-400">Texto Abaixo do Botão</Label><Input className="bg-zinc-900 border-zinc-700 text-white" value={block.postButtonText || ''} onChange={e => handleValueChange('postButtonText', e.target.value)} /></div>
+                    <div><Label className="text-zinc-400">Texto Acima do Preço</Label><Input className={cn(inputBg, borderColor, "text-white")} value={block.prePriceText || ''} onChange={e => handleValueChange('prePriceText', e.target.value)} /></div>
+                    <div><Label className="text-zinc-400">Preço</Label><Input className={cn(inputBg, borderColor, "text-white")} value={block.price || ''} onChange={e => handleValueChange('price', e.target.value)} /></div>
+                    <div><Label className="text-zinc-400">Texto de Pagamento</Label><Input className={cn(inputBg, borderColor, "text-white")} value={block.paymentType || ''} onChange={e => handleValueChange('paymentType', e.target.value)} /></div>
+                    <div><Label className="text-zinc-400">Texto do Botão</Label><Input className={cn(inputBg, borderColor, "text-white")} value={block.buttonText || ''} onChange={e => handleValueChange('buttonText', e.target.value)} /></div>
+                    <div><Label className="text-zinc-400">URL do Botão</Label><Input className={cn(inputBg, borderColor, "text-white")} value={block.buttonUrl || ''} onChange={e => handleValueChange('buttonUrl', e.target.value)} /></div>
+                    <div><Label className="text-zinc-400">Texto Abaixo do Botão</Label><Input className={cn(inputBg, borderColor, "text-white")} value={block.postButtonText || ''} onChange={e => handleValueChange('postButtonText', e.target.value)} /></div>
                 </>
             )}
         </div>
