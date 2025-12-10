@@ -93,25 +93,6 @@ export const LoginForm = () => {
       >
         <span className="truncate">{isSubmitting ? 'Entrando...' : 'Entrar'}</span>
       </Button>
-
-      {/* Separator */}
-      <div className="flex items-center gap-4 my-4">
-        <hr className="w-full border-slate-700"/>
-        <span className="text-slate-400 text-sm whitespace-nowrap">ou entre com</span>
-        <hr className="w-full border-slate-700"/>
-      </div>
-
-      {/* Social Login Buttons */}
-      <div className="flex gap-4">
-        <Button className="flex-1 flex items-center justify-center gap-2 rounded-lg h-12 px-6 text-sm font-medium text-white bg-[#0f172a] border border-slate-700 hover:bg-slate-800 transition-all">
-            <img alt="Google icon" className="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGsX32HIvemGTPO5C5i-SMZVFtMLCKSEwU7yH-S3YCfWTtehLK0WTsCW0U4nRb0reywNREgyDSt10v5rZvxlG2gxJEriCXfj2JdFyxEGG9DtFFSUc5t5Vk9hNEORlZDTHRPQ5mVcZWxlQ-HLSpiu9vI9GA8gxUBGt0dVKm-531r58kBYn1AwHxsTEafIcDwCw10SiRLZqrwgulyVy8qYDUM3wwsfJALwAtsUz993iY1xCeJejHi8aLxiwGTIW2etzif8_IchFGA2R5"/>
-            <span>Google</span>
-        </Button>
-        <Button className="flex-1 flex items-center justify-center gap-2 rounded-lg h-12 px-6 text-sm font-medium text-white bg-[#0f172a] border border-slate-700 hover:bg-slate-800 transition-all">
-            <img alt="Microsoft icon" className="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsXGT0rJ6XGRUCIqLYolyir82qFRyWTnBsL_OiJpGaRvcCrxwt1mkyCLgvTwY1QJ1S03O-EkMCwpgzEPNeU-afXsZLK1qfcxdnZuNPl0qIjURKIrdZzc5KHF7HcTqSKpaQT27U9I8BKWu6_fBSz6mCtw8T2k0bdnPnR5Jhm_UaL-IykkrBzMjJPeY-rxVVh078a9OgiqTrL7t_prqv9GUCq2K6eQf0jcaXrX6W0O_oAJxE4lTG_-0lo79lENbbHWm8khDG5-LIk2kl"/>
-            <span>Microsoft</span>
-        </Button>
-      </div>
     </form>
   );
 };
