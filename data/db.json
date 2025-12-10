@@ -88,5 +88,8 @@
       "copyright": "Todos os direitos reservados © 2024 - OneConversion Soluções Digitais"
     }
   },
-  "customAdvertorials": []
+  "customAdvertorials": [],
+  "auth": {
+    "passwordHash": "$2b$10$EXkOL4QE6PVarG8FWrb.oepBgnW4/LRcBQWR6ZlgY0WXRXNLlWSma"
+  }
 }

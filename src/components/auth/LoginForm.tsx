@@ -74,7 +74,7 @@ export const LoginForm = () => {
       <Button
         type="submit"
         className={cn(
-          "h-16 px-6 text-xl font-bold text-white bg-black hover:bg-gray-800 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#1e293b] focus:ring-black rounded-xl",
+          "h-16 px-6 text-xl font-bold text-white bg-[#0bc839] hover:bg-[#09a82e] transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#00030a] focus:ring-[#0bc839] rounded-xl",
           isSubmitting && "opacity-70 cursor-not-allowed"
         )}
         disabled={isSubmitting}

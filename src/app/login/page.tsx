@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 };
 
 export default function LoginPage() {
-  // Cores do novo design: background-dark: #101622
-  const mainBg = 'bg-[#101622]';
+  // Cores do novo design: background-dark: #00030a
+  const mainBg = 'bg-[#00030a]';
   const logoUrl = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f-zzhjEezm98VoMWqEUpkxkCiEYvH7rp.png"; // Usando o logo do sidebar como placeholder
 
   return (
