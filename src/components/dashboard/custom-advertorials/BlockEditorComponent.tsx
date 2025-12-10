@@ -45,7 +45,12 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
                     <Icon className="h-5 w-5" />
                     <span className="capitalize font-semibold">{block.type}</span>
                 </div>
-                <Button variant="destructive" size="icon" onClick={() => onDelete(index)}>
+                <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    onClick={() => onDelete(index)}
+                    className="text-red-500 hover:bg-red-900/20" // Estilo customizado para ser discreto
+                >
                     <Trash2 className="h-4 w-4" />
                 </Button>
             </div>

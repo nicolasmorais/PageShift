@@ -168,6 +168,6 @@
     }
   ],
   "auth": {
-    "passwordHash": ""
+    "passwordHash": "$2b$10$i/bBtoMj1k/wzguXeWB3peVr5BU5E9sLOsYMfcoza55Hv1BzTJnKW"
   }
 }
