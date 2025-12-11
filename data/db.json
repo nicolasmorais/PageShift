@@ -124,7 +124,7 @@
         {
           "id": "kr334ga",
           "type": "html",
-          "value": "<div style=\"background-color: #f0f0f0; padding: 20px; text-align: center;\">Insira seu HTML personalizado aqui.</div>"
+          "value": "<p>Este é um texto de exemplo criado apenas para demonstração. Você pode substituí-lo pelo conteúdo que desejar.</p>\n"
         }
       ],
       "footer": {

@@ -137,9 +137,10 @@ const PricingBlock = ({ block }: { block: ContentBlock }) => {
 
 const HtmlBlock = ({ value }: { value: string }) => {
     // Renderiza HTML puro. CUIDADO: O usuário deve garantir que o HTML é seguro.
+    // Adicionando text-black/dark:text-white para garantir que o texto seja visível se o HTML não definir cor.
     return (
         <div 
-            className="w-full" 
+            className="w-full text-black dark:text-white" 
             dangerouslySetInnerHTML={{ __html: value }} 
         />
     );
