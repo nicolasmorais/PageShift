@@ -50,24 +50,25 @@ export const Sidebar = () => {
     // Base classes
     let classes = "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all";
 
-    // Light Mode
+    // Light Mode (Default text color)
     classes += ` ${lightTextColor}`;
     
-    // Remove hover effect, only apply active styles
     if (isActive) {
+        // Active styles
         classes += ` ${lightActiveBg} ${lightActiveTextColor}`;
     } else {
-        // Ensure hover is transparent/default text color when not active
-        classes += ` hover:bg-transparent hover:text-gray-900`;
+        // Ensure no hover effect is applied
+        classes += ` hover:bg-transparent hover:text-gray-600`; // Mantém a cor padrão no hover
     }
 
-    // Dark Mode
+    // Dark Mode (Default text color)
     classes += ` ${darkTextColor}`;
     if (isActive) {
+        // Active styles
         classes += ` ${darkActiveBg} ${darkActiveTextColor}`;
     } else {
-        // Ensure dark hover is transparent/default text color when not active
-        classes += ` dark:hover:bg-transparent dark:hover:text-zinc-50`;
+        // Ensure no hover effect is applied
+        classes += ` dark:hover:bg-transparent dark:hover:text-zinc-400`; // Mantém a cor padrão no hover
     }
 
     return classes;
