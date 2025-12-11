@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Trash2, AlertTriangle, Image, Text, DollarSign } from 'lucide-react';
+import { Trash2, AlertTriangle, Image, Text, DollarSign, Code } from 'lucide-react'; // Importando Code
 import { cn } from '@/lib/utils';
 
 interface BlockEditorComponentProps {
@@ -24,6 +24,7 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
             case 'image': return Image;
             case 'alert': return AlertTriangle;
             case 'pricing': return DollarSign;
+            case 'html': return Code; // <-- Novo ícone
             default: return Text;
         }
     }, [block.type]);
@@ -60,13 +61,13 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
             {/* Common Fields */}
             {block.type !== 'pricing' && (
                 <div>
-                    <Label className={labelColor}>Conteúdo Principal ({block.type === 'image' ? 'URL' : 'Texto'})</Label>
-                    {block.type === 'text' || block.type === 'alert' ? (
+                    <Label className={labelColor}>Conteúdo Principal ({block.type === 'image' ? 'URL' : block.type === 'html' ? 'Código HTML' : 'Texto'})</Label>
+                    {block.type === 'text' || block.type === 'alert' || block.type === 'html' ? (
                         <Textarea 
-                            className={cn(inputBg, borderColor, textColor)} 
+                            className={cn(inputBg, borderColor, textColor, "font-mono text-sm")} 
                             value={block.value} 
                             onChange={e => handleValueChange('value', e.target.value)} 
-                            rows={4}
+                            rows={block.type === 'html' ? 8 : 4}
                         />
                     ) : (
                         <Input 

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Image, Text, DollarSign, GripVertical } from 'lucide-react';
+import { AlertTriangle, Image, Text, DollarSign, GripVertical, Code } from 'lucide-react'; // Importando Code
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import { ContentBlock, BlockType } from '@/lib/advertorial-types';
 import { BlockEditorComponent } from './BlockEditorComponent';
@@ -57,6 +57,7 @@ export const BlocksEditor = ({ blocks, setBlocks, onSave, isSaving, name }: Bloc
                     <Button size="sm" variant="secondary" onClick={() => handleAddBlock('image')} className={secondaryButtonClasses}><Image className="h-4 w-4 mr-2" /> Imagem</Button>
                     <Button size="sm" variant="secondary" onClick={() => handleAddBlock('alert')} className={secondaryButtonClasses}><AlertTriangle className="h-4 w-4 mr-2" /> Alerta</Button>
                     <Button size="sm" variant="secondary" onClick={() => handleAddBlock('pricing')} className={secondaryButtonClasses}><DollarSign className="h-4 w-4 mr-2" /> Preço</Button>
+                    <Button size="sm" variant="secondary" onClick={() => handleAddBlock('html')} className={secondaryButtonClasses}><Code className="h-4 w-4 mr-2" /> HTML</Button>
                 </div>
             </CardHeader>
             <CardContent>

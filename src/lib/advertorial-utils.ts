@@ -25,6 +25,8 @@ export const getDefaultBlock = (type: BlockType): ContentBlock => {
                 paymentType: "Pagamento Único",
                 postButtonText: "Acesso imediato."
             };
+        case 'html': // <-- Novo bloco HTML
+            return { id, type, value: '<div style="background-color: #f0f0f0; padding: 20px; text-align: center;">Insira seu HTML personalizado aqui.</div>' };
         default:
             return { id, type: 'text', value: "Bloco desconhecido." };
     }

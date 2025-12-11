@@ -46,13 +46,13 @@ export interface CustomAdvertorialFooter extends ApprovalPageFooter {
   hidePolicies?: boolean;
 }
 
-export type BlockType = 'text' | 'image' | 'alert' | 'pricing';
+export type BlockType = 'text' | 'image' | 'alert' | 'pricing' | 'html'; // <-- Adicionado 'html'
 
 export interface ContentBlock {
   id: string;
   type: BlockType;
   // Common fields
-  value: string; // Main content (text, URL, etc.)
+  value: string; // Main content (text, URL, HTML code, etc.)
   fontSize?: string; // Font size for text blocks (e.g., 'xl', '2xl', '16px')
   fontFamily?: string;
   caption?: string; // Caption for images

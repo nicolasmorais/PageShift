@@ -135,6 +135,16 @@ const PricingBlock = ({ block }: { block: ContentBlock }) => {
     );
 };
 
+const HtmlBlock = ({ value }: { value: string }) => {
+    // Renderiza HTML puro. CUIDADO: O usuário deve garantir que o HTML é seguro.
+    return (
+        <div 
+            className="w-full" 
+            dangerouslySetInnerHTML={{ __html: value }} 
+        />
+    );
+};
+
 
 export function BlockRenderer({ block }: BlockRendererProps) {
   switch (block.type) {
@@ -147,6 +157,8 @@ export function BlockRenderer({ block }: BlockRendererProps) {
       return <AlertBlock block={block} />;
     case 'pricing':
       return <PricingBlock block={block} />;
+    case 'html': // <-- Novo caso
+      return <HtmlBlock value={block.value} />;
     default:
       return <div className="text-red-500">Tipo de bloco desconhecido: {block.type}</div>;
   }
