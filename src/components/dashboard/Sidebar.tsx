@@ -28,6 +28,7 @@ const pagesNavItems = [
 
 export const Sidebar = () => {
   const pathname = usePathname();
+  const LOGO_URL = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29-cQ9d9YZNOknrfYOmNv38Sj0LQVfjHp.png";
 
   // Cores do Modo Claro (Padrão)
   const lightBg = 'bg-white';
@@ -52,7 +53,7 @@ export const Sidebar = () => {
       <div className={cn("flex h-20 items-center justify-center border-b px-6", lightBorderColor, darkBorderColor)}>
         <Link href="/dashboard">
           <img
-            src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f-zzhjEezm98VoMWqEUpkxkCiEYvH7rp.png"
+            src={LOGO_URL}
             alt="PageShift Logo"
             className="h-12"
           />
