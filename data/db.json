@@ -28,7 +28,7 @@
     },
     {
       "path": "/a20a8ed1-9f42-4bad-9fed-59b0e067b510",
-      "contentId": "ap",
+      "contentId": "a20a8ed1-9f42-4bad-9fed-59b0e067b510",
       "name": "Rota Personalizada: /a20a8ed1-9f42-4bad-9fed-59b0e067b510"
     }
   ],
@@ -90,9 +90,12 @@
           "content": "Por se tratar de um produto digital, o acesso ao conteúdo é liberado imediatamente após a confirmação do pagamento. Ainda assim, oferecemos uma política de reembolso transparente para garantir a satisfação do cliente. Você pode solicitar o reembolso em até 7 dias corridos após a compra, conforme o Código de Defesa do Consumidor..."
         }
       ],
-      "copyright": "Todos os direitos reservados © 2024 - OneConversion Soluções Digitais"
+      "copyright": "Todos os direitos reservados © 2024 - OneConversion Soluções Digitais",
+      "hideDisclaimers": false,
+      "hideCompanyInfo": false,
+      "hidePolicies": false
     }
-  },
+  ],
   "customAdvertorials": [
     {
       "id": "a20a8ed1-9f42-4bad-9fed-59b0e067b510",
@@ -120,6 +123,11 @@
           "prePriceText": "OFERTA ESPECIAL",
           "paymentType": "Pagamento Único",
           "postButtonText": "Acesso imediato."
+        },
+        {
+          "id": "kr334ga",
+          "type": "html",
+          "value": "<div style=\"background-color: #f0f0f0; padding: 20px; text-align: center; border: 2px solid #38bdf8; color: #1e293b;\">Este é um bloco HTML personalizado!</div>"
         }
       ],
       "footer": {
