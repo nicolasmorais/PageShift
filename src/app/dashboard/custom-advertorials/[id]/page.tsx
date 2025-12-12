@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, CustomAdvertorialFooter, BlockType, Policy, Disclaimer, defaultCustomAdvertorialFooter } from '@/lib/advertorial-types';
+import { ContentBlock, CustomAdvertorialHeader, CustomAdvertorial, CustomAdvertorialFooter, BlockType, Policy, Disclaimer, defaultCustomAdvertorialFooter, PagePixelConfig } from '@/lib/advertorial-types';
 import Link from 'next/link';
 import { getDefaultBlock } from '@/lib/advertorial-utils';
 import { cn } from '@/lib/utils';
@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { HeaderEditor } from '@/components/dashboard/custom-advertorials/HeaderEditor';
 import { BlocksEditor } from '@/components/dashboard/custom-advertorials/BlocksEditor';
 import { FooterEditor } from '@/components/dashboard/custom-advertorials/FooterEditor';
+import { PixelEditor } from '@/components/dashboard/custom-advertorials/PixelEditor'; // NEW: Import PixelEditor
 
 
 export default function CustomAdvertorialEditor() {
@@ -29,6 +30,7 @@ export default function CustomAdvertorialEditor() {
     const [header, setHeader] = useState<CustomAdvertorialHeader>({ preTitle: '', title: '', subheadline: '', fontFamily: 'sans' });
     const [blocks, setBlocks] = useState<ContentBlock[]>([]);
     const [footer, setFooter] = useState<CustomAdvertorialFooter | null>(null);
+    const [pixels, setPixels] = useState<PagePixelConfig>({ metaPixelId: '', taboolaPixelId: '', customScripts: '', useGlobalPixels: true }); // NEW: Pixel state
 
     // Use the default footer structure from advertorial-types.ts
     const defaultFooter = useMemo(() => defaultCustomAdvertorialFooter, []);
@@ -56,6 +58,8 @@ export default function CustomAdvertorialEditor() {
                         hideCompanyInfo: data.footer?.hideCompanyInfo ?? false,
                         hidePolicies: data.footer?.hidePolicies ?? false,
                     });
+                    // Initialize pixels
+                    setPixels(data.pixels || { metaPixelId: '', taboolaPixelId: '', customScripts: '', useGlobalPixels: true });
                 })
                 .catch(() => {
                     toast.error("Advertorial não encontrado ou falha ao carregar.");
@@ -74,6 +78,7 @@ export default function CustomAdvertorialEditor() {
             // Use imported getDefaultBlock for initialization
             setBlocks([getDefaultBlock('text'), getDefaultBlock('pricing')]); 
             setFooter(defaultFooter);
+            setPixels({ metaPixelId: '', taboolaPixelId: '', customScripts: '', useGlobalPixels: true }); // Default pixels
             setIsLoading(false);
         }
     }, [advertorialId, isNew, router, defaultFooter]);
@@ -137,6 +142,12 @@ export default function CustomAdvertorialEditor() {
         });
     };
     // --- End Handlers for Footer ---
+    
+    // --- Handlers for Pixels ---
+    const handlePixelChange = (field: keyof PagePixelConfig, value: string | boolean) => {
+        setPixels(prev => ({ ...prev, [field]: value }));
+    };
+    // --- End Handlers for Pixels ---
 
 
     const handleSave = async () => {
@@ -152,6 +163,7 @@ export default function CustomAdvertorialEditor() {
             header,
             blocks,
             footer,
+            pixels, // Include pixels in payload
         };
 
         try {
@@ -213,6 +225,12 @@ export default function CustomAdvertorialEditor() {
                     header={header} 
                     setName={setName} 
                     handleHeaderChange={handleHeaderChange} 
+                />
+
+                {/* PIXEL CARD */}
+                <PixelEditor 
+                    pixels={pixels} 
+                    handlePixelChange={handlePixelChange} 
                 />
 
                 {/* BLOCKS CARD */}

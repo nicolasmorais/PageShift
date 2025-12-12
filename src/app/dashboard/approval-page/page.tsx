@@ -9,16 +9,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils'; // Import cn
+import { Zap, Code } from 'lucide-react';
+import { DashboardSwitch } from '@/components/dashboard/DashboardSwitch';
 
 interface Policy { title: string; trigger: string; content: string; }
 interface Disclaimer { title: string; text: string; }
 interface CompanyInfo { name: string; address: string; cnpj: string; contact: string; }
+interface PagePixelConfig { metaPixelId: string; taboolaPixelId: string; customScripts: string; useGlobalPixels: boolean; }
 interface ApprovalPageFooter { disclaimers: Disclaimer[]; companyInfo: CompanyInfo; policies: Policy[]; copyright: string; }
 interface ApprovalPageContent {
   header: { preTitle: string; title: string; subheadline: string; };
   body: { imageUrl1: string; advertorialText: string; imageUrl2: string; guaranteeText: string; };
   pricing: { prePriceText: string; price: string; paymentType: string; buttonText: string; buttonUrl: string; postButtonText: string; };
   footer: ApprovalPageFooter;
+  pixels: PagePixelConfig; // NEW
 }
 
 const LoadingSkeleton = () => (
@@ -35,7 +39,14 @@ export default function ApprovalPageEditor() {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    fetch('/api/approval-page').then(res => res.json()).then(data => { setContent(data); setIsLoading(false); }).catch(() => { toast.error("Falha ao carregar o conteúdo da página."); setIsLoading(false); });
+    fetch('/api/approval-page').then(res => res.json()).then(data => { 
+        // Garante que o campo pixels exista, se não, usa um default
+        if (!data.pixels) {
+            data.pixels = { metaPixelId: '', taboolaPixelId: '', customScripts: '', useGlobalPixels: true };
+        }
+        setContent(data); 
+        setIsLoading(false); 
+    }).catch(() => { toast.error("Falha ao carregar o conteúdo da página."); setIsLoading(false); });
   }, []);
 
   const handleInputChange = (section: keyof ApprovalPageContent, field: string, value: string) => {
@@ -69,6 +80,15 @@ export default function ApprovalPageEditor() {
         const newContent = { ...prev };
         // Acessamos o array dentro do footer e atualizamos o item
         ((newContent[section] as any)[arrayName] as T[])[index][field] = value as any;
+        return newContent;
+    });
+  };
+  
+  const handlePixelChange = (field: keyof PagePixelConfig, value: string | boolean) => {
+    setContent(prev => {
+        if (!prev) return null;
+        const newContent = { ...prev };
+        (newContent.pixels as any)[field] = value;
         return newContent;
     });
   };
@@ -133,6 +153,53 @@ export default function ApprovalPageEditor() {
             <div><Label className={labelColor}>URL do Botão</Label><Input className={cn(inputBg, borderColor, textColor)} value={content.pricing.buttonUrl} onChange={e => handleInputChange('pricing', 'buttonUrl', e.target.value)} /></div>
             <div><Label className={labelColor}>Texto Abaixo do Botão</Label><Input className={cn(inputBg, borderColor, textColor)} value={content.pricing.postButtonText} onChange={e => handleInputChange('pricing', 'postButtonText', e.target.value)} /></div>
           </CardContent>
+        </Card>
+        
+        {/* PIXEL CONFIGURATION CARD */}
+        <Card className={cn(cardBg, borderColor, textColor)}>
+            <CardHeader><CardTitle className="flex items-center gap-2"><Zap className="h-5 w-5 text-blue-500" /> Rastreamento (Pixels)</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+                <div className={cn("flex items-center justify-between p-3 rounded-md", borderColor, "border bg-gray-50 dark:bg-[#0f172a]")}>
+                    <Label className={labelColor}>Usar Configurações Globais?</Label>
+                    <DashboardSwitch 
+                        checked={content.pixels.useGlobalPixels} 
+                        onCheckedChange={(checked) => handlePixelChange('useGlobalPixels', checked)}
+                    />
+                </div>
+                
+                <p className={descriptionColor}>Se a opção acima estiver desativada, use os campos abaixo. Se estiver ativada, os campos abaixo *substituirão* os globais se preenchidos.</p>
+
+                <div>
+                    <Label className={labelColor}>Meta Pixel ID (Local)</Label>
+                    <Input 
+                        className={cn(inputBg, borderColor, textColor)} 
+                        value={content.pixels.metaPixelId} 
+                        onChange={e => handlePixelChange('metaPixelId', e.target.value)} 
+                        placeholder="Deixe vazio para usar o global"
+                    />
+                </div>
+                
+                <div>
+                    <Label className={labelColor}>Taboola Pixel ID (Local)</Label>
+                    <Input 
+                        className={cn(inputBg, borderColor, textColor)} 
+                        value={content.pixels.taboolaPixelId} 
+                        onChange={e => handlePixelChange('taboolaPixelId', e.target.value)} 
+                        placeholder="Deixe vazio para usar o global"
+                    />
+                </div>
+                
+                <div>
+                    <Label className={labelColor}>Scripts Adicionais (Local)</Label>
+                    <Textarea 
+                        className={cn(inputBg, borderColor, textColor, "font-mono text-sm")} 
+                        value={content.pixels.customScripts} 
+                        onChange={e => handlePixelChange('customScripts', e.target.value)} 
+                        rows={5}
+                        placeholder="<!-- Scripts específicos desta página -->"
+                    />
+                </div>
+            </CardContent>
         </Card>
 
         <Card className={cn(cardBg, borderColor, textColor)}>

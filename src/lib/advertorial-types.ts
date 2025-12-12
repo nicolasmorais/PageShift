@@ -68,12 +68,21 @@ export interface ContentBlock {
   postButtonText?: string;
 }
 
+// Pixel Configuration for a single page
+export interface PagePixelConfig {
+    metaPixelId: string;
+    taboolaPixelId: string;
+    customScripts: string;
+    useGlobalPixels: boolean; // NEW: Flag to use global settings
+}
+
 export interface CustomAdvertorial {
   id: string;
   name: string;
   header: CustomAdvertorialHeader;
   blocks: ContentBlock[];
   footer: CustomAdvertorialFooter;
+  pixels: PagePixelConfig; // NEW: Pixel configuration for this page
 }
 
 // Interfaces for Approval Page (AP)
@@ -98,10 +107,11 @@ export interface ApprovalPageContent {
     postButtonText: string;
   };
   footer: ApprovalPageFooter;
+  pixels: PagePixelConfig; // NEW: Pixel configuration for AP page
 }
 
-// Pixel Configuration Interface
-export interface PixelConfig {
+// Global Pixel Configuration Interface
+export interface GlobalPixelConfig {
     metaPixelId: string;
     taboolaPixelId: string;
     globalScripts: string; // Scripts adicionais (ex: Google Analytics, TikTok)
@@ -113,6 +123,13 @@ export interface AuthSchema {
 }
 
 // Default content definitions (safe to export to client)
+const defaultPagePixelConfig: PagePixelConfig = {
+    metaPixelId: '',
+    taboolaPixelId: '',
+    customScripts: '',
+    useGlobalPixels: true,
+};
+
 const defaultApprovalPageContent: ApprovalPageContent = {
   header: {
     preTitle: "Bem-Estar e Saúde",
@@ -151,7 +168,8 @@ const defaultApprovalPageContent: ApprovalPageContent = {
         { title: "Política de Reembolso", trigger: "Política de Reembolso", content: "Por se tratar de um produto digital, o acesso ao conteúdo é liberado imediatamente após a confirmação do pagamento. Ainda assim, oferecemos uma política de reembolso transparente para garantir a satisfação do cliente. Você pode solicitar o reembolso em até 7 dias corridos após a compra, conforme o Código de Defesa do Consumidor..." }
     ],
     copyright: "Todos os direitos reservados © 2024 - OneConversion Soluções Digitais"
-  }
+  },
+  pixels: defaultPagePixelConfig, // NEW: Default pixel config for AP
 };
 
 // Default footer content based on the existing approval page footer
@@ -162,7 +180,7 @@ export const defaultCustomAdvertorialFooter: CustomAdvertorialFooter = {
     hidePolicies: false,
 };
 
-export const defaultPixelConfig: PixelConfig = {
+export const defaultGlobalPixelConfig: GlobalPixelConfig = {
     metaPixelId: '',
     taboolaPixelId: '',
     globalScripts: '',
@@ -181,5 +199,5 @@ export const defaultDbData = {
     auth: {
         passwordHash: '', // Hash will be generated on first run if empty
     },
-    pixelConfig: defaultPixelConfig, // NEW: Pixel configuration
+    pixelConfig: defaultGlobalPixelConfig, // Global configuration
 };

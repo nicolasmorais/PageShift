@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Merriweather, Space_Grotesk, Roboto, Open_Sans } from "next/font/google";
 import "./globals.css";
-import { PixelInjector } from '@/components/tracking/PixelInjector'; // NEW: Import PixelInjector
+// import { PixelInjector } from '@/components/tracking/PixelInjector'; // REMOVIDO
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,8 +50,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        {/* Injeta os scripts de pixel aqui */}
-        <PixelInjector />
+        {/* Os scripts de pixel agora são injetados dentro das páginas específicas (ex: CustomAdvertorialPage) */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${spaceGrotesk.variable} ${roboto.variable} ${openSans.variable} font-sans antialiased`}

@@ -1,14 +1,28 @@
 import { getDb } from '@/lib/database';
-import { PixelConfig } from '@/lib/advertorial-types';
+import { GlobalPixelConfig, PagePixelConfig } from '@/lib/advertorial-types';
+
+interface PixelInjectorProps {
+    pagePixels: PagePixelConfig;
+}
 
 // Componente para injetar scripts de rastreamento no head
-export async function PixelInjector() {
-  const db = await getDb();
-  const config: PixelConfig = db.data.pixelConfig;
+export async function PixelInjector({ pagePixels }: PixelInjectorProps) {
+  
+  let metaPixelId = pagePixels.metaPixelId;
+  let taboolaPixelId = pagePixels.taboolaPixelId;
+  let customScripts = pagePixels.customScripts;
 
-  const { metaPixelId, taboolaPixelId, globalScripts } = config;
+  if (pagePixels.useGlobalPixels) {
+    const db = await getDb();
+    const globalConfig: GlobalPixelConfig = db.data.pixelConfig;
+    
+    // Se usar global, os IDs globais substituem os locais se estes estiverem vazios
+    metaPixelId = metaPixelId || globalConfig.metaPixelId;
+    taboolaPixelId = taboolaPixelId || globalConfig.taboolaPixelId;
+    customScripts = customScripts || globalConfig.globalScripts;
+  }
 
-  // 1. Meta Pixel Script
+  // 1. Meta Pixel Script (PageView padrão)
   const metaScript = metaPixelId ? `
     <!-- Meta Pixel Code -->
     <script>
@@ -30,7 +44,7 @@ export async function PixelInjector() {
     <!-- End Meta Pixel Code -->
   ` : '';
 
-  // 2. Taboola Pixel Script
+  // 2. Taboola Pixel Script (PageView padrão)
   const taboolaScript = taboolaPixelId ? `
     <!-- Taboola Pixel Code -->
     <script type="text/javascript">
@@ -49,8 +63,6 @@ export async function PixelInjector() {
   ` : '';
 
   // 3. Global Scripts (Injetado como HTML puro)
-  const customScripts = globalScripts || '';
-
   const combinedScripts = metaScript + taboolaScript + customScripts;
 
   if (!combinedScripts) {

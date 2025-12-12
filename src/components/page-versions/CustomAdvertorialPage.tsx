@@ -5,6 +5,7 @@ import { FooterAP } from '@/components/advertorial-ap/FooterAP'; // Reusing the 
 import { notFound } from 'next/navigation';
 import type { Metadata } from "next";
 import { cn } from '@/lib/utils';
+import { PixelInjector } from '@/components/tracking/PixelInjector'; // NEW: Import PixelInjector
 
 interface CustomAdvertorialPageProps {
     advertorialId: string;
@@ -58,23 +59,29 @@ export async function CustomAdvertorialPage({ advertorialId }: CustomAdvertorial
   const mainFontClass = advertorial.header.fontFamily ? `font-${advertorial.header.fontFamily}` : 'font-sans';
 
   return (
-    <div className={cn("bg-white dark:bg-gray-900 text-gray-800 dark:text-white min-h-screen", mainFontClass)}>
-      <div className="bg-gray-100 dark:bg-gray-800 text-center py-2">
-        <p className="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
-          Advertorial
-        </p>
+    <>
+      {/* Injeta os pixels específicos da página no head */}
+      <head>
+        <PixelInjector pagePixels={advertorial.pixels} />
+      </head>
+      <div className={cn("bg-white dark:bg-gray-900 text-gray-800 dark:text-white min-h-screen", mainFontClass)}>
+        <div className="bg-gray-100 dark:bg-gray-800 text-center py-2">
+          <p className="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+            Advertorial
+          </p>
+        </div>
+        
+        <DynamicHeader {...advertorial.header} />
+        
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          {advertorial.blocks.map((block) => (
+            <BlockRenderer key={block.id} block={block} />
+          ))}
+        </main>
+        
+        {/* Using the custom footer from the advertorial object */}
+        <FooterAP {...advertorial.footer} />
       </div>
-      
-      <DynamicHeader {...advertorial.header} />
-      
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {advertorial.blocks.map((block) => (
-          <BlockRenderer key={block.id} block={block} />
-        ))}
-      </main>
-      
-      {/* Using the custom footer from the advertorial object */}
-      <FooterAP {...advertorial.footer} />
-    </div>
+    </>
   );
 }
