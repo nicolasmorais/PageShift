@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Settings, Wand2, LayoutGrid, Zap, BarChart } from "lucide-react"; // Importando BarChart
+import { Settings, Wand2, LayoutGrid, Zap, BarChart, Activity } from "lucide-react"; // Importando Activity
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +11,12 @@ const mainNavItems = [
     icon: Settings,
     label: "Route Control",
   },
-  { // NEW: Analytics link
+  { // NEW: Status link
+    href: "/dashboard/status",
+    icon: Activity,
+    label: "Status do Sistema",
+  },
+  { // Analytics link
     href: "/dashboard/analytics",
     icon: BarChart,
     label: "Analytics",
@@ -31,7 +36,7 @@ const pagesNavItems = [
   },
 ];
 
-const trackingNavItems = [ // NEW: Nova seção de rastreamento
+const trackingNavItems = [ // Nova seção de rastreamento
   {
     href: "/dashboard/pixels",
     icon: Zap,
@@ -138,7 +143,7 @@ export const Sidebar = () => {
             ))}
           </div>
         </div>
-        {/* NEW: Tracking Section */}
+        {/* Tracking Section */}
         <div>
           <h3 className={cn("mb-2 px-3 text-xs font-semibold uppercase", lightTextColor, darkTextColor)}>
             Rastreamento
