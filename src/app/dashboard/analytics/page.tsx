@@ -18,10 +18,10 @@ import {
 } from "@/components/ui/table";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { BarChart, TrendingUp, LayoutGrid } from 'lucide-react';
+import { BarChart, TrendingUp, LayoutGrid, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageViewEvent, RouteMapping, CustomAdvertorial } from '@/lib/advertorial-types';
-import { DateRangePicker } from '@/components/dashboard/DateRangePicker'; // NEW
+import { DateRangePicker } from '@/components/dashboard/DateRangePicker';
 import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
 
@@ -30,6 +30,7 @@ interface AnalyticsData {
     name: string;
     totalViews: number;
     paths: { path: string; views: number }[];
+    regions: { regionName: string; views: number }[]; // NEW
 }
 
 const LoadingSkeleton = () => (
@@ -84,9 +85,9 @@ export default function AnalyticsPage() {
       contentMap.set('ap', 'Página de Aprovação (AP)');
       customAdvData.forEach(adv => contentMap.set(adv.id, adv.name));
 
-      // Agrupar visualizações por ContentId e Path
+      // Agrupar visualizações por ContentId, Path e Região
       const groupedData = viewsData.reduce((acc, event) => {
-        const { contentId, path } = event;
+        const { contentId, path, regionName } = event;
         
         if (!acc[contentId]) {
           acc[contentId] = {
@@ -94,19 +95,25 @@ export default function AnalyticsPage() {
             name: contentMap.get(contentId) || `Conteúdo Desconhecido (${contentId})`,
             totalViews: 0,
             paths: {},
+            regions: {}, // NEW
           };
         }
         
         acc[contentId].totalViews += 1;
         acc[contentId].paths[path] = (acc[contentId].paths[path] || 0) + 1;
         
+        // Agrupar por região
+        const region = regionName || 'Desconhecido';
+        acc[contentId].regions[region] = (acc[contentId].regions[region] || 0) + 1;
+
         return acc;
-      }, {} as Record<string, Omit<AnalyticsData, 'paths'> & { paths: Record<string, number> }>);
+      }, {} as Record<string, Omit<AnalyticsData, 'paths' | 'regions'> & { paths: Record<string, number>, regions: Record<string, number> }>);
 
       // Formatar para o estado final
       const formattedAnalytics: AnalyticsData[] = Object.values(groupedData).map(item => ({
         ...item,
         paths: Object.entries(item.paths).map(([path, views]) => ({ path, views })).sort((a, b) => b.views - a.views),
+        regions: Object.entries(item.regions).map(([regionName, views]) => ({ regionName, views })).sort((a, b) => b.views - a.views), // NEW
       })).sort((a, b) => b.totalViews - a.totalViews);
 
       setAnalytics(formattedAnalytics);
@@ -171,23 +178,53 @@ export default function AnalyticsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <h3 className="font-semibold mb-2 text-gray-700 dark:text-zinc-300">Visualizações por Rota (Path)</h3>
-                <Table>
-                    <TableHeader>
-                        <TableRow className={cn(borderColor, "hover:bg-transparent")}>
-                            <TableHead className="text-gray-500 dark:text-zinc-400">Caminho</TableHead>
-                            <TableHead className="text-right text-gray-500 dark:text-zinc-400">Visualizações</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {item.paths.map((pathItem, index) => (
-                            <TableRow key={index} className={cn(borderColor, "hover:bg-gray-50 dark:hover:bg-[#0f172a]")}>
-                                <TableCell className="font-mono text-sm text-blue-600 dark:text-blue-400">{pathItem.path}</TableCell>
-                                <TableCell className="text-right font-bold">{pathItem.views}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Coluna 1: Visualizações por Rota */}
+                    <div>
+                        <h3 className="font-semibold mb-2 text-gray-700 dark:text-zinc-300 flex items-center gap-2">
+                            <Route className="h-4 w-4" /> Visualizações por Rota (Path)
+                        </h3>
+                        <Table>
+                            <TableHeader>
+                                <TableRow className={cn(borderColor, "hover:bg-transparent")}>
+                                    <TableHead className="text-gray-500 dark:text-zinc-400">Caminho</TableHead>
+                                    <TableHead className="text-right text-gray-500 dark:text-zinc-400">Visualizações</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {item.paths.map((pathItem, index) => (
+                                    <TableRow key={index} className={cn(borderColor, "hover:bg-gray-50 dark:hover:bg-[#0f172a]")}>
+                                        <TableCell className="font-mono text-sm text-blue-600 dark:text-blue-400">{pathItem.path}</TableCell>
+                                        <TableCell className="text-right font-bold">{pathItem.views}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+
+                    {/* Coluna 2: Distribuição Geográfica */}
+                    <div>
+                        <h3 className="font-semibold mb-2 text-gray-700 dark:text-zinc-300 flex items-center gap-2">
+                            <MapPin className="h-4 w-4" /> Distribuição por Região
+                        </h3>
+                        <Table>
+                            <TableHeader>
+                                <TableRow className={cn(borderColor, "hover:bg-transparent")}>
+                                    <TableHead className="text-gray-500 dark:text-zinc-400">Região/Estado</TableHead>
+                                    <TableHead className="text-right text-gray-500 dark:text-zinc-400">Visualizações</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {item.regions.map((regionItem, index) => (
+                                    <TableRow key={index} className={cn(borderColor, "hover:bg-gray-50 dark:hover:bg-[#0f172a]")}>
+                                        <TableCell className="font-medium">{regionItem.regionName}</TableCell>
+                                        <TableCell className="text-right font-bold">{regionItem.views}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </div>
               </CardContent>
             </Card>
           ))

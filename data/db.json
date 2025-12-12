@@ -14,7 +14,7 @@
     {
       "path": "/v2",
       "name": "Rota do Advertorial V2",
-      "contentId": "v3"
+      "contentId": "v2"
     },
     {
       "path": "/v3",
@@ -25,16 +25,6 @@
       "path": "/aprovado",
       "name": "Página de Aprovação (Preview)",
       "contentId": "ap"
-    },
-    {
-      "path": "/c350eb67-4ad9-46c3-bbd8-2657f98736a7",
-      "contentId": "c350eb67-4ad9-46c3-bbd8-2657f98736a7",
-      "name": "Rota Personalizada: /c350eb67-4ad9-46c3-bbd8-2657f98736a7"
-    },
-    {
-      "path": "/e0b3b190-9b9e-4a05-83e0-08dd60955115",
-      "contentId": "ap",
-      "name": "Rota Personalizada: /e0b3b190-9b9e-4a05-83e0-08dd60955115"
     }
   ],
   "approvalPageContent": {
@@ -104,171 +94,9 @@
       "useGlobalPixels": true
     }
   },
-  "customAdvertorials": [
-    {
-      "id": "c350eb67-4ad9-46c3-bbd8-2657f98736a7",
-      "name": "Novo Advertorial Dinâmico",
-      "header": {
-        "preTitle": "Reportagem Especial",
-        "title": "Título do Novo Advertorial",
-        "subheadline": "Subtítulo chamativo aqui.",
-        "fontFamily": "sans"
-      },
-      "blocks": [
-        {
-          "id": "w0wfs9a",
-          "type": "text",
-          "value": "Novo parágrafo de texto. Use **asteriscos** para negrito.",
-          "fontSize": "xl"
-        },
-        {
-          "id": "0c7fg7e",
-          "type": "pricing",
-          "value": "R$ 29,90",
-          "price": "R$ 29,90",
-          "buttonText": "COMPRAR AGORA",
-          "buttonUrl": "#",
-          "prePriceText": "OFERTA ESPECIAL",
-          "paymentType": "Pagamento Único",
-          "postButtonText": "Acesso imediato."
-        },
-        {
-          "id": "r7aha6x",
-          "type": "html",
-          "value": "<div style=\"background-color: #f0f0f0; padding: 20px; text-align: center;\">Insira seu HTML personalizado aqui.</div>"
-        }
-      ],
-      "footer": {
-        "disclaimers": [
-          {
-            "title": "Isenção de Responsabilidade",
-            "text": "Este conteúdo tem caráter exclusivamente informativo e educacional. Não oferece diagnóstico, tratamento ou cura de condições de saúde. Os resultados podem variar de pessoa para pessoa. Sempre consulte um profissional de saúde qualificado antes de iniciar qualquer mudança na dieta, no consumo de chás, suplementos ou rotina de bem-estar."
-          },
-          {
-            "title": "Declaração de Risco",
-            "text": "O uso de qualquer produto natural deve ser feito com responsabilidade. Pessoas com condições médicas pré-existentes, gestantes, lactantes ou usuários de medicamentos devem buscar orientação profissional antes do consumo."
-          },
-          {
-            "title": "Aviso de Idade",
-            "text": "Conteúdo destinado a maiores de 18 anos."
-          }
-        ],
-        "companyInfo": {
-          "name": "OneConversion Soluções Digitais",
-          "address": "Av. Digital, 123, Sala 4, Aparecida de Goiania - GO",
-          "cnpj": "60.357.932/0001-18",
-          "contact": "suporte@oneconversion.pro"
-        },
-        "policies": [
-          {
-            "title": "Termos e Condições",
-            "trigger": "Termos e Condições",
-            "content": "Ao acessar este site, o usuário concorda que todo o conteúdo exibido — incluindo textos, imagens, vídeos e informações — possui caráter exclusivamente informativo. Os produtos apresentados não substituem consultas, diagnósticos ou recomendações de profissionais da saúde. As informações sobre preços, disponibilidade, frete e políticas comerciais podem ser modificadas a qualquer momento, sem aviso prévio. O uso dos produtos adquiridos é de responsabilidade do consumidor, que deve sempre seguir as orientações descritas na embalagem ou no material que acompanha o produto."
-          },
-          {
-            "title": "Política de Privacidade",
-            "trigger": "Política de Privacidade",
-            "content": "Valorizamos sua privacidade. Todas as informações fornecidas voluntariamente pelo usuário — como nome, e-mail ou dados inseridos em formulários — são utilizadas apenas para fins de atendimento, envio de comunicações solicitadas ou suporte relacionado aos produtos oferecidos. Não compartilhamos, vendemos ou divulgamos dados a terceiros sem autorização do usuário, exceto quando exigido por lei. O usuário pode solicitar a remoção ou alteração de seus dados a qualquer momento por meio de nossos canais de suporte. Consulte esta página regularmente, pois nossa Política de Privacidade pode ser atualizada conforme necessário."
-          },
-          {
-            "title": "Política de Reembolso",
-            "trigger": "Política de Reembolso",
-            "content": "Por se tratar de um produto digital, o acesso ao conteúdo é liberado imediatamente após a confirmação do pagamento. Ainda assim, oferecemos uma política de reembolso transparente para garantir a satisfação do cliente. Você pode solicitar o reembolso em até 7 dias corridos após a compra, conforme o Código de Defesa do Consumidor..."
-          }
-        ],
-        "copyright": "Todos os direitos reservados © 2024 - OneConversion Soluções Digitais",
-        "hideDisclaimers": false,
-        "hideCompanyInfo": false,
-        "hidePolicies": false
-      },
-      "pixels": {
-        "metaPixelId": "",
-        "taboolaPixelId": "1959176",
-        "customScripts": "",
-        "useGlobalPixels": true
-      }
-    },
-    {
-      "id": "e0b3b190-9b9e-4a05-83e0-08dd60955115",
-      "name": "Metodo Japones - ADV1",
-      "header": {
-        "preTitle": "Reportagem Especial",
-        "title": "Título do Novo Advertorial",
-        "subheadline": "Subtítulo chamativo aqui.",
-        "fontFamily": "sans"
-      },
-      "blocks": [
-        {
-          "id": "b828jc1",
-          "type": "text",
-          "value": "Novo parágrafo de texto. Use **asteriscos** para negrito.",
-          "fontSize": "xl"
-        },
-        {
-          "id": "y62vzwv",
-          "type": "pricing",
-          "value": "R$ 29,90",
-          "price": "R$ 29,90",
-          "buttonText": "COMPRAR AGORA",
-          "buttonUrl": "#",
-          "prePriceText": "OFERTA ESPECIAL",
-          "paymentType": "Pagamento Único",
-          "postButtonText": "Acesso imediato."
-        }
-      ],
-      "footer": {
-        "disclaimers": [
-          {
-            "title": "Isenção de Responsabilidade",
-            "text": "Este conteúdo tem caráter exclusivamente informativo e educacional. Não oferece diagnóstico, tratamento ou cura de condições de saúde. Os resultados podem variar de pessoa para pessoa. Sempre consulte um profissional de saúde qualificado antes de iniciar qualquer mudança na dieta, no consumo de chás, suplementos ou rotina de bem-estar."
-          },
-          {
-            "title": "Declaração de Risco",
-            "text": "O uso de qualquer produto natural deve ser feito com responsabilidade. Pessoas com condições médicas pré-existentes, gestantes, lactantes ou usuários de medicamentos devem buscar orientação profissional antes do consumo."
-          },
-          {
-            "title": "Aviso de Idade",
-            "text": "Conteúdo destinado a maiores de 18 anos."
-          }
-        ],
-        "companyInfo": {
-          "name": "OneConversion Soluções Digitais",
-          "address": "Av. Digital, 123, Sala 4, Aparecida de Goiania - GO",
-          "cnpj": "60.357.932/0001-18",
-          "contact": "suporte@oneconversion.pro"
-        },
-        "policies": [
-          {
-            "title": "Termos e Condições",
-            "trigger": "Termos e Condições",
-            "content": "Ao acessar este site, o usuário concorda que todo o conteúdo exibido — incluindo textos, imagens, vídeos e informações — possui caráter exclusivamente informativo. Os produtos apresentados não substituem consultas, diagnósticos ou recomendações de profissionais da saúde. As informações sobre preços, disponibilidade, frete e políticas comerciais podem ser modificadas a qualquer momento, sem aviso prévio. O uso dos produtos adquiridos é de responsabilidade do consumidor, que deve sempre seguir as orientações descritas na embalagem ou no material que acompanha o produto."
-          },
-          {
-            "title": "Política de Privacidade",
-            "trigger": "Política de Privacidade",
-            "content": "Valorizamos sua privacidade. Todas as informações fornecidas voluntariamente pelo usuário — como nome, e-mail ou dados inseridos em formulários — são utilizadas apenas para fins de atendimento, envio de comunicações solicitadas ou suporte relacionado aos produtos oferecidos. Não compartilhamos, vendemos ou divulgamos dados a terceiros sem autorização do usuário, exceto quando exigido por lei. O usuário pode solicitar a remoção ou alteração de seus dados a qualquer momento por meio de nossos canais de suporte. Consulte esta página regularmente, pois nossa Política de Privacidade pode ser atualizada conforme necessário."
-          },
-          {
-            "title": "Política de Reembolso",
-            "trigger": "Política de Reembolso",
-            "content": "Por se tratar de um produto digital, o acesso ao conteúdo é liberado imediatamente após a confirmação do pagamento. Ainda assim, oferecemos uma política de reembolso transparente para garantir a satisfação do cliente. Você pode solicitar o reembolso em até 7 dias corridos após a compra, conforme o Código de Defesa do Consumidor..."
-          }
-        ],
-        "copyright": "Todos os direitos reservados © 2024 - OneConversion Soluções Digitais",
-        "hideDisclaimers": false,
-        "hideCompanyInfo": false,
-        "hidePolicies": false
-      },
-      "pixels": {
-        "metaPixelId": "",
-        "taboolaPixelId": "",
-        "customScripts": "",
-        "useGlobalPixels": true
-      }
-    }
-  ],
+  "customAdvertorials": [],
   "auth": {
-    "passwordHash": "$2b$10$i/bBtoMj1k/wzguXeWB3peVr5BU5E9sLOsYMfcoza55Hv1BzTJnKW"
+    "passwordHash": ""
   },
   "pixelConfig": {
     "metaPixelId": "",
@@ -277,58 +105,10 @@
   },
   "pageViews": [
     {
-      "id": "36d43575-690b-46d0-8fd6-431345e3c853",
-      "contentId": "v1",
-      "path": "/",
-      "timestamp": "2025-12-12T03:37:40.935Z"
-    },
-    {
-      "id": "f787004a-0f7e-44bf-bfbd-44ce5458f5d6",
-      "contentId": "v1",
-      "path": "/",
-      "timestamp": "2025-12-12T03:37:53.909Z"
-    },
-    {
-      "id": "c7b473e2-cb68-4775-80a9-075dfb6efc98",
-      "contentId": "v1",
-      "path": "/",
-      "timestamp": "2025-12-12T03:38:16.289Z"
-    },
-    {
-      "id": "4b6422ca-d463-423b-a491-ae72e6445b29",
-      "contentId": "v2",
-      "path": "/v2",
-      "timestamp": "2025-12-12T03:38:45.884Z"
-    },
-    {
-      "id": "209bad50-b3d0-4faa-af0e-f036460dd8a7",
-      "contentId": "v3",
-      "path": "/v2",
-      "timestamp": "2025-12-12T03:39:09.745Z"
-    },
-    {
-      "id": "12b29ffb-b050-4513-946e-b40db2285246",
-      "contentId": "v3",
-      "path": "/v2",
-      "timestamp": "2025-12-12T03:40:02.248Z"
-    },
-    {
-      "id": "6453ec55-6711-4bf0-b813-843ede77a07c",
-      "contentId": "v1",
-      "path": "/",
-      "timestamp": "2025-12-12T03:43:55.243Z"
-    },
-    {
-      "id": "a3e76b95-419c-44b6-bb3a-228b98f60ee7",
+      "id": "9d8d7347-216d-4b23-8723-8591d72a24a2",
       "contentId": "v1",
       "path": "/v1",
-      "timestamp": "2025-12-12T03:45:11.910Z"
-    },
-    {
-      "id": "32ed89c4-2466-4a46-b396-c62c13572742",
-      "contentId": "v1",
-      "path": "/",
-      "timestamp": "2025-12-12T03:46:46.977Z"
+      "timestamp": "2025-12-12T03:49:11.195Z"
     }
   ]
 }

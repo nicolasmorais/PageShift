@@ -24,6 +24,8 @@ services:
       NODE_ENV: production
       # Set the DATABASE_DIR to match the volume mapping
       DATABASE_DIR: /app/data
+      # Exemplo de URL para GeoIP (ip-api.com)
+      # GEOIP_API_URL: http://ip-api.com/json
 
     # Restart policy for the container
     restart: unless-stopped

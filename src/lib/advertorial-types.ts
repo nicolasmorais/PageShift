@@ -37,6 +37,8 @@ export interface PageViewEvent {
     contentId: string;
     path: string;
     timestamp: string;
+    country?: string; // NEW
+    regionName?: string; // NEW (Estado/Região)
 }
 
 // Interfaces for Custom Advertorials
