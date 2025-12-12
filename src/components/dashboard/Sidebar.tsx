@@ -22,7 +22,7 @@ const pagesNavItems = [
   {
     href: "/dashboard/custom-advertorials",
     icon: LayoutGrid,
-    label: "Criar Advertoriais",
+    label: "Meus Advertoriais",
   },
 ];
 

@@ -82,7 +82,7 @@ export default function CustomAdvertorialsPage() {
       <Toaster richColors />
       <div className="flex items-center justify-between py-4">
         <div>
-          <h1 className={cn("text-2xl font-bold", textColor)}>Advertoriais Dinâmicos</h1>
+          <h1 className={cn("text-2xl font-bold", textColor)}>Meus Advertoriais</h1>
           <p className={secondaryTextColor}>Crie e gerencie conteúdos de página usando blocos dinâmicos.</p>
         </div>
         <Link href="/dashboard/custom-advertorials/new">
