@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { PixelConfig } from '@/lib/advertorial-types';
+import { GlobalPixelConfig } from '@/lib/advertorial-types'; // Corrigido: Usando GlobalPixelConfig
 import { Save, Zap, Code } from 'lucide-react';
 
 const LoadingSkeleton = () => (
@@ -20,7 +20,7 @@ const LoadingSkeleton = () => (
 );
 
 export default function PixelManagerPage() {
-  const [config, setConfig] = useState<PixelConfig | null>(null);
+  const [config, setConfig] = useState<GlobalPixelConfig | null>(null); // Corrigido: Usando GlobalPixelConfig
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -42,8 +42,8 @@ export default function PixelManagerPage() {
     fetchConfig();
   }, []);
 
-  const handleInputChange = (field: keyof PixelConfig, value: string) => {
-    setConfig(prev => {
+  const handleInputChange = (field: keyof GlobalPixelConfig, value: string) => { // Corrigido: Tipagem de field
+    setConfig((prev: GlobalPixelConfig | null) => { // Corrigido: Tipagem de prev
       if (!prev) return null;
       return { ...prev, [field]: value };
     });

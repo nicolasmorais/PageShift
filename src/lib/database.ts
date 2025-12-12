@@ -9,7 +9,7 @@ import {
   defaultCustomAdvertorialFooter,
   defaultDbData,
   AuthSchema,
-  PixelConfig,
+  GlobalPixelConfig, // Corrigido: Usando GlobalPixelConfig
   PageViewEvent // NEW: Import PageViewEvent
 } from './advertorial-types';
 
@@ -21,7 +21,7 @@ interface DbSchema {
   approvalPageContent: ApprovalPageContent;
   customAdvertorials: CustomAdvertorial[];
   auth: AuthSchema;
-  pixelConfig: PixelConfig;
+  pixelConfig: GlobalPixelConfig; // Corrigido: Usando GlobalPixelConfig
   pageViews: PageViewEvent[]; // NEW: Analytics collection
 }
 
