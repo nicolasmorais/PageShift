@@ -100,6 +100,13 @@ export interface ApprovalPageContent {
   footer: ApprovalPageFooter;
 }
 
+// Pixel Configuration Interface
+export interface PixelConfig {
+    metaPixelId: string;
+    taboolaPixelId: string;
+    globalScripts: string; // Scripts adicionais (ex: Google Analytics, TikTok)
+}
+
 // Auth Schema
 export interface AuthSchema {
     passwordHash: string;
@@ -155,6 +162,12 @@ export const defaultCustomAdvertorialFooter: CustomAdvertorialFooter = {
     hidePolicies: false,
 };
 
+export const defaultPixelConfig: PixelConfig = {
+    metaPixelId: '',
+    taboolaPixelId: '',
+    globalScripts: '',
+};
+
 export const defaultDbData = {
     routes: [
         { path: '/', name: 'Página Principal', contentId: 'v1' },
@@ -167,5 +180,6 @@ export const defaultDbData = {
     customAdvertorials: [],
     auth: {
         passwordHash: '', // Hash will be generated on first run if empty
-    }
+    },
+    pixelConfig: defaultPixelConfig, // NEW: Pixel configuration
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Settings, Wand2, LayoutGrid } from "lucide-react";
+import { Settings, Wand2, LayoutGrid, Zap } from "lucide-react"; // Importando Zap
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +23,14 @@ const pagesNavItems = [
     href: "/dashboard/custom-advertorials",
     icon: LayoutGrid,
     label: "Meus Advertoriais",
+  },
+];
+
+const trackingNavItems = [ // NEW: Nova seção de rastreamento
+  {
+    href: "/dashboard/pixels",
+    icon: Zap,
+    label: "Gerenciamento de Pixels",
   },
 ];
 
@@ -113,6 +121,24 @@ export const Sidebar = () => {
           </h3>
           <div className="space-y-1">
             {pagesNavItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={getLinkClasses(item.href)}
+              >
+                <item.icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+        {/* NEW: Tracking Section */}
+        <div>
+          <h3 className={cn("mb-2 px-3 text-xs font-semibold uppercase", lightTextColor, darkTextColor)}>
+            Rastreamento
+          </h3>
+          <div className="space-y-1">
+            {trackingNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

@@ -8,7 +8,9 @@ import {
   CustomAdvertorial, 
   defaultCustomAdvertorialFooter,
   defaultDbData,
-  AuthSchema
+  AuthSchema,
+  PixelConfig, // NEW: Import PixelConfig
+  defaultPixelConfig // NEW: Import defaultPixelConfig
 } from './advertorial-types';
 
 // ----------------------------------------------
@@ -18,7 +20,8 @@ interface DbSchema {
   routes: RouteMapping[];
   approvalPageContent: ApprovalPageContent;
   customAdvertorials: CustomAdvertorial[];
-  auth: AuthSchema; // NEW: Auth schema
+  auth: AuthSchema;
+  pixelConfig: PixelConfig; // NEW: Pixel configuration
 }
 
 const DB_FILE_NAME = 'db.json';
@@ -48,7 +51,8 @@ export async function getDb(): Promise<Low<DbSchema>> {
       routes: defaultDbData.routes,
       approvalPageContent: defaultDbData.approvalPageContent,
       customAdvertorials: defaultDbData.customAdvertorials,
-      auth: defaultDbData.auth, // Include auth default
+      auth: defaultDbData.auth,
+      pixelConfig: defaultDbData.pixelConfig, // Include pixelConfig default
     };
 
     const adapter = new JSONFile<DbSchema>(DB_FULL_PATH);
@@ -76,8 +80,12 @@ export async function getDb(): Promise<Low<DbSchema>> {
         dbInstance.data.customAdvertorials = defaultDbData.customAdvertorials;
         needsUpdate = true;
       }
-      if (!dbInstance.data.auth) { // Check for new auth field
+      if (!dbInstance.data.auth) {
         dbInstance.data.auth = defaultDbData.auth;
+        needsUpdate = true;
+      }
+      if (!dbInstance.data.pixelConfig) { // Check for new pixelConfig field
+        dbInstance.data.pixelConfig = defaultDbData.pixelConfig;
         needsUpdate = true;
       }
       
