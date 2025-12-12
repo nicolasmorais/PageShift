@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { BarChart, TrendingUp, LayoutGrid, MapPin } from 'lucide-react';
+import { BarChart, TrendingUp, LayoutGrid, MapPin, Route } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageViewEvent, RouteMapping, CustomAdvertorial } from '@/lib/advertorial-types';
 import { DateRangePicker } from '@/components/dashboard/DateRangePicker';
