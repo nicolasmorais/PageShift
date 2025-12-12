@@ -1,3 +1,5 @@
+"use client"; // Adicionando a diretiva 'use client'
+
 import { Header } from "@/components/advertorial/Header";
 import { Problem } from "@/components/advertorial/Problem";
 import { CaseStudy } from "@/components/advertorial/CaseStudy";
@@ -9,9 +11,10 @@ import { Footer } from "@/components/advertorial/Footer";
 import type { Metadata } from "next";
 import { usePageTracker } from '@/hooks/use-page-tracker'; // NEW
 
-export const metadata: Metadata = {
-  title: "Advertorial - V1",
-};
+// A exportação de metadata deve ser movida para o arquivo de layout ou page.tsx pai
+// export const metadata: Metadata = {
+//   title: "Advertorial - V1",
+// };
 
 export function V1Page() {
   usePageTracker('v1'); // Rastreia a visualização para o contentId 'v1'
