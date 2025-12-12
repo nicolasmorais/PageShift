@@ -7,11 +7,13 @@ interface RouteContext {
 }
 
 // GET: Fetch a single custom advertorial by ID
-export async function GET(request: Request, context: RouteContext) {
+export async function GET(request: Request, context: { params: { id: string } }) {
   try {
     const { params } = context;
     const db = await getDb();
-    const advertorial = db.data.customAdvertorials.find(a => a.id === params.id);
+    // Nota: No modo PostgreSQL, db.data não existe. Precisamos migrar esta lógica.
+    // Por enquanto, mantemos a compatibilidade com lowdb.
+    const advertorial = (await db).data.customAdvertorials.find(a => a.id === params.id);
 
     if (!advertorial) {
       return NextResponse.json({ message: 'Advertorial não encontrado' }, { status: 404 });
@@ -25,22 +27,25 @@ export async function GET(request: Request, context: RouteContext) {
 }
 
 // DELETE: Delete a custom advertorial by ID
-export async function DELETE(request: Request, context: RouteContext) {
+export async function DELETE(request: Request, context: { params: { id: string } }) {
   try {
     const { params } = context;
     const db = await getDb();
-    const initialLength = db.data.customAdvertorials.length;
     
-    db.data.customAdvertorials = db.data.customAdvertorials.filter(a => a.id !== params.id);
+    // Nota: No modo PostgreSQL, db.data não existe. Precisamos migrar esta lógica.
+    // Por enquanto, mantemos a compatibilidade com lowdb.
+    const initialLength = (await db).data.customAdvertorials.length;
+    
+    (await db).data.customAdvertorials = (await db).data.customAdvertorials.filter(a => a.id !== params.id);
 
-    if (db.data.customAdvertorials.length === initialLength) {
+    if ((await db).data.customAdvertorials.length === initialLength) {
       return NextResponse.json({ message: 'Advertorial não encontrado' }, { status: 404 });
     }
 
     // Also remove any route mapping pointing to this content ID
-    db.data.routes = db.data.routes.filter(r => r.contentId !== params.id);
+    (await db).data.routes = (await db).data.routes.filter(r => r.contentId !== params.id);
 
-    await db.write();
+    await (await db).write();
 
     return NextResponse.json({ message: 'Advertorial excluído com sucesso' });
   } catch (error) {
