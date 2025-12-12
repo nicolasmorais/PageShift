@@ -6,8 +6,8 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-# Simplificando: Usar npm ci se package-lock.json existir, senão falhar.
-RUN   if [ -f package-lock.json ]; then npm ci;   else echo "package-lock.json not found. Using npm install." && npm install;   fi
+# Usando --legacy-peer-deps para resolver o conflito com React 19
+RUN   if [ -f package-lock.json ]; then npm ci --legacy-peer-deps;   else echo "package-lock.json not found. Using npm install." && npm install --legacy-peer-deps;   fi
 
 # 2. Build da aplicação (builder stage)
 FROM base AS builder
