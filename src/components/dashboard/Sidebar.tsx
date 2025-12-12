@@ -88,7 +88,8 @@ export const Sidebar = () => {
       lightBg, lightBorderColor, lightTextColor,
       darkBg, darkBorderColor, darkTextColor
     )}>
-      <div className={cn("flex h-20 items-center justify-center border-b px-6", lightBorderColor, darkBorderColor)}>
+      {/* Removida a classe border-b daqui */}
+      <div className={cn("flex h-20 items-center justify-center px-6")}>
         <Link href="/dashboard">
           <img
             src={LOGO_URL}
