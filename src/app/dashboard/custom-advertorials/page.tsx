@@ -20,7 +20,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { Plus, Trash2, Edit, ExternalLink } from 'lucide-react';
+import { Plus, Trash2, Edit, ExternalLink, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CustomAdvertorial {
@@ -91,6 +91,14 @@ export default function CustomAdvertorialsPage() {
             Novo Advertorial
           </Button>
         </Link>
+      </div>
+      
+      <div className="p-4 mb-6 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 rounded-md flex items-start gap-3">
+        <AlertTriangle className="h-5 w-5 text-yellow-600 mt-1 flex-shrink-0" />
+        <p className="text-sm text-yellow-800 dark:text-yellow-300">
+          <strong>Atenção:</strong> O ID de Conteúdo abaixo é apenas para referência interna e visualização. Para usar um slug amigável (ex: `/promocao-verao`), você deve criar uma rota no painel 
+          <Link href="/dashboard" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline ml-1">Route Control</Link> e mapeá-la para este ID.
+        </p>
       </div>
 
       <Card className={cn(cardBg, borderColor, textColor)}>

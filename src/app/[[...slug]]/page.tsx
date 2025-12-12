@@ -19,8 +19,7 @@ function ContentSwitcher({ contentId }: { contentId: string }) {
     case 'ap':
       return <APPage />;
     default:
-      // If the contentId is not a fixed version, assume it's a Custom Advertorial ID
-      // The CustomAdvertorialPage component will handle fetching the content by ID
+      // For custom advertorials, we pass the contentId (which is the advertorial ID)
       return <CustomAdvertorialPage advertorialId={contentId} />;
   }
 }
@@ -52,15 +51,7 @@ export default async function DynamicPage({
     return <ContentSwitcher contentId={route.contentId} />;
   }
 
-  // If no route mapping is found in the database, check if the path itself is a Custom Advertorial ID
-  const potentialId = path.substring(1); // Remove leading '/'
-  const customAdvertorial = db.data.customAdvertorials.find(a => a.id === potentialId);
-  
-  if (customAdvertorial) {
-    // If the path matches a custom advertorial ID, render it directly
-    return <ContentSwitcher contentId={potentialId} />;
-  }
-  
-  // If neither a mapped route nor a custom ID is found, return a 404.
+  // Se nenhuma rota mapeada for encontrada, retorna 404.
+  // Removemos a lógica que tentava carregar pelo ID do advertorial.
   return notFound();
 }
