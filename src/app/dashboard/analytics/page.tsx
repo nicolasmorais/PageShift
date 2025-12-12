@@ -21,6 +21,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { BarChart, TrendingUp, LayoutGrid } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageViewEvent, RouteMapping, CustomAdvertorial } from '@/lib/advertorial-types';
+import { DateRangePicker } from '@/components/dashboard/DateRangePicker'; // NEW
+import { DateRange } from 'react-day-picker';
+import { format } from 'date-fns';
 
 interface AnalyticsData {
     contentId: string;
@@ -38,12 +41,29 @@ const LoadingSkeleton = () => (
 export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState<AnalyticsData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = async (range?: DateRange) => {
     setIsLoading(true);
+    
+    let url = '/api/analytics/views';
+    const params = new URLSearchParams();
+
+    if (range?.from) {
+        // Formato ISO para o backend
+        params.append('startDate', format(range.from, 'yyyy-MM-dd'));
+    }
+    if (range?.to) {
+        params.append('endDate', format(range.to, 'yyyy-MM-dd'));
+    }
+    
+    if (params.toString()) {
+        url += `?${params.toString()}`;
+    }
+
     try {
       const [viewsRes, routesRes, customAdvRes] = await Promise.all([
-        fetch('/api/analytics/views'),
+        fetch(url),
         fetch('/api/routes'),
         fetch('/api/custom-advertorials'),
       ]);
@@ -99,9 +119,10 @@ export default function AnalyticsPage() {
     }
   };
 
+  // Recarrega os dados sempre que o intervalo de datas muda
   useEffect(() => {
-    fetchAnalytics();
-  }, []);
+    fetchAnalytics(dateRange);
+  }, [dateRange]);
 
   // Cores Dinâmicas
   const cardBg = 'bg-white dark:bg-[#1e293b]';
@@ -113,10 +134,13 @@ export default function AnalyticsPage() {
     <>
       <Toaster richColors />
       <div className="space-y-6">
-        <div className="flex items-center justify-between sticky top-0 z-10 py-4 bg-background">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between sticky top-0 z-10 py-4 bg-background border-b border-gray-100 dark:border-gray-800">
           <div>
             <h1 className={cn("text-2xl font-bold", textColor)}>Analytics de Visualizações</h1>
             <p className={secondaryTextColor}>Visualizações de página rastreadas por conteúdo.</p>
+          </div>
+          <div className="mt-4 sm:mt-0 w-full sm:w-64">
+            <DateRangePicker date={dateRange} setDate={setDateRange} />
           </div>
         </div>
 
@@ -125,7 +149,7 @@ export default function AnalyticsPage() {
         ) : analytics.length === 0 ? (
           <Card className={cn(cardBg, borderColor, "col-span-full text-center p-8 text-gray-500 dark:text-zinc-400")}>
             <CardTitle className="text-xl text-gray-900 dark:text-white">Nenhum dado de visualização encontrado</CardTitle>
-            <CardDescription className="mt-2 text-gray-500 dark:text-zinc-500">Visite suas rotas para começar a rastrear.</CardDescription>
+            <CardDescription className="mt-2 text-gray-500 dark:text-zinc-500">Ajuste o filtro de data ou visite suas rotas para começar a rastrear.</CardDescription>
           </Card>
         ) : (
           analytics.map((item) => (
