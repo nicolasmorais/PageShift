@@ -47,32 +47,15 @@ const DynamicHeader = ({ preTitle, title, subheadline, fontFamily }: CustomAdver
     </header>
 );
 
-
-export async function CustomAdvertorialPage({ advertorialId }: CustomAdvertorialPageProps) {
-  const db = await getDb();
-  const advertorial = db.data.customAdvertorials.find(a => a.id === advertorialId);
-
-  if (!advertorial) {
-    notFound();
-  }
-  
-  // Determina a classe de fonte principal
-  const mainFontClass = advertorial.header.fontFamily ? `font-${advertorial.header.fontFamily}` : 'font-sans';
-
-  return (
-    <CustomAdvertorialPageClient advertorial={advertorial} mainFontClass={mainFontClass} />
-  );
-}
-
 // Wrapper Client Component para usar o hook de rastreamento
-function CustomAdvertorialPageClient({ advertorial, mainFontClass }: { advertorial: CustomAdvertorial, mainFontClass: string }) {
+function CustomAdvertorialPageClient({ advertorial, mainFontClass, pixelScripts }: { advertorial: CustomAdvertorial, mainFontClass: string, pixelScripts: React.ReactNode }) {
     usePageTracker(advertorial.id); // Rastreia a visualização usando o ID do advertorial
     
     return (
         <>
-            {/* Injeta os pixels específicos da página no head */}
+            {/* Injeta os pixels específicos da página no head (passados como prop) */}
             <head>
-                <PixelInjector pagePixels={advertorial.pixels} />
+                {pixelScripts}
             </head>
             <div className={cn("bg-white dark:bg-gray-900 text-gray-800 dark:text-white min-h-screen", mainFontClass)}>
                 <div className="bg-gray-100 dark:bg-gray-800 text-center py-2">
@@ -94,4 +77,26 @@ function CustomAdvertorialPageClient({ advertorial, mainFontClass }: { advertori
             </div>
         </>
     );
+}
+CustomAdvertorialPageClient.displayName = 'CustomAdvertorialPageClient';
+(CustomAdvertorialPageClient as any).isClientComponent = true; // Marcação para o Next.js
+
+
+export async function CustomAdvertorialPage({ advertorialId }: CustomAdvertorialPageProps) {
+  const db = await getDb();
+  const advertorial = db.data.customAdvertorials.find(a => a.id === advertorialId);
+
+  if (!advertorial) {
+    notFound();
+  }
+  
+  // Determina a classe de fonte principal
+  const mainFontClass = advertorial.header.fontFamily ? `font-${advertorial.header.fontFamily}` : 'font-sans';
+  
+  // Renderiza o PixelInjector (Server Component)
+  const pixelScripts = await PixelInjector({ pagePixels: advertorial.pixels });
+
+  return (
+    <CustomAdvertorialPageClient advertorial={advertorial} mainFontClass={mainFontClass} pixelScripts={pixelScripts} />
+  );
 }

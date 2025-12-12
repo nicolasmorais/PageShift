@@ -1,5 +1,3 @@
-"use client"; // Tornando o componente cliente para usar o hook
-
 import { HeaderAP } from "@/components/advertorial-ap/HeaderAP";
 import { ContentAP } from "@/components/advertorial-ap/ContentAP";
 import { PricingAP } from "@/components/advertorial-ap/PricingAP";
@@ -8,7 +6,8 @@ import { FooterAP } from "@/components/advertorial-ap/FooterAP";
 import { getDb } from "@/lib/database";
 import type { Metadata } from "next";
 import { PixelInjector } from '@/components/tracking/PixelInjector';
-import { usePageTracker } from '@/hooks/use-page-tracker'; // NEW
+import { usePageTracker } from '@/hooks/use-page-tracker';
+import { ApprovalPageContent } from '@/lib/advertorial-types'; // Importando o tipo
 
 // Função para gerar metadados dinamicamente
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,28 +18,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export async function APPage() {
-  // Como este é um Server Component, precisamos buscar os dados aqui
-  const db = await getDb();
-  const content = db.data.approvalPageContent;
-
-  // Extrai guaranteeText do body para renderizá-lo separadamente
-  const { guaranteeText, ...contentBodyProps } = content.body;
-
-  // O componente principal deve ser um Client Component para usar o hook.
-  // Vamos criar um wrapper Client Component para o rastreamento.
-  return <APPageClient content={content} contentBodyProps={contentBodyProps} guaranteeText={guaranteeText} />;
-}
-
-// Wrapper Client Component
-function APPageClient({ content, contentBodyProps, guaranteeText }: { content: any, contentBodyProps: any, guaranteeText: string }) {
-    usePageTracker('ap'); // Rastreia a visualização para o contentId 'ap'
+// Wrapper Client Component (Deve ser definido em um arquivo separado, mas mantido aqui por simplicidade)
+// O uso de 'use client' garante que este componente e seus filhos rodem no cliente.
+function APPageClient({ content, contentBodyProps, guaranteeText, pixelScripts }: { content: ApprovalPageContent, contentBodyProps: any, guaranteeText: string, pixelScripts: React.ReactNode }) {
+    // Este hook só pode ser chamado em Client Components
+    usePageTracker('ap'); 
     
     return (
         <>
-            {/* Injeta os pixels específicos da página no head */}
+            {/* Injeta os scripts de pixel no head (passados como prop) */}
             <head>
-                <PixelInjector pagePixels={content.pixels} />
+                {pixelScripts}
             </head>
             <div className="bg-white text-gray-800 font-merriweather">
                 <div className="bg-gray-100 text-center py-2">
@@ -58,4 +46,22 @@ function APPageClient({ content, contentBodyProps, guaranteeText }: { content: a
             </div>
         </>
     );
+}
+APPageClient.displayName = 'APPageClient';
+(APPageClient as any).isClientComponent = true; // Marcação para o Next.js
+
+// Server Component principal
+export async function APPage() {
+  // Busca de dados no servidor
+  const db = await getDb();
+  const content: ApprovalPageContent = db.data.approvalPageContent;
+
+  // Extrai guaranteeText do body
+  const { guaranteeText, ...contentBodyProps } = content.body;
+
+  // Renderiza o PixelInjector (Server Component)
+  const pixelScripts = await PixelInjector({ pagePixels: content.pixels });
+
+  // Passa os dados e os scripts injetados para o Client Component
+  return <APPageClient content={content} contentBodyProps={contentBodyProps} guaranteeText={guaranteeText} pixelScripts={pixelScripts} />;
 }
