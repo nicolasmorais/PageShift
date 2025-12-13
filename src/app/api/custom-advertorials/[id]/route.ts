@@ -2,17 +2,16 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getDb } from '@/lib/database';
 import { CustomAdvertorial } from '@/lib/advertorial-types';
 
-interface RouteContext {
-  params: { id: string };
-}
-
 // GET: Fetch a single custom advertorial by ID
-export async function GET(request: NextRequest, context: RouteContext): Promise<NextResponse> {
+export async function GET(
+  request: NextRequest, 
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
   try {
-    const { params } = context;
+    const { id } = await params;
     const db = await getDb();
     // Explicitly typing the parameter in find
-    const advertorial = db.data.customAdvertorials.find((a: CustomAdvertorial) => a.id === params.id);
+    const advertorial = db.data.customAdvertorials.find((a: CustomAdvertorial) => a.id === id);
 
     if (!advertorial) {
       return NextResponse.json({ message: 'Advertorial não encontrado' }, { status: 404 });
@@ -26,15 +25,18 @@ export async function GET(request: NextRequest, context: RouteContext): Promise<
 }
 
 // DELETE: Delete a custom advertorial by ID
-export async function DELETE(request: NextRequest, context: RouteContext): Promise<NextResponse> {
+export async function DELETE(
+  request: NextRequest, 
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
   try {
-    const { params } = context;
+    const { id } = await params;
     const db = await getDb();
     
     const initialLength = db.data.customAdvertorials.length;
     
     // Explicitly typing the parameter in filter
-    db.data.customAdvertorials = db.data.customAdvertorials.filter((a: CustomAdvertorial) => a.id !== params.id);
+    db.data.customAdvertorials = db.data.customAdvertorials.filter((a: CustomAdvertorial) => a.id !== id);
 
     if (db.data.customAdvertorials.length === initialLength) {
       return NextResponse.json({ message: 'Advertorial não encontrado' }, { status: 404 });
@@ -42,7 +44,7 @@ export async function DELETE(request: NextRequest, context: RouteContext): Promi
 
     // Also remove any route mapping pointing to this content ID
     // Explicitly typing the parameter in filter
-    db.data.routes = db.data.routes.filter(r => r.contentId !== params.id);
+    db.data.routes = db.data.routes.filter(r => r.contentId !== id);
 
     await db.write();
 
