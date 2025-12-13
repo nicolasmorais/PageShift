@@ -26,9 +26,9 @@ function ContentSwitcher({ contentId }: { contentId: string }): JSX.Element {
 }
 
 interface DynamicPageProps {
-  params: {
+  params: Promise<{
     slug?: string[];
-  };
+  }>;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
@@ -37,7 +37,8 @@ export default async function DynamicPage({
   params, 
 }: DynamicPageProps): Promise<JSX.Element> {
   // Await the params promise (removed promise type from props interface)
-  const { slug } = params;
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
   
   // Construct the path from the slug segments.
   // If slug is undefined or empty, it's the root path '/'.
