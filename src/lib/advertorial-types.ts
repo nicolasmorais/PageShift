@@ -132,6 +132,17 @@ export interface AuthSchema {
     passwordHash: string;
 }
 
+// NEW: DbSchema Interface for lowdb
+export interface DbSchema {
+    examples: Array<{ id: number; name: string; createdAt: string }>;
+    routes: RouteMapping[];
+    approvalPageContent: ApprovalPageContent;
+    customAdvertorials: CustomAdvertorial[];
+    auth: AuthSchema;
+    pixelConfig: GlobalPixelConfig;
+    pageViews: PageViewEvent[];
+}
+
 // Default content definitions (safe to export to client)
 const defaultPagePixelConfig: PagePixelConfig = {
     metaPixelId: '',
@@ -196,7 +207,8 @@ export const defaultGlobalPixelConfig: GlobalPixelConfig = {
     globalScripts: '',
 };
 
-export const defaultDbData = {
+export const defaultDbData: DbSchema = {
+    examples: [],
     routes: [
         { path: '/', name: 'Página Principal', contentId: 'v1' },
         { path: '/v1', name: 'Rota do Advertorial V1', contentId: 'v1' },
