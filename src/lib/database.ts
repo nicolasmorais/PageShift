@@ -57,6 +57,11 @@ class PgDbSimulator {
         this.client = client;
     }
     
+    // Adiciona o getter 'data' que retorna 'this' para compatibilidade com db.data.prop
+    get data(): PgDbSimulator {
+        return this;
+    }
+    
     // --- Implementação de Leitura (GET) ---
     
     // Nota: A implementação completa de todas as propriedades (routes, customAdvertorials, etc.)

@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, context: any) { // Usando 'any' 
   try {
     const { params } = context;
     const db = await getDb();
-    const advertorial = (await db).data.customAdvertorials.find(a => a.id === params.id);
+    const advertorial = db.data.customAdvertorials.find(a => a.id === params.id);
 
     if (!advertorial) {
       return NextResponse.json({ message: 'Advertorial não encontrado' }, { status: 404 });
@@ -30,18 +30,18 @@ export async function DELETE(request: NextRequest, context: any) { // Usando 'an
     const { params } = context;
     const db = await getDb();
     
-    const initialLength = (await db).data.customAdvertorials.length;
+    const initialLength = db.data.customAdvertorials.length;
     
-    (await db).data.customAdvertorials = (await db).data.customAdvertorials.filter(a => a.id !== params.id);
+    db.data.customAdvertorials = db.data.customAdvertorials.filter(a => a.id !== params.id);
 
-    if ((await db).data.customAdvertorials.length === initialLength) {
+    if (db.data.customAdvertorials.length === initialLength) {
       return NextResponse.json({ message: 'Advertorial não encontrado' }, { status: 404 });
     }
 
     // Also remove any route mapping pointing to this content ID
-    (await db).data.routes = (await db).data.routes.filter(r => r.contentId !== params.id);
+    db.data.routes = db.data.routes.filter(r => r.contentId !== params.id);
 
-    await (await db).write();
+    await db.write();
 
     return NextResponse.json({ message: 'Advertorial excluído com sucesso' });
   } catch (error) {
