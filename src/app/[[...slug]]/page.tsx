@@ -29,14 +29,15 @@ interface DynamicPageProps {
   params: Promise<{
     slug?: string[];
   }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 // Refatorado para usar async/await, tratando-o como um Server Component
 export default async function DynamicPage({ 
   params, 
+  searchParams, // Mantendo searchParams aqui, embora não seja usado, para desestruturação
 }: DynamicPageProps): Promise<JSX.Element> {
-  // Await the params promise (removed promise type from props interface)
+  // Await the params promise
   const resolvedParams = await params;
   const { slug } = resolvedParams;
   
