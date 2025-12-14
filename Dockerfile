@@ -32,7 +32,8 @@ RUN adduser --system --uid 1001 nextjs
 
 # Copia o build gerado
 COPY --from=builder /app/public ./public
-COPY --from=builder --from=base /app/node_modules ./node_modules
+# CORREÇÃO: Copiando node_modules da etapa 'base' (onde foram instalados)
+COPY --from=base /app/node_modules ./node_modules
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
