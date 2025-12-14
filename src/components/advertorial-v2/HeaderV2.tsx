@@ -7,7 +7,7 @@ export const HeaderV2 = () => {
         <p className="text-sm text-blue-600 font-semibold uppercase tracking-wider">
           Bem-Estar e Tradição
         </p>
-        <h1 className="mt-4 text-3xl md:text-5xl text-gray-900 dark:text-white leading-tight font-black">
+        <h1 className="mt-4 text-3xl md:text-5xl text-gray-900 leading-tight font-black">
           Brasileiros descobrem guia com prática japonesa para apoiar o controle
           diário da glicemia
         </h1>

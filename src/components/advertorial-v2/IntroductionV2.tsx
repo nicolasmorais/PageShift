@@ -5,8 +5,8 @@ export const IntroductionV2 = () => {
     <section className="space-y-6 text-xl leading-relaxed">
       <p>
         Nos últimos anos, práticas tradicionais do Japão têm chamado a atenção
-        de especialistas em bem-estar. Entre elas está o uso de determinados
-        chás funcionais, conhecidos por fazer parte da rotina de milhares de
+        de especialistas em bem-estar. Entre elas está o uso de determinados chás
+        funcionais, conhecidos por fazer parte da rotina de milhares de
         famílias japonesas há gerações.
       </p>
       <div className="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">

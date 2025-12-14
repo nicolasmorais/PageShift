@@ -72,4 +72,4 @@ export const PixelEditor = ({ pixels, handlePixelChange }: PixelEditorProps) => 
             </CardContent>
         </Card>
     );
-};
+}

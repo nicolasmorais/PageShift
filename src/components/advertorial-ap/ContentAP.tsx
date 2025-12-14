@@ -23,7 +23,7 @@ export const ContentAP = ({ imageUrl1, advertorialText, imageUrl2 }: ContentAPPr
         />
       )}
       
-      <div className="prose prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: formattedAdvertitorialText }} />
+      <div className="prose prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: formattedAdvertorialText }} />
 
       {imageUrl2 && (
         <img

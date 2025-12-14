@@ -12,14 +12,14 @@ import { cn } from '@/lib/utils';
 import { GlobalPixelConfig } from '@/lib/advertorial-types'; // Corrigido: Usando GlobalPixelConfig
 import { Save, Zap, Code } from 'lucide-react';
 
-const LoadingSkeleton = (): JSX.Element => (
+const LoadingSkeleton = () => (
   <div className="space-y-6">
     <Card className="bg-white border-gray-200 dark:bg-[#1e293b] dark:border-[#334155]"><CardHeader><Skeleton className="h-6 w-1/4 bg-gray-200 dark:bg-[#334155]" /></CardHeader><CardContent className="space-y-4"><Skeleton className="h-10 w-full bg-gray-200 dark:bg-[#334155]" /><Skeleton className="h-10 w-full bg-gray-200 dark:bg-[#334155]" /></CardContent></Card>
     <Card className="bg-white border-gray-200 dark:bg-[#1e293b] dark:border-[#334155]"><CardHeader><Skeleton className="h-6 w-1/4 bg-gray-200 dark:bg-[#334155]" /></CardHeader><CardContent className="space-y-4"><Skeleton className="h-40 w-full bg-gray-200 dark:bg-[#334155]" /></CardContent></Card>
   </div>
 );
 
-export default function PixelManagerPage(): JSX.Element {
+export default function PixelManagerPage() {
   const [config, setConfig] = useState<GlobalPixelConfig | null>(null); // Corrigido: Usando GlobalPixelConfig
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSaving, setIsSaving] = useState<boolean>(false);

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Settings, Plus, MinusCircle } from 'lucide-react';
 import { CustomAdvertorialFooter, Policy, Disclaimer } from '@/lib/advertorial-types';
 import { cn } from '@/lib/utils';
-import { DashboardSwitch } from '@/components/dashboard/DashboardSwitch'; // Importando o novo Switch
+import { DashboardSwitch } from '@/components/dashboard/DashboardSwitch';
 
 interface FooterEditorProps {
     footer: CustomAdvertorialFooter;
@@ -82,10 +82,7 @@ export const FooterEditor = ({
 
                 {/* Disclaimers */}
                 <div className={cn("space-y-4 p-4 rounded-md", borderColor, "border")}>
-                    <h3 className="font-semibold text-lg flex items-center justify-between">
-                        Avisos e Isenções
-                        <Button size="sm" onClick={() => handleAddFooterItem('disclaimers')} className={primaryButtonClasses}><Plus className="h-4 w-4 mr-2" /> Adicionar Aviso</Button>
-                    </h3>
+                    <h3 className="font-semibold text-lg">Avisos e Isenções</h3>
                     {footer.disclaimers.map((disclaimer, index) => (
                         <div key={index} className={cn("space-y-2 p-2 rounded-md relative bg-gray-50 dark:bg-[#0f172a]", borderColor, "border")}>
                             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => handleRemoveFooterItem('disclaimers', index)}><MinusCircle className="h-4 w-4" /></Button>
@@ -97,10 +94,7 @@ export const FooterEditor = ({
 
                 {/* Policies */}
                 <div className={cn("space-y-4 p-4 rounded-md", borderColor, "border")}>
-                    <h3 className="font-semibold text-lg flex items-center justify-between">
-                        Políticas (Links Modais)
-                        <Button size="sm" onClick={() => handleAddFooterItem('policies')} className={primaryButtonClasses}><Plus className="h-4 w-4 mr-2" /> Adicionar Política</Button>
-                    </h3>
+                    <h3 className="font-semibold text-lg">Políticas (Links Modais)</h3>
                     {footer.policies.map((policy, index) => (
                         <div key={index} className={cn("space-y-2 p-2 rounded-md relative bg-gray-50 dark:bg-[#0f172a]", borderColor, "border")}>
                             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => handleRemoveFooterItem('policies', index)}><MinusCircle className="h-4 w-4" /></Button>
@@ -121,4 +115,4 @@ export const FooterEditor = ({
             </CardFooter>
         </Card>
     );
-};
+}

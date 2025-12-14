@@ -28,7 +28,7 @@ interface ContentOption {
   name: string;
 }
 
-const LoadingSkeleton = (): JSX.Element => {
+const LoadingSkeleton = () => {
   // Cores do Modo Escuro
   const darkSkeletonBg = 'dark:bg-[#334155]';
   const darkCardBg = 'dark:bg-[#1e293b]';
@@ -61,7 +61,7 @@ const LoadingSkeleton = (): JSX.Element => {
 };
 
 
-export default function DashboardPage(): JSX.Element {
+export default function DashboardPage() {
   const [routes, setRoutes] = useState<RouteMapping[]>([]);
   const [contentOptions, setContentOptions] = useState<ContentOption[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);

@@ -39,7 +39,7 @@ interface ContentOption {
     name: string;
 }
 
-const LoadingSkeleton = (): JSX.Element => (
+const LoadingSkeleton = () => (
   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
     {Array.from({ length: 4 }).map((_, i: number) => (
       <Card key={i} className="bg-white border-gray-200 dark:bg-[#1e293b] dark:border-[#334155]"><CardHeader><Skeleton className="h-6 w-1/4 bg-gray-200 dark:bg-[#334155]" /></CardHeader><CardContent><Skeleton className="h-40 w-full bg-gray-200 dark:bg-[#334155]" /></CardContent></Card>
@@ -47,7 +47,7 @@ const LoadingSkeleton = (): JSX.Element => (
   </div>
 );
 
-export default function AnalyticsPage(): JSX.Element {
+export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState<AnalyticsData[]>([]);
   const [contentOptions, setContentOptions] = useState<ContentOption[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);

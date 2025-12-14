@@ -17,7 +17,7 @@ import { FooterEditor } from '@/components/dashboard/custom-advertorials/FooterE
 import { PixelEditor } from '@/components/dashboard/custom-advertorials/PixelEditor'; // NEW: Import PixelEditor
 
 
-export default function CustomAdvertorialEditor(): JSX.Element {
+export default function CustomAdvertorialEditor() {
     const params = useParams();
     const router = useRouter();
     

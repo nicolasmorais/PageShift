@@ -1,4 +1,3 @@
-import React from 'react'; // Adicionado para resolver o erro JSX.Element
 import { getDb } from '@/lib/database';
 import { notFound } from 'next/navigation';
 
@@ -10,7 +9,7 @@ import { CustomAdvertorialPage } from '@/components/page-versions/CustomAdvertor
 import { RouteMapping } from '@/lib/advertorial-types'; // Import RouteMapping type
 
 // This component maps a contentId to the actual Page Component
-function ContentSwitcher({ contentId }: { contentId: string }): JSX.Element {
+function ContentSwitcher({ contentId }: { contentId: string }) {
   switch (contentId) {
     case 'v1':
       return <V1Page />;
@@ -37,7 +36,7 @@ interface DynamicPageProps {
 export default async function DynamicPage({ 
   params, 
   searchParams, // Mantendo searchParams aqui, embora não seja usado, para desestruturação
-}: DynamicPageProps): Promise<JSX.Element> {
+}: DynamicPageProps) {
   // Await the params promise
   const resolvedParams = await params;
   const { slug } = resolvedParams;

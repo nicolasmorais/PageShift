@@ -104,4 +104,4 @@ export const BlocksEditor = ({ blocks, setBlocks, onSave, isSaving, name }: Bloc
             </CardFooter>
         </Card>
     );
-};
+}

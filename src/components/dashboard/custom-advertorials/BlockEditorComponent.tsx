@@ -146,4 +146,4 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
             )}
         </div>
     );
-};
+}

@@ -6,7 +6,7 @@ interface PixelInjectorProps {
 }
 
 // Componente para injetar scripts de rastreamento no head
-export async function PixelInjector({ pagePixels }: PixelInjectorProps): Promise<JSX.Element | null> {
+export async function PixelInjector({ pagePixels }: PixelInjectorProps): Promise<React.ReactNode> {
   
   let metaPixelId: string = pagePixels.metaPixelId;
   let taboolaPixelId: string = pagePixels.taboolaPixelId;

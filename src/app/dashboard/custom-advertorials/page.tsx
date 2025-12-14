@@ -29,7 +29,7 @@ interface CustomAdvertorial {
   name: string;
 }
 
-export default function CustomAdvertorialsPage(): JSX.Element {
+export default function CustomAdvertorialsPage() {
   const [advertorials, setAdvertorials] = useState<CustomAdvertorial[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
