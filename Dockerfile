@@ -1,42 +1,48 @@
-# Use a imagem base do Node.js 18 Alpine
+# Use a imagem base oficial do Node.js 18 Alpine
 FROM node:18-alpine AS base
 
-# 1. Instalação de dependências (deps stage)
-FROM base AS deps
+# Instala dependências necessárias para o build
 RUN apk add --no-cache libc6-compat
-WORKDIR /app
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-# Usando --legacy-peer-deps para resolver o conflito com React 19
-RUN   if [ -f package-lock.json ]; then npm ci --legacy-peer-deps;   else echo "package-lock.json not found. Using npm install." && npm install --legacy-peer-deps;   fi
 
-# 2. Build da aplicação (builder stage)
+WORKDIR /app
+
+# Copia arquivos de configuração do package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+# Instala dependências com legacy-peer-deps para evitar conflitos
+RUN npm ci --legacy-peer-deps
+
+# Constrói a aplicação
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=base /app/node_modules ./node_modules
 COPY . .
-# Simplificando: Usar npm run build
+
+# Gera o build da aplicação Next.js
 RUN npm run build
 
-# 3. Imagem final (runner stage)
+# Imagem de produção
 FROM base AS runner
 WORKDIR /app
 
-# Adiciona usuários e grupos para segurança
+ENV NODE_ENV=production
+
+# Cria um usuário não-root para segurança
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copia arquivos essenciais do build
+# Copia o build gerado
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/data ./data
+COPY --from=builder --from=base /app/node_modules ./node_modules
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
-# Define a porta de execução
-ENV PORT 3000
-
-# Define o usuário de execução
+# Define o usuário e expõe a porta
 USER nextjs
 
-# Comando de inicialização
-CMD ["npm", "start"]
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Comando para iniciar a aplicação
+CMD ["node", "server.js"]

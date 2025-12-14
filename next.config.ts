@@ -13,13 +13,12 @@ const nextConfig: NextConfig = {
     return config;
   },
   async rewrites() {
-    // Explicitly typing the rewrites array
+    // Explicitamente typing the rewrites array
     const rewrites: Array<{ source: string; destination: string }> = [];
 
     const externalApiUrlService1 = process.env.EXTERNAL_API_URL_SERVICE1;
     const externalApiUrlService2 = process.env.EXTERNAL_API_URL_SERVICE2;
     const weatherApiUrl = process.env.WEATHER_API_URL;
-    // Removendo GEOIP_API_URL
 
     if (externalApiUrlService1) {
       rewrites.push({
@@ -30,7 +29,6 @@ const nextConfig: NextConfig = {
 
     if (externalApiUrlService2) {
       rewrites.push({
-      // ... (restante do código)
         source: '/api/service2/:path*',
         destination: `${externalApiUrlService2}/:path*`,
       });
@@ -43,8 +41,6 @@ const nextConfig: NextConfig = {
       });
     }
     
-    // Removida a regra de GeoIP
-
     return rewrites;
   },
 };

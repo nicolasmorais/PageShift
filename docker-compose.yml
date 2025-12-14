@@ -2,29 +2,29 @@ version: '3.8'
 
 services:
   web:
-    # Replace 'your-github-username/your-repo-name' with the actual image path from GHCR.
-    # Users will need to update this to their own image after building with GitHub Actions.
+    # Substitua 'your-github-username/your-repo-name' pelo caminho real da imagem no GHCR.
+    # Os usuários precisarão atualizar isso para sua própria imagem após o build com GitHub Actions.
     image: ghcr.io/your-github-username/your-repo-name:latest
     container_name: dyad-app-web
 
-    # Allows for port change: Maps container port 3000 (where Next.js runs)
-    # to host port 3000. Users can change the host port (e.g., "8080:3000").
+    # Permite a alteração da porta: Mapeia a porta do contêiner 3000 (onde o Next.js roda)
+    # para a porta do host 3000. Os usuários podem mudar "3000:3000" no docker-compose.yml para, por exemplo, "8080:3000" para acessar na porta 8080.
     ports:
       - "3000:3000"
 
-    # Maps a directory to keep the JSON DB file (for persistence).
-    # This creates a named volume for persistent data storage,
-    # or you can map a host path (e.g., "./data:/app/data").
+    # Mapeia um diretório para manter o arquivo JSON do DB (para persistência)
+    # Isso cria um volume nomeado para armazenamento persistente de dados,
+    # ou você pode mapear um caminho do host (ex: "./data:/app/data").
     volumes:
       - dyad_db_data:/app/data
 
-    # Optionally sets environment variables.
-    # These override any ENVs set in the Dockerfile.
+    # Opcionalmente define variáveis de ambiente
+    # Substitui ENVs definidos no Dockerfile
     environment:
       NODE_ENV: production
-      # Set the DATABASE_DIR to match the volume mapping
+      # Define o DATABASE_DIR para corresponder ao mapeamento de volume
       DATABASE_DIR: /app/data
-      # Chave de API para ipgeolocation.io (DEVE SER DEFINIDA NO .ENV ou Dyad UI)
+      # Chave de API para ipgeolocation.io (DEVE SER DEFINIDA NO .env ou Dyad UI)
       IPGEOLOCATION_API_KEY: d04e5f06615e4ad78f0eb2d479c61ecd
       
       # Variáveis de Conexão PostgreSQL (Usadas pelo serviço 'web')
@@ -34,7 +34,7 @@ services:
     depends_on:
       - db
 
-    # Restart policy for the container
+    # Política de reinicialização do contêiner
     restart: unless-stopped
 
   db:
@@ -51,7 +51,7 @@ services:
       # Mapeia a porta do PostgreSQL para a porta 5432 do host (opcional, mas útil para ferramentas externas)
       - "5432:5432"
 
-# Define the named volumes used by the services
+# Define os volumes nomeados usados pelos serviços
 volumes:
   dyad_db_data:
   postgres_data:
