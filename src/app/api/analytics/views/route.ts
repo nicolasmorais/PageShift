@@ -9,25 +9,56 @@ export async function GET(request: Request): Promise<NextResponse> {
     const endDateParam = searchParams.get('endDate');
 
     const db = await getDb();
+    
+    // Se estiver usando PostgreSQL, buscar da tabela page_views
+    if (db.constructor.name === 'PgDbSimulator') {
+      const client = (db as any).client;
+      
+      let query = 'SELECT id, content_id as "contentId", path, timestamp, country, region_name as "regionName" FROM page_views';
+      const params: any[] = [];
+      
+      if (startDateParam || endDateParam) {
+        query += ' WHERE';
+        const conditions: string[] = [];
+        
+        if (startDateParam) {
+          conditions.push('timestamp >= $' + (params.length + 1));
+          params.push(startDateParam);
+        }
+        
+        if (endDateParam) {
+          conditions.push('timestamp < $' + (params.length + 1));
+          const nextDay = new Date(endDateParam);
+          nextDay.setDate(nextDay.getDate() + 1);
+          params.push(nextDay.toISOString());
+        }
+        
+        query += ' ' + conditions.join(' AND ');
+      }
+      
+      query += ' ORDER BY timestamp DESC';
+      
+      const result = await client.query(query, params);
+      return NextResponse.json(result.rows);
+    }
+    
+    // Fallback para lowdb (não deve acontecer)
     let pageViews: PageViewEvent[] = db.data.pageViews || [];
 
     if (startDateParam || endDateParam) {
       const startDate = startDateParam ? new Date(startDateParam) : null;
       const endDate = endDateParam ? new Date(endDateParam) : null;
 
-      // Explicitly typing the parameter in filter
       pageViews = pageViews.filter((view: PageViewEvent) => {
         const viewDate = new Date(view.timestamp);
         let matchesStart = true;
         let matchesEnd = true;
 
         if (startDate) {
-          // Compara apenas a data (ignora o tempo)
           matchesStart = viewDate >= startDate;
         }
 
         if (endDate) {
-          // Para incluir o dia final, comparamos com o início do dia seguinte
           const nextDay = new Date(endDate);
           nextDay.setDate(nextDay.getDate() + 1);
           matchesEnd = viewDate < nextDay;

@@ -85,12 +85,15 @@ export async function getDb(): Promise<Low<DbSchema> | PgDbSimulator> {
         return db;
     }
 
-    if (connectionString) {
+    // FORÇAR USO DO POSTGRESQL - Se não tiver DATABASE_URL, usar valores padrão do docker-compose
+    const dbConnectionString = connectionString || 'postgres://user:password@db:5432/mydatabase';
+
+    if (dbConnectionString) {
         // Modo PostgreSQL
         try {
             // Importação dinâmica para evitar erro de dependência se pg não for usado
             const { Client: PgClient } = await import('pg');
-            const client = new PgClient({ connectionString });
+            const client = new PgClient({ connectionString: dbConnectionString });
             await client.connect();
             console.log("Conexão PostgreSQL estabelecida com sucesso.");
             
@@ -101,19 +104,13 @@ export async function getDb(): Promise<Low<DbSchema> | PgDbSimulator> {
             isPostgres = true;
             return db;
         } catch (error) {
-            console.error("Falha ao conectar ao PostgreSQL, fallback para lowdb:", error);
-            // Fallback para lowdb
+            console.error("Falha ao conectar ao PostgreSQL:", error);
+            throw new Error("Não foi possível conectar ao PostgreSQL. Verifique a configuração DATABASE_URL.");
         }
     }
 
-    // Modo lowdb (JSON)
-    const adapter = new JSONFile<DbSchema>(getDatabasePath());
-    db = new Low(adapter, defaultDbData);
-    await db.read();
-    await (db as Low<DbSchema>).write(); // Casting para garantir que write exista no Low
-    console.log("Banco de dados lowdb inicializado.");
-    
-    return db;
+    // NÃO USAR LOWDB - Lançar erro se não conseguir conectar ao PostgreSQL
+    throw new Error("DATABASE_URL não configurada. O PostgreSQL é obrigatório para este projeto.");
 }
 
 /**
@@ -158,11 +155,66 @@ async function ensureTablesExist(client: Client): Promise<void> {
         );
     `);
     
+    // Inserir dados padrão se não existirem
+    await insertDefaultData(client);
+    
     console.log("Tabelas do PostgreSQL verificadas/criadas.");
 }
 
 /**
- * Retorna o caminho para o arquivo do banco de dados
+ * Insere dados padrão nas tabelas se não existirem
+ */
+async function insertDefaultData(client: Client): Promise<void> {
+    // Verificar se já existem rotas
+    const routeCount = await client.query('SELECT COUNT(*) FROM routes');
+    if (parseInt(routeCount.rows[0].count) === 0) {
+        // Inserir rotas padrão
+        const defaultRoutes = [
+            { path: '/', name: 'Página Principal', content_id: 'v1' },
+            { path: '/v1', name: 'Rota do Advertorial V1', content_id: 'v1' },
+            { path: '/v2', name: 'Rota do Advertorial V2', content_id: 'v2' },
+            { path: '/v3', name: 'Rota do Advertorial V3', content_id: 'v3' },
+            { path: '/aprovado', name: 'Página de Aprovação (Preview)', content_id: 'ap' },
+        ];
+
+        for (const route of defaultRoutes) {
+            await client.query(
+                'INSERT INTO routes (path, name, content_id) VALUES ($1, $2, $3)',
+                [route.path, route.name, route.content_id]
+            );
+        }
+    }
+
+    // Verificar se já existe configuração de approval page
+    const approvalPageCount = await client.query('SELECT COUNT(*) FROM settings WHERE key = $1', ['approvalPageContent']);
+    if (parseInt(approvalPageCount.rows[0].count) === 0) {
+        await client.query(
+            'INSERT INTO settings (key, value) VALUES ($1, $2)',
+            ['approvalPageContent', JSON.stringify(defaultDbData.approvalPageContent)]
+        );
+    }
+
+    // Verificar se já existe configuração de pixels
+    const pixelConfigCount = await client.query('SELECT COUNT(*) FROM settings WHERE key = $1', ['pixelConfig']);
+    if (parseInt(pixelConfigCount.rows[0].count) === 0) {
+        await client.query(
+            'INSERT INTO settings (key, value) VALUES ($1, $2)',
+            ['pixelConfig', JSON.stringify(defaultDbData.pixelConfig)]
+        );
+    }
+
+    // Verificar se já existe configuração de auth
+    const authCount = await client.query('SELECT COUNT(*) FROM settings WHERE key = $1', ['auth']);
+    if (parseInt(authCount.rows[0].count) === 0) {
+        await client.query(
+            'INSERT INTO settings (key, value) VALUES ($1, $2)',
+            ['auth', JSON.stringify(defaultDbData.auth)]
+        );
+    }
+}
+
+/**
+ * Retorna o caminho para o arquivo do banco de dados (mantido para compatibilidade)
  */
 function getDatabasePath(): string {
     const databaseDir = process.env.DATABASE_DIR || './data';

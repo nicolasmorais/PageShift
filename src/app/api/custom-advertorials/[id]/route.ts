@@ -10,6 +10,27 @@ export async function GET(
   try {
     const { id } = await params;
     const db = await getDb();
+    
+    // Se estiver usando PostgreSQL, buscar da tabela custom_advertorials
+    if (db.constructor.name === 'PgDbSimulator') {
+      const client = (db as any).client;
+      const result = await client.query('SELECT id, name, data FROM custom_advertorials WHERE id = $1', [id]);
+      
+      if (result.rows.length === 0) {
+        return NextResponse.json({ message: 'Advertorial não encontrado' }, { status: 404 });
+      }
+      
+      const row = result.rows[0];
+      const advertorial: CustomAdvertorial = {
+        id: row.id,
+        name: row.name,
+        ...row.data
+      };
+      
+      return NextResponse.json(advertorial);
+    }
+    
+    // Fallback para lowdb (não deve acontecer)
     const advertorial = db.data.customAdvertorials.find((a: CustomAdvertorial) => a.id === id);
 
     if (!advertorial) {
@@ -32,6 +53,26 @@ export async function DELETE(
     const { id } = await params;
     const db = await getDb();
     
+    // Se estiver usando PostgreSQL, manipular a tabela custom_advertorials
+    if (db.constructor.name === 'PgDbSimulator') {
+      const client = (db as any).client;
+      
+      // Verificar se o advertorial existe
+      const existingAdvertorial = await client.query('SELECT id FROM custom_advertorials WHERE id = $1', [id]);
+      if (existingAdvertorial.rows.length === 0) {
+        return NextResponse.json({ message: 'Advertorial não encontrado' }, { status: 404 });
+      }
+      
+      // Deletar o advertorial
+      await client.query('DELETE FROM custom_advertorials WHERE id = $1', [id]);
+      
+      // Remover qualquer rota que aponte para este content_id
+      await client.query('DELETE FROM routes WHERE content_id = $1', [id]);
+      
+      return NextResponse.json({ message: 'Advertorial excluído com sucesso' });
+    }
+    
+    // Fallback para lowdb (não deve acontecer)
     const initialLength = db.data.customAdvertorials.length;
     
     db.data.customAdvertorials = db.data.customAdvertorials.filter((a: CustomAdvertorial) => a.id !== id);

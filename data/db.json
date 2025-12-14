@@ -189,6 +189,14 @@
       "timestamp": "2025-12-14T21:13:21.091Z",
       "country": "Brasil",
       "regionName": "GO"
+    },
+    {
+      "id": "5d497450-6342-4b5b-afbc-2091ee9b56a6",
+      "contentId": "v1",
+      "path": "/",
+      "timestamp": "2025-12-14T21:49:20.695Z",
+      "country": "Brasil",
+      "regionName": "GO"
     }
   ]
 }

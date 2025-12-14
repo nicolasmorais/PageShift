@@ -78,8 +78,20 @@ export async function POST(req: Request): Promise<NextResponse> {
       regionName: location.regionName,
     };
 
-    db.data.pageViews.push(newEvent);
+    // Se estiver usando PostgreSQL, inserir na tabela page_views
+    if (db.constructor.name === 'PgDbSimulator') {
+      const client = (db as any).client;
+      
+      await client.query(
+        'INSERT INTO page_views (id, content_id, path, timestamp, country, region_name) VALUES ($1, $2, $3, $4, $5, $6)',
+        [newEvent.id, newEvent.contentId, newEvent.path, newEvent.timestamp, newEvent.country, newEvent.regionName]
+      );
+      
+      return NextResponse.json({ success: true, message: 'Evento registrado' }, { status: 201 });
+    }
     
+    // Fallback para lowdb (não deve acontecer)
+    db.data.pageViews.push(newEvent);
     await db.write();
 
     return NextResponse.json({ success: true, message: 'Evento registrado' }, { status: 201 });

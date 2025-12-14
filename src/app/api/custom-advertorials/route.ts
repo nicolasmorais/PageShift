@@ -7,6 +7,23 @@ import { v4 as uuidv4 } from 'uuid';
 export async function GET(): Promise<NextResponse> {
   try {
     const db = await getDb();
+    
+    // Se estiver usando PostgreSQL, buscar da tabela custom_advertorials
+    if (db.constructor.name === 'PgDbSimulator') {
+      const client = (db as any).client;
+      const result = await client.query('SELECT id, name, data FROM custom_advertorials ORDER BY name');
+      
+      // Transformar os dados para o formato esperado
+      const advertorials: CustomAdvertorial[] = result.rows.map(row => ({
+        id: row.id,
+        name: row.name,
+        ...row.data
+      }));
+      
+      return NextResponse.json(advertorials);
+    }
+    
+    // Fallback para lowdb (não deve acontecer)
     const advertorials: CustomAdvertorial[] = db.data.customAdvertorials;
     return NextResponse.json(advertorials);
   } catch (error) {
@@ -25,6 +42,35 @@ export async function POST(req: Request): Promise<NextResponse> {
       return NextResponse.json({ message: 'Dados incompletos' }, { status: 400 });
     }
 
+    // Se estiver usando PostgreSQL, manipular a tabela custom_advertorials
+    if (db.constructor.name === 'PgDbSimulator') {
+      const client = (db as any).client;
+      
+      if (payload.id) {
+        // Update existing advertorial
+        const { id, ...data } = payload;
+        await client.query(
+          'UPDATE custom_advertorials SET name = $1, data = $2 WHERE id = $3',
+          [payload.name, JSON.stringify(data), payload.id]
+        );
+        
+        return NextResponse.json({ message: 'Advertorial atualizado com sucesso', advertorial: payload });
+      } else {
+        // Create new advertorial
+        const newId = uuidv4();
+        const { id, ...data } = payload;
+        
+        await client.query(
+          'INSERT INTO custom_advertorials (id, name, data) VALUES ($1, $2, $3)',
+          [newId, payload.name, JSON.stringify(data)]
+        );
+        
+        const newAdvertorial = { ...payload, id: newId };
+        return NextResponse.json({ message: 'Advertorial criado com sucesso', advertorial: newAdvertorial });
+      }
+    }
+    
+    // Fallback para lowdb (não deve acontecer)
     let advertorial: CustomAdvertorial;
     
     if (payload.id) {
