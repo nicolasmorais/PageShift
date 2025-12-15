@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Route, ExternalLink, RefreshCw, ArrowRightLeft, AlertTriangle } from 'lucide-react';
+import { Plus, Route, ExternalLink, RefreshCw, ArrowRightLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CustomAdvertorial {
@@ -34,7 +34,6 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [isAssigning, setIsAssigning] = useState<boolean>(false);
-  const [debugInfo, setDebugInfo] = useState<any>(null);
 
   // States for "Gerar Nova Rota"
   const [selectedAdvertorialId, setSelectedAdvertorialId] = useState<string>('');
@@ -49,13 +48,12 @@ export default function DashboardPage() {
     try {
       console.log("Dashboard: Buscando dados...");
       
-      const [advRes, routeRes, debugRes] = await Promise.all([
+      const [advRes, routeRes] = await Promise.all([
         fetch('/api/custom-advertorials'),
-        fetch('/api/routes'),
-        fetch('/api/debug/db')
+        fetch('/api/routes')
       ]);
 
-      console.log("Dashboard: Respostas recebidas - Adv:", advRes.status, "Routes:", routeRes.status, "Debug:", debugRes.status);
+      console.log("Dashboard: Respostas recebidas - Adv:", advRes.status, "Routes:", routeRes.status);
 
       if (!advRes.ok || !routeRes.ok) {
         throw new Error(`Falha ao buscar dados. Adv: ${advRes.status}, Routes: ${routeRes.status}`);
@@ -63,14 +61,11 @@ export default function DashboardPage() {
 
       const advData: CustomAdvertorial[] = await advRes.json();
       const routeData: ExistingRoute[] = await routeRes.json();
-      const debugData = await debugRes.json();
       
       console.log("Dashboard: Dados recebidos - Advertoriais:", advData.length, "Rotas:", routeData.length);
-      console.log("Debug info:", debugData);
 
       setAdvertorials(advData);
       setExistingRoutes(routeData);
-      setDebugInfo(debugData);
 
       if (advData.length === 0) {
         toast.warning("Nenhum advertorial encontrado. Crie um novo em 'Meus Advertoriais'.");
@@ -174,44 +169,11 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Gerenciamento de Rotas</h1>
             <p className="mt-1 text-gray-500 dark:text-zinc-400">Crie novas rotas ou atribua conteúdo de advertoriais a URLs existentes.</p>
         </div>
-        <div className="flex gap-2">
-          <Button 
-            onClick={() => window.open('/api/debug/db', '_blank')} 
-            variant="outline" 
-            className={borderColor}
-          >
-            <AlertTriangle className="mr-2 h-4 w-4" />
-            Debug DB
-          </Button>
-          <Button onClick={fetchAdvertorialsAndRoutes} variant="outline" className={borderColor}>
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Atualizar Lista
-          </Button>
-        </div>
+        <Button onClick={fetchAdvertorialsAndRoutes} variant="outline" className={borderColor}>
+          <RefreshCw className="mr-2 h-4 w-4" />
+          Atualizar Lista
+        </Button>
       </header>
-
-      {/* Debug Info Card */}
-      {debugInfo && (
-        <Card className={cn(cardBg, borderColor, "text-gray-900 dark:text-white")}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-yellow-500" />
-              Informações de Depuração
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <p><strong>Tabela custom_advertorials existe:</strong> {debugInfo.tableExists ? 'Sim' : 'Não'}</p>
-              <p><strong>Quantidade de advertoriais:</strong> {debugInfo.advertorialCount}</p>
-              <p><strong>Amostra de advertoriais:</strong></p>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-2 rounded overflow-x-auto">
-                {JSON.stringify(debugInfo.advertorialSample, null, 2)}
-              </pre>
-              <p><strong>Todas as tabelas:</strong> {debugInfo.allTables?.join(', ')}</p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       <main className="space-y-8">
         {/* Card 1: Gerar Nova Rota */}
