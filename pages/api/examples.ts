@@ -1,21 +1,33 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/database';
-import { DbSchema } from '@/lib/advertorial-types';
+import { Client, QueryResult } from 'pg';
+import { v4 as uuidv4 } from 'uuid';
 
 // Definindo o tipo para um item de exemplo
 interface ExampleItem {
-    id: number;
+    id: string; // Usando string/UUID para PostgreSQL
     name: string;
     createdAt: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+  let client: Client | null = null;
   try {
-    const db = await getDb(); // Get the Lowdb instance
+    client = await getDb(); // Get the PostgreSQL Client
+
+    // Garantir que a tabela 'examples' exista (não estava no ensureTablesExist)
+    await client.query(`
+        CREATE TABLE IF NOT EXISTS examples (
+            id UUID PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        );
+    `);
 
     if (req.method === 'GET') {
       // Handle GET requests to fetch examples
-      const examples: ExampleItem[] = db.data?.examples || [];
+      const result: QueryResult = await client.query('SELECT id, name, created_at as "createdAt" FROM examples ORDER BY created_at DESC');
+      const examples: ExampleItem[] = result.rows;
       res.status(200).json(examples);
       return;
     } else if (req.method === 'POST') {
@@ -26,21 +38,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
       }
 
-      // Generate a simple ID (lowdb doesn't auto-increment like SQL dbs)
-      const examples: ExampleItem[] = db.data?.examples || [];
-      const newId = examples.length > 0 ? Math.max(...examples.map((e: ExampleItem) => e.id)) + 1 : 1;
-
+      const newId = uuidv4();
       const newExample: ExampleItem = {
         id: newId,
         name,
         createdAt: new Date().toISOString(),
       };
 
-      // Add the new example to the array
-      db.data?.examples.push(newExample);
-
-      // Write changes to the JSON file
-      await db.write();
+      // Insert the new example
+      await client.query(
+        'INSERT INTO examples (id, name, created_at) VALUES ($1, $2, $3)',
+        [newId, name, newExample.createdAt]
+      );
 
       res.status(201).json(newExample);
       return;

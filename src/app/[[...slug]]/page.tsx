@@ -1,5 +1,6 @@
 import { getDb } from '@/lib/database';
 import { notFound } from 'next/navigation';
+import { Client } from 'pg';
 
 import { V1Page } from '@/components/page-versions/V1Page';
 import { V2Page } from '@/components/page-versions/V2Page';
@@ -45,9 +46,15 @@ export default async function DynamicPage({
   // If slug is undefined or empty, it's the root path '/'.
   const path = slug ? `/${slug.join('/')}` : '/';
 
-  const db = await getDb();
-  // Explicitly typing the parameter in find
-  const route = db.data.routes.find((r: RouteMapping) => r.path === path);
+  const client: Client = await getDb();
+  
+  // Busca a rota no PostgreSQL
+  const routeResult = await client.query(
+    'SELECT content_id as "contentId" FROM routes WHERE path = $1', 
+    [path]
+  );
+  
+  const route: RouteMapping | undefined = routeResult.rows[0];
 
   if (route) {
     // Render the component corresponding to the contentId found in the database.
@@ -55,6 +62,5 @@ export default async function DynamicPage({
   }
 
   // Se nenhuma rota mapeada for encontrada, retorna 404.
-  // Removemos a lógica que tentava carregar pelo ID do advertorial.
   return notFound();
 }
