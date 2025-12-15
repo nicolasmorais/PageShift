@@ -1,6 +1,2 @@
-import { redirect } from 'next/navigation';
-
-export default function HomePage() {
-  // Redireciona para a página de setup/login
-  redirect('/login');
-}
+// Esta página foi removida para evitar conflito com a rota dinâmica [[...slug]]
+// O redirecionamento será tratado pelo middleware

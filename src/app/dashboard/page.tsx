@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
 import { RouteCard } from '@/components/dashboard/RouteCard';
 import { CreateRouteDialog } from '@/components/dashboard/CreateRouteDialog';
@@ -96,7 +95,7 @@ export default function DashboardPage() {
       setContentOptions([...baseOptions, ...dynamicOptions]);
 
     } catch (error) {
-      toast.error("Falha ao carregar rotas ou conteúdos.");
+      console.error("Failed to fetch routes or content:", error);
     } finally {
       setIsLoading(false);
     }
@@ -114,15 +113,14 @@ export default function DashboardPage() {
         body: JSON.stringify({ path, contentId }),
       });
       if (!response.ok) throw new Error('Failed to save');
-      toast.success(`Rota ${path} atualizada com sucesso!`);
       await fetchRoutesAndContent();
     } catch (error) {
-      toast.error(`Falha ao atualizar a rota ${path}.`);
+      console.error("Failed to save route:", error);
     }
   };
   
   const handleDeleteRoute = async (path: string, name: string): Promise<void> => {
-    toast.warning(`A exclusão da rota ${name} (${path}) não é suportada pela API atual.`);
+    console.warn(`Route deletion not supported for ${name} (${path})`);
   };
 
   const filteredRoutes = routes.filter((route: RouteMapping) => {
@@ -142,8 +140,6 @@ export default function DashboardPage() {
 
   return (
     <>
-      <Toaster richColors />
-      
       <DashboardHeader />
       
       <header className="mb-8">
