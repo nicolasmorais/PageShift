@@ -10,133 +10,100 @@ import {
 } from "@/components/ui/card";
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
-import { RouteCard } from '@/components/dashboard/RouteCard';
-import { CreateRouteDialog } from '@/components/dashboard/CreateRouteDialog';
-import { cn } from '@/lib/utils';
-import { Search, Filter } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Plus, Route, ExternalLink, RefreshCw } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-interface RouteMapping {
-  path: string;
-  contentId: string;
-  name: string;
-}
-
-interface ContentOption {
+interface CustomAdvertorial {
   id: string;
   name: string;
 }
 
-const LoadingSkeleton = () => {
-  // Cores do Modo Escuro
-  const darkSkeletonBg = 'dark:bg-[#334155]';
-  const darkCardBg = 'dark:bg-[#1e293b]';
-  const darkBorderColor = 'dark:border-[#334155]';
-  
-  // Cores do Modo Claro
-  const lightCardBg = 'bg-white';
-  const lightBorderColor = 'border-gray-200';
-  const lightSkeletonBg = 'bg-gray-200';
-  
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {Array.from({ length: 3 }).map((_, i: number) => (
-        <div key={i} className={cn(lightCardBg, lightBorderColor, darkCardBg, darkBorderColor, "rounded-lg shadow-sm border p-6 flex flex-col space-y-6")}>
-          <div className="flex-grow space-y-4">
-            <Skeleton className={cn("h-4 w-1/3", lightSkeletonBg, darkSkeletonBg)} />
-            <Skeleton className={cn("h-10 w-full", lightSkeletonBg, darkSkeletonBg)} />
-            <Skeleton className={cn("h-4 w-1/4", lightSkeletonBg, darkSkeletonBg)} />
-            <Skeleton className={cn("h-10 w-full", lightSkeletonBg, darkSkeletonBg)} />
-            <Skeleton className={cn("h-4 w-1/3", lightSkeletonBg, darkSkeletonBg)} />
-            <Skeleton className={cn("h-10 w-full", lightSkeletonBg, darkSkeletonBg)} />
-          </div>
-          <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-[#334155]">
-            <Skeleton className={cn("h-8 w-20", lightSkeletonBg, darkSkeletonBg)} />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
+interface AutoRoute {
+  id: string;
+  slug: string;
+  name: string;
+  url: string;
+}
 
 export default function DashboardPage() {
-  const [routes, setRoutes] = useState<RouteMapping[]>([]);
-  const [contentOptions, setContentOptions] = useState<ContentOption[]>([]);
+  const [advertorials, setAdvertorials] = useState<CustomAdvertorial[]>([]);
+  const [autoRoutes, setAutoRoutes] = useState<AutoRoute[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [filterContentId, setFilterContentId] = useState<string>('all');
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [selectedAdvertorialId, setSelectedAdvertorialId] = useState<string>('');
+  const [customSlug, setCustomSlug] = useState<string>('');
 
-  const baseOptions: ContentOption[] = [
-    { id: 'v1', name: 'Advertorial V1' },
-    { id: 'v2', name: 'Advertorial V2' },
-    { id: 'v3', name: 'Advertorial V3' },
-    { id: 'ap', name: 'Página de Aprovação (AP)' },
-  ];
-
-  const fetchRoutesAndContent = async (): Promise<void> => {
+  const fetchAdvertorials = async (): Promise<void> => {
     setIsLoading(true);
     try {
-      const [routesRes, customAdvRes] = await Promise.all([
-        fetch('/api/routes'),
-        fetch('/api/custom-advertorials'),
-      ]);
-
-      if (!routesRes.ok || !customAdvRes.ok) {
-        throw new Error('Failed to fetch data');
-      }
-
-      const routesData: RouteMapping[] = await routesRes.json();
-      const customAdvData: { id: string, name: string }[] = await customAdvRes.json();
-
-      const dynamicOptions: ContentOption[] = customAdvData.map((adv: { id: string, name: string }) => ({
+      const res = await fetch('/api/custom-advertorials');
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data: CustomAdvertorial[] = await res.json();
+      setAdvertorials(data);
+      
+      // Gera as rotas automáticas baseadas nos advertoriais
+      const routes = data.map(adv => ({
         id: adv.id,
-        name: `Dinâmico: ${adv.name}`,
+        slug: adv.id, // Por padrão, o slug é o próprio ID
+        name: adv.name,
+        url: `/${adv.id}`
       }));
-
-      setRoutes(routesData);
-      setContentOptions([...baseOptions, ...dynamicOptions]);
+      setAutoRoutes(routes);
 
     } catch (error) {
-      toast.error("Falha ao carregar rotas ou conteúdos.");
+      toast.error("Falha ao carregar os advertoriais.");
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchRoutesAndContent();
+    fetchAdvertorials();
   }, []);
 
-  const handleSaveRoute = async (path: string, contentId: string): Promise<void> => {
+  const handleGenerateRoute = async () => {
+    if (!selectedAdvertorialId) {
+      toast.error("Selecione um advertorial para gerar a rota.");
+      return;
+    }
+
+    setIsGenerating(true);
     try {
-      const response = await fetch('/api/routes', {
+      const response = await fetch('/api/auto-routes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ path, contentId }),
+        body: JSON.stringify({ 
+          advertorialId: selectedAdvertorialId, 
+          slug: customSlug || undefined 
+        }),
       });
-      if (!response.ok) throw new Error('Failed to save');
-      toast.success(`Rota ${path} atualizada com sucesso!`);
-      // Refetch all data to ensure consistency
-      await fetchRoutesAndContent();
+
+      if (!response.ok) throw new Error('Failed to generate route');
+
+      const result = await response.json();
+      toast.success(`Rota gerada: ${result.url}`);
+      
+      // Atualiza a lista de rotas automáticas
+      setAutoRoutes(prev => prev.map(route => 
+        route.id === selectedAdvertorialId 
+          ? { ...route, slug: result.slug, url: result.url }
+          : route
+      ));
+
+      // Limpa o formulário
+      setSelectedAdvertorialId('');
+      setCustomSlug('');
+
     } catch (error) {
-      toast.error(`Falha ao atualizar a rota ${path}.`);
+      toast.error("Falha ao gerar a rota.");
+    } finally {
+      setIsGenerating(false);
     }
   };
-  
-  const handleDeleteRoute = async (path: string, name: string): Promise<void> => {
-    toast.warning(`A exclusão da rota ${name} (${path}) não é suportada pela API atual.`);
-  };
-
-  const filteredRoutes = routes.filter((route: RouteMapping) => {
-    const matchesSearch = route.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          route.path.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesFilter = filterContentId === 'all' || route.contentId === filterContentId;
-
-    return matchesSearch && matchesFilter;
-  });
 
   // Cores Dinâmicas
   const cardBg = 'bg-white dark:bg-[#1e293b]';
@@ -151,66 +118,106 @@ export default function DashboardPage() {
       
       <header className="mb-8 pt-4 flex items-center justify-between">
         <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Gerenciamento de Rotas</h1>
-            <p className="mt-1 text-gray-500 dark:text-zinc-400">Controle qual conteúdo é exibido para cada rota (URL) do seu site.</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Gerador de Rotas Automáticas</h1>
+            <p className="mt-1 text-gray-500 dark:text-zinc-400">Crie URLs amigáveis para seus advertoriais dinâmicos.</p>
         </div>
-        <CreateRouteDialog 
-            contentOptions={contentOptions} 
-            onRouteCreated={fetchRoutesAndContent} 
-        />
+        <Button onClick={fetchAdvertorials} variant="outline" className={borderColor}>
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Atualizar Lista
+        </Button>
       </header>
 
-      {/* Filtros e Pesquisa */}
-      <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center">
-        <div className="relative w-full sm:flex-grow">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 dark:text-zinc-500" />
-          <Input 
-            aria-label="Pesquisar rota" 
-            className={cn("w-full pl-10 pr-4 py-2.5 rounded-lg focus:ring-2 focus:ring-[#38bdf8] focus:border-[#38bdf8] transition-colors text-gray-900 dark:text-white", inputBg, borderColor)} 
-            placeholder="Pesquisar por nome ou caminho..." 
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        
-        <div className="relative w-full sm:w-56">
-          <Select value={filterContentId} onValueChange={setFilterContentId}>
-            <SelectTrigger className={cn("w-full sm:w-56 appearance-none pl-4 pr-10 py-2.5 rounded-lg focus:ring-2 focus:ring-[#38bdf8] focus:border-[#38bdf8] transition-colors text-gray-900 dark:text-white", inputBg, borderColor)}>
-              <Filter className="h-5 w-5 text-gray-500 dark:text-zinc-500 mr-2" />
-              <SelectValue placeholder="Filtrar por conteúdo" />
-            </SelectTrigger>
-            <SelectContent className={cn(selectContentBg, "text-gray-900 dark:text-white", borderColor)}>
-              <SelectItem value="all" className="focus:bg-gray-100 dark:focus:bg-[#1e293b]">Todos os Conteúdos</SelectItem>
-              {contentOptions.map((opt: ContentOption) => (
-                <SelectItem key={opt.id} value={opt.id} className="focus:bg-gray-100 dark:focus:bg-[#1e293b]">
-                  {opt.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+      <main className="space-y-8">
+        {/* Card de Geração de Rota */}
+        <Card className={cn(cardBg, borderColor, "text-gray-900 dark:text-white")}>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <Route className="h-5 w-5" />
+                    Gerar Nova Rota
+                </CardTitle>
+                <CardDescription className="text-gray-500 dark:text-zinc-400">
+                    Escolha um advertorial e atribua uma URL personalizada (opcional).
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div>
+                    <Label className="text-gray-600 dark:text-zinc-300">Escolher Advertorial</Label>
+                    <Select value={selectedAdvertorialId} onValueChange={setSelectedAdvertorialId}>
+                        <SelectTrigger className={cn(inputBg, borderColor, "text-gray-900 dark:text-white")}>
+                            <SelectValue placeholder="Selecione um advertorial" />
+                        </SelectTrigger>
+                        <SelectContent className={cn(selectContentBg, "text-gray-900 dark:text-white", borderColor)}>
+                            {advertorials.map((adv) => (
+                                <SelectItem key={adv.id} value={adv.id} className="focus:bg-gray-100 dark:focus:bg-[#1e293b]">
+                                    {adv.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+                
+                <div>
+                    <Label className="text-gray-600 dark:text-zinc-300">URL Personalizada (Opcional)</Label>
+                    <Input 
+                        className={cn(inputBg, borderColor, "text-gray-900 dark:text-white")} 
+                        value={customSlug}
+                        onChange={(e) => setCustomSlug(e.target.value)}
+                        placeholder="ex: promocao-de-verao (deixe em branco para usar o ID)"
+                    />
+                    <p className="text-xs text-gray-500 dark:text-zinc-500 mt-1">
+                        Se não preenchida, a URL será o ID do advertorial.
+                    </p>
+                </div>
 
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {isLoading ? (
-          <LoadingSkeleton />
-        ) : filteredRoutes.length === 0 ? (
-          <Card className={cn(cardBg, borderColor, "col-span-full text-center p-8 text-gray-500 dark:text-zinc-400")}>
-            <CardTitle className="text-xl text-gray-900 dark:text-white">Nenhuma rota encontrada</CardTitle>
-            <CardDescription className="mt-2 text-gray-500 dark:text-zinc-500">Ajuste os filtros ou a pesquisa.</CardDescription>
-          </Card>
-        ) : (
-          filteredRoutes.map((route: RouteMapping) => (
-            <RouteCard 
-              key={route.path} 
-              route={route} 
-              onSave={handleSaveRoute} 
-              onDelete={handleDeleteRoute}
-              contentOptions={contentOptions}
-            />
-          ))
-        )}
+                <Button 
+                    onClick={handleGenerateRoute} 
+                    disabled={isGenerating || !selectedAdvertorialId} 
+                    className={primaryButtonClasses}
+                >
+                    <Plus className="mr-2 h-4 w-4" />
+                    {isGenerating ? "Gerando..." : "Gerar Rota"}
+                </Button>
+            </CardContent>
+        </Card>
+
+        {/* Card de Rotas Existentes */}
+        <Card className={cn(cardBg, borderColor, "text-gray-900 dark:text-white")}>
+            <CardHeader>
+                <CardTitle>Rotas Automáticas Existentes</CardTitle>
+                <CardDescription className="text-gray-500 dark:text-zinc-400">
+                    Lista de URLs que já apontam para seus advertoriais.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                {isLoading ? (
+                    <div className="space-y-3">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                            <Skeleton key={i} className="h-12 w-full bg-gray-200 dark:bg-[#334155]" />
+                        ))}
+                    </div>
+                ) : autoRoutes.length === 0 ? (
+                    <p className="text-center text-gray-500 dark:text-zinc-500">
+                        Nenhuma rota automática encontrada. Crie uma nova acima.
+                    </p>
+                ) : (
+                    <div className="space-y-3">
+                        {autoRoutes.map((route) => (
+                            <div key={route.id} className={cn("flex items-center justify-between p-3 rounded-md border", borderColor, "bg-gray-50 dark:bg-[#0f172a]")}>
+                                <div>
+                                    <p className="font-medium">{route.name}</p>
+                                    <code className="text-sm text-gray-600 dark:text-zinc-400">{route.url}</code>
+                                </div>
+                                <a href={route.url} target="_blank" rel="noopener noreferrer">
+                                    <Button variant="outline" size="sm" className={borderColor}>
+                                        <ExternalLink className="h-4 w-4" />
+                                    </Button>
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </CardContent>
+        </Card>
       </main>
     </>
   );
