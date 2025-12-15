@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/database';
 import { PageViewEvent } from '@/lib/advertorial-types';
 import { v4 as uuidv4 } from 'uuid';
+import { Client } from 'pg';
 
 interface GeoLocation {
     country?: string;
@@ -67,7 +68,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     // 2. Obter a localização
     const location: GeoLocation = await getGeoLocation(clientIp);
 
-    const db = await getDb();
+    const db: Client = await getDb();
     
     const newEvent: PageViewEvent = {
       id: uuidv4(),
@@ -78,22 +79,12 @@ export async function POST(req: Request): Promise<NextResponse> {
       regionName: location.regionName,
     };
 
-    // Se estiver usando PostgreSQL, inserir na tabela page_views
-    if (db.constructor.name === 'PgDbSimulator') {
-      const client = (db as any).client;
+    // Inserir na tabela page_views
+    await db.query(
+      'INSERT INTO page_views (id, content_id, path, timestamp, country, region_name) VALUES ($1, $2, $3, $4, $5, $6)',
+      [newEvent.id, newEvent.contentId, newEvent.path, newEvent.timestamp, newEvent.country, newEvent.regionName]
+    );
       
-      await client.query(
-        'INSERT INTO page_views (id, content_id, path, timestamp, country, region_name) VALUES ($1, $2, $3, $4, $5, $6)',
-        [newEvent.id, newEvent.contentId, newEvent.path, newEvent.timestamp, newEvent.country, newEvent.regionName]
-      );
-      
-      return NextResponse.json({ success: true, message: 'Evento registrado' }, { status: 201 });
-    }
-    
-    // Fallback para lowdb (não deve acontecer)
-    db.data.pageViews.push(newEvent);
-    await db.write();
-
     return NextResponse.json({ success: true, message: 'Evento registrado' }, { status: 201 });
   } catch (error) {
     console.error('Failed to track page view:', error);
