@@ -1,5 +1,3 @@
-"use client"; // Tornando o componente cliente para usar o hook
-
 import { HeaderV3 } from "@/components/advertorial-v3/HeaderV3";
 import { IntroductionV3 } from "@/components/advertorial-v3/IntroductionV3";
 import { WhyItWorksV3 } from "@/components/advertorial-v3/WhyItWorksV3";
@@ -9,9 +7,10 @@ import { TestimonialsV3 } from "@/components/advertorial-v3/TestimonialsV3";
 import { PricingV3 } from "@/components/advertorial-v3/PricingV3";
 import { DisclaimerV3 } from "@/components/advertorial-v3/DisclaimerV3";
 import { FooterV3 } from "@/components/advertorial-v3/FooterV3";
-import { usePageTracker } from '@/hooks/use-page-tracker'; // NEW
+import { usePageTracker } from '@/hooks/use-page-tracker';
 
-export function V3Page() {
+// Componente Cliente que usa o hook e renderiza o conteúdo
+function V3PageClient() {
   usePageTracker('v3'); // Rastreia a visualização para o contentId 'v3'
   
   return (
@@ -29,4 +28,11 @@ export function V3Page() {
       <FooterV3 />
     </div>
   );
+}
+V3PageClient.displayName = 'V3PageClient';
+(V3PageClient as any).isClientComponent = true;
+
+// Componente Servidor que exporta o Client Component
+export function V3Page() {
+  return <V3PageClient />;
 }

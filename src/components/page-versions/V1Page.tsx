@@ -1,5 +1,3 @@
-"use client"; // Adicionando a diretiva 'use client'
-
 import { Header } from "@/components/advertorial/Header";
 import { Problem } from "@/components/advertorial/Problem";
 import { CaseStudy } from "@/components/advertorial/CaseStudy";
@@ -8,15 +6,10 @@ import { Offer } from "@/components/advertorial/Offer";
 import { Pricing } from "@/components/advertorial/Pricing";
 import { Testimonials } from "@/components/advertorial/Testimonials";
 import { Footer } from "@/components/advertorial/Footer";
-import type { Metadata } from "next";
-import { usePageTracker } from '@/hooks/use-page-tracker'; // NEW
+import { usePageTracker } from '@/hooks/use-page-tracker';
 
-// A exportação de metadata deve ser movida para o arquivo de layout ou page.tsx pai
-// export const metadata: Metadata = {
-//   title: "Advertorial - V1",
-// };
-
-export function V1Page() {
+// Componente Cliente que usa o hook e renderiza o conteúdo
+function V1PageClient() {
   usePageTracker('v1'); // Rastreia a visualização para o contentId 'v1'
   
   return (
@@ -38,4 +31,11 @@ export function V1Page() {
       <Footer />
     </div>
   );
+}
+V1PageClient.displayName = 'V1PageClient';
+(V1PageClient as any).isClientComponent = true;
+
+// Componente Servidor que exporta o Client Component
+export function V1Page() {
+  return <V1PageClient />;
 }
