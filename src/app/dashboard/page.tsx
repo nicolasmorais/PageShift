@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
 import { RouteCard } from '@/components/dashboard/RouteCard';
 import { CreateRouteDialog } from '@/components/dashboard/CreateRouteDialog';
@@ -15,7 +16,6 @@ import { cn } from '@/lib/utils';
 import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
 
 interface RouteMapping {
   path: string;
@@ -29,9 +29,12 @@ interface ContentOption {
 }
 
 const LoadingSkeleton = () => {
+  // Cores do Modo Escuro
   const darkSkeletonBg = 'dark:bg-[#334155]';
   const darkCardBg = 'dark:bg-[#1e293b]';
   const darkBorderColor = 'dark:border-[#334155]';
+  
+  // Cores do Modo Claro
   const lightCardBg = 'bg-white';
   const lightBorderColor = 'border-gray-200';
   const lightSkeletonBg = 'bg-gray-200';
@@ -56,6 +59,7 @@ const LoadingSkeleton = () => {
     </div>
   );
 };
+
 
 export default function DashboardPage() {
   const [routes, setRoutes] = useState<RouteMapping[]>([]);
@@ -95,7 +99,7 @@ export default function DashboardPage() {
       setContentOptions([...baseOptions, ...dynamicOptions]);
 
     } catch (error) {
-      console.error("Failed to fetch routes or content:", error);
+      toast.error("Falha ao carregar rotas ou conteúdos.");
     } finally {
       setIsLoading(false);
     }
@@ -113,14 +117,16 @@ export default function DashboardPage() {
         body: JSON.stringify({ path, contentId }),
       });
       if (!response.ok) throw new Error('Failed to save');
+      toast.success(`Rota ${path} atualizada com sucesso!`);
+      // Refetch all data to ensure consistency
       await fetchRoutesAndContent();
     } catch (error) {
-      console.error("Failed to save route:", error);
+      toast.error(`Falha ao atualizar a rota ${path}.`);
     }
   };
   
   const handleDeleteRoute = async (path: string, name: string): Promise<void> => {
-    console.warn(`Route deletion not supported for ${name} (${path})`);
+    toast.warning(`A exclusão da rota ${name} (${path}) não é suportada pela API atual.`);
   };
 
   const filteredRoutes = routes.filter((route: RouteMapping) => {
@@ -132,17 +138,18 @@ export default function DashboardPage() {
     return matchesSearch && matchesFilter;
   });
 
+  // Cores Dinâmicas
   const cardBg = 'bg-white dark:bg-[#1e293b]';
   const borderColor = 'border-gray-200 dark:border-[#334155]';
   const inputBg = 'bg-gray-100 dark:bg-[#020617]'; 
   const selectContentBg = 'bg-white dark:bg-[#1e293b]'; 
-  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white'; // sky-400
 
   return (
     <>
-      <DashboardHeader />
+      <Toaster richColors />
       
-      <header className="mb-8">
+      <header className="mb-8 pt-4 flex items-center justify-between">
         <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Gerenciamento de Rotas</h1>
             <p className="mt-1 text-gray-500 dark:text-zinc-400">Controle qual conteúdo é exibido para cada rota (URL) do seu site.</p>
@@ -153,6 +160,7 @@ export default function DashboardPage() {
         />
       </header>
 
+      {/* Filtros e Pesquisa */}
       <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center">
         <div className="relative w-full sm:flex-grow">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 dark:text-zinc-500" />

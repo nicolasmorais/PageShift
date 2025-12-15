@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        {/* Scripts de pixel injetados dinamicamente nas páginas */}
+        {/* Os scripts de pixel agora são injetados dentro das páginas específicas (ex: CustomAdvertorialPage) */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${spaceGrotesk.variable} ${roboto.variable} ${openSans.variable} font-sans antialiased`}
