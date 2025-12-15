@@ -15,58 +15,34 @@ export async function POST(req: Request): Promise<NextResponse> {
     }
 
     const db = await getDb();
+    let storedHash = '';
     
     // Se estiver usando PostgreSQL, buscar da tabela settings
     if (db.constructor.name === 'PgDbSimulator') {
       const client = (db as any).client;
       const result = await client.query('SELECT value FROM settings WHERE key = $1', ['auth']);
       
-      let storedHash = '';
       if (result.rows.length > 0) {
         const authData = result.rows[0].value;
         storedHash = authData.passwordHash || '';
       }
-      
-      if (!storedHash) {
-        // Se não houver hash armazenado, inicializa com a senha padrão (84740949)
-        const defaultPassword = '84740949';
-        const newHash = await bcrypt.hash(defaultPassword, 10);
-        
-        await client.query(
-          'INSERT INTO settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO UPDATE SET value = $2',
-          ['auth', JSON.stringify({ passwordHash: newHash })]
-        );
-        
-        const isMatch = await bcrypt.compare(password, newHash);
-        if (!isMatch) {
-          return NextResponse.json({ message: 'Senha incorreta' }, { status: 401 });
-        }
-      } else {
-        const isMatch = await bcrypt.compare(password, storedHash);
-        if (!isMatch) {
-          return NextResponse.json({ message: 'Senha incorreta' }, { status: 401 });
-        }
-      }
     } else {
       // Fallback para lowdb
-      const storedHash = db.data.auth.passwordHash;
+      storedHash = db.data.auth.passwordHash;
+    }
 
-      if (!storedHash) {
-        const defaultPassword = '84740949';
-        const newHash = await bcrypt.hash(defaultPassword, 10);
-        db.data.auth.passwordHash = newHash;
-        await db.write();
-        
-        const isMatch = await bcrypt.compare(password, newHash);
-        if (!isMatch) {
-          return NextResponse.json({ message: 'Senha incorreta' }, { status: 401 });
-        }
-      } else {
-        const isMatch = await bcrypt.compare(password, storedHash);
-        if (!isMatch) {
-          return NextResponse.json({ message: 'Senha incorreta' }, { status: 401 });
-        }
-      }
+    // Se não houver hash, redireciona para setup
+    if (!storedHash) {
+      return NextResponse.json({ 
+        message: 'Sistema não configurado. Configure uma senha primeiro.',
+        needsSetup: true 
+      }, { status: 422 });
+    }
+
+    // Verifica a senha
+    const isMatch = await bcrypt.compare(password, storedHash);
+    if (!isMatch) {
+      return NextResponse.json({ message: 'Senha incorreta' }, { status: 401 });
     }
 
     // Define o cookie de sessão
@@ -75,6 +51,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       secure: process.env.NODE_ENV === 'production',
       maxAge: SESSION_EXPIRY_SECONDS,
       path: '/',
+      sameSite: 'lax'
     });
 
     return NextResponse.json({ success: true, message: 'Login bem-sucedido' });

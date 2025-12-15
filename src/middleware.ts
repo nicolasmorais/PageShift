@@ -7,13 +7,13 @@ export function middleware(request: NextRequest) {
   const isAuthenticated = request.cookies.get(SESSION_COOKIE_NAME)?.value === 'true';
   const pathname = request.nextUrl.pathname;
 
-  // Se o usuário tentar acessar o dashboard sem autenticação, redireciona para o login
+  // Se não estiver autenticado e tentar acessar o dashboard
   if (pathname.startsWith('/dashboard') && !isAuthenticated) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // Se o usuário estiver autenticado e tentar acessar a página de login, redireciona para o dashboard
-  if (pathname.startsWith('/login') && isAuthenticated) {
+  // Se estiver autenticado e tentar acessar login ou setup
+  if ((pathname.startsWith('/login') || pathname.startsWith('/setup')) && isAuthenticated) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
@@ -21,5 +21,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/login'],
+  matcher: ['/dashboard/:path*', '/login', '/setup'],
 };
