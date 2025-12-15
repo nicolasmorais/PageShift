@@ -40,21 +40,13 @@ export const LoginForm = () => {
     }
   };
 
-  // Classes dinâmicas para Input
   const inputClasses = "flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl h-16 p-4 text-xl font-normal leading-normal border-none";
-  
-  // Cores do Input: Claro (fundo cinza, texto escuro) / Escuro (fundo azul escuro, texto branco)
   const inputThemeClasses = "bg-gray-100 text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-[#38bdf8] focus:border-[#38bdf8] dark:bg-[#1e293b] dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-[#38bdf8]/50 dark:focus:border-[#38bdf8]";
-  
-  // Botão Primário
-  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white'; // sky-400
-  
-  // Offset do anel de foco (deve ser o fundo da página)
-  const focusRingOffset = 'focus:ring-offset-background dark:focus:ring-offset-[#0f172a]'; 
+  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+  const focusRingOffset = 'focus:ring-offset-background dark:focus:ring-offset-[#0f172a]';
 
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-      {/* Password Input */}
       <label className="flex flex-col w-full">
         <div className="flex w-full flex-1 items-stretch rounded-lg relative">
           <Input
@@ -70,7 +62,6 @@ export const LoginForm = () => {
                 type="button" 
                 variant="ghost" 
                 size="icon" 
-                // Cores do ícone: Claro (cinza, hover escuro) / Escuro (cinza, hover branco)
                 className="h-full w-full text-gray-500 hover:bg-transparent hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                 onClick={() => setShowPassword(!showPassword)}
             >
@@ -80,7 +71,6 @@ export const LoginForm = () => {
         </div>
       </label>
 
-      {/* Submit Button */}
       <Button
         type="submit"
         className={cn(
