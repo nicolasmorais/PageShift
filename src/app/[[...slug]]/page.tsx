@@ -6,8 +6,8 @@ import { validate as isUUID } from 'uuid';
 import { V1Page } from '@/components/page-versions/V1Page';
 import { V2Page } from '@/components/page-versions/V2Page';
 import { V3Page } from '@/components/page-versions/V3Page';
-import { APPage } from '@/components/page-versions/APPage';
-import { CustomAdvertorialPage } from '@/components/page-versions/CustomAdvertorialPage';
+import APPage from '@/components/page-versions/APPage';
+import CustomAdvertorialPage from '@/components/page-versions/CustomAdvertorialPage';
 import { RouteMapping } from '@/lib/advertorial-types';
 
 // IDs de páginas estáticas que não devem ser procurados como advertoriais dinâmicos
