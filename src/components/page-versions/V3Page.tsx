@@ -7,34 +7,25 @@ import { TestimonialsV3 } from "@/components/advertorial-v3/TestimonialsV3";
 import { PricingV3 } from "@/components/advertorial-v3/PricingV3";
 import { DisclaimerV3 } from "@/components/advertorial-v3/DisclaimerV3";
 import { FooterV3 } from "@/components/advertorial-v3/FooterV3";
-import { usePageTracker } from '@/hooks/use-page-tracker';
+import { PageTracker } from "./PageTracker";
 
-// Componente Cliente que usa o hook e renderiza o conteúdo
-function V3PageClient() {
-  usePageTracker('v3'); // Rastreia a visualização para o contentId 'v3'
-  
-  return (
-    <div className="bg-white text-gray-800 font-merriweather">
-      <HeaderV3 />
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <IntroductionV3 />
-        <WhyItWorksV3 />
-        <RitualV3 />
-        <GuideContentsV3 />
-        <TestimonialsV3 />
-        <PricingV3 />
-        <DisclaimerV3 />
-      </main>
-      <FooterV3 />
-    </div>
-  );
-}
-
-// Marcar explicitamente como Client Component
-V3PageClient.displayName = 'V3PageClient';
-(V3PageClient as any).isClientComponent = true;
-
-// Componente Servidor que exporta o Client Component
 export function V3Page() {
-  return <V3PageClient />;
+  return (
+    <>
+      <PageTracker contentId="v3" />
+      <div className="bg-white text-gray-800 font-merriweather">
+        <HeaderV3 />
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <IntroductionV3 />
+          <WhyItWorksV3 />
+          <RitualV3 />
+          <GuideContentsV3 />
+          <TestimonialsV3 />
+          <PricingV3 />
+          <DisclaimerV3 />
+        </main>
+        <FooterV3 />
+      </div>
+    </>
+  );
 }

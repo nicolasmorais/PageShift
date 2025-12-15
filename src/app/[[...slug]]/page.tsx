@@ -13,7 +13,7 @@ import { RouteMapping } from '@/lib/advertorial-types';
 // IDs de páginas estáticas que não devem ser procurados como advertoriais dinâmicos
 const STATIC_PAGE_IDS = ['v1', 'v2', 'v3', 'ap'];
 
-// Componente Cliente que apenas renderiza o conteúdo correto
+// Componente que renderiza o conteúdo correto
 function ContentSwitcher({ contentId }: { contentId: string }) {
   try {
     console.log("ContentSwitcher: Renderizando contentId:", contentId);
@@ -131,7 +131,7 @@ export default async function DynamicPage({
 
     console.log("DynamicPage: ContentId final:", contentId);
 
-    // Renderiza o componente cliente com o contentId correto
+    // Renderiza o componente com o contentId correto
     return <ContentSwitcher contentId={contentId} />;
   } catch (error) {
     console.error("DynamicPage: Erro ao processar requisição:", error);
