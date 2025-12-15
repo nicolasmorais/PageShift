@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Route, ExternalLink, RefreshCw } from 'lucide-react';
+import { Plus, Route, ExternalLink, RefreshCw, ArrowRightLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CustomAdvertorial {
@@ -22,47 +22,52 @@ interface CustomAdvertorial {
   name: string;
 }
 
-interface AutoRoute {
-  id: string;
-  slug: string;
+interface ExistingRoute {
+  path: string;
   name: string;
-  url: string;
+  contentId: string;
 }
 
 export default function DashboardPage() {
   const [advertorials, setAdvertorials] = useState<CustomAdvertorial[]>([]);
-  const [autoRoutes, setAutoRoutes] = useState<AutoRoute[]>([]);
+  const [existingRoutes, setExistingRoutes] = useState<ExistingRoute[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [isAssigning, setIsAssigning] = useState<boolean>(false);
+
+  // States for "Gerar Nova Rota"
   const [selectedAdvertorialId, setSelectedAdvertorialId] = useState<string>('');
   const [customSlug, setCustomSlug] = useState<string>('');
 
-  const fetchAdvertorials = async (): Promise<void> => {
+  // States for "Atribuir Conteúdo a Rota Existente"
+  const [selectedRoutePath, setSelectedRoutePath] = useState<string>('');
+  const [selectedAdvertorialIdForAssignment, setSelectedAdvertorialIdForAssignment] = useState<string>('');
+
+  const fetchAdvertorialsAndRoutes = async (): Promise<void> => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/custom-advertorials');
-      if (!res.ok) throw new Error('Failed to fetch');
-      const data: CustomAdvertorial[] = await res.json();
-      setAdvertorials(data);
-      
-      // Gera as rotas automáticas baseadas nos advertoriais
-      const routes = data.map(adv => ({
-        id: adv.id,
-        slug: adv.id, // Por padrão, o slug é o próprio ID
-        name: adv.name,
-        url: `/${adv.id}`
-      }));
-      setAutoRoutes(routes);
+      const [advRes, routeRes] = await Promise.all([
+        fetch('/api/custom-advertorials'),
+        fetch('/api/routes')
+      ]);
+
+      if (!advRes.ok || !routeRes.ok) throw new Error('Failed to fetch data');
+
+      const advData: CustomAdvertorial[] = await advRes.json();
+      const routeData: ExistingRoute[] = await routeRes.json();
+
+      setAdvertorials(advData);
+      setExistingRoutes(routeData);
 
     } catch (error) {
-      toast.error("Falha ao carregar os advertoriais.");
+      toast.error("Falha ao carregar os dados.");
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchAdvertorials();
+    fetchAdvertorialsAndRoutes();
   }, []);
 
   const handleGenerateRoute = async () => {
@@ -73,35 +78,65 @@ export default function DashboardPage() {
 
     setIsGenerating(true);
     try {
-      const response = await fetch('/api/auto-routes', {
+      const response = await fetch('/api/routes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          advertorialId: selectedAdvertorialId, 
-          slug: customSlug || undefined 
+          contentId: selectedAdvertorialId, 
+          path: customSlug || undefined,
+          name: `Rota para ${advertorials.find(a => a.id === selectedAdvertorialId)?.name}`
         }),
       });
 
       if (!response.ok) throw new Error('Failed to generate route');
 
       const result = await response.json();
-      toast.success(`Rota gerada: ${result.url}`);
+      toast.success(`Rota gerada: ${result.route.path}`);
       
-      // Atualiza a lista de rotas automáticas
-      setAutoRoutes(prev => prev.map(route => 
-        route.id === selectedAdvertorialId 
-          ? { ...route, slug: result.slug, url: result.url }
-          : route
-      ));
-
       // Limpa o formulário
       setSelectedAdvertorialId('');
       setCustomSlug('');
+      fetchAdvertorialsAndRoutes(); // Atualiza a lista de rotas
 
     } catch (error) {
       toast.error("Falha ao gerar a rota.");
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  const handleAssignContent = async () => {
+    if (!selectedRoutePath || !selectedAdvertorialIdForAssignment) {
+      toast.error("Selecione uma rota e um advertorial.");
+      return;
+    }
+
+    setIsAssigning(true);
+    try {
+      const response = await fetch('/api/routes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          contentId: selectedAdvertorialIdForAssignment, 
+          path: selectedRoutePath,
+          name: `Rota para ${advertorials.find(a => a.id === selectedAdvertorialIdForAssignment)?.name}`
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to assign content');
+
+      const result = await response.json();
+      toast.success(`Conteúdo atribuído à rota: ${result.route.path}`);
+      
+      // Limpa o formulário
+      setSelectedRoutePath('');
+      setSelectedAdvertorialIdForAssignment('');
+      fetchAdvertorialsAndRoutes(); // Atualiza a lista de rotas
+
+    } catch (error) {
+      toast.error("Falha ao atribuir o conteúdo.");
+    } finally {
+      setIsAssigning(false);
     }
   };
 
@@ -118,17 +153,17 @@ export default function DashboardPage() {
       
       <header className="mb-8 pt-4 flex items-center justify-between">
         <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Gerador de Rotas Automáticas</h1>
-            <p className="mt-1 text-gray-500 dark:text-zinc-400">Crie URLs amigáveis para seus advertoriais dinâmicos.</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Gerenciamento de Rotas</h1>
+            <p className="mt-1 text-gray-500 dark:text-zinc-400">Crie novas rotas ou atribua conteúdo de advertoriais a URLs existentes.</p>
         </div>
-        <Button onClick={fetchAdvertorials} variant="outline" className={borderColor}>
+        <Button onClick={fetchAdvertorialsAndRoutes} variant="outline" className={borderColor}>
             <RefreshCw className="mr-2 h-4 w-4" />
             Atualizar Lista
         </Button>
       </header>
 
       <main className="space-y-8">
-        {/* Card de Geração de Rota */}
+        {/* Card 1: Gerar Nova Rota */}
         <Card className={cn(cardBg, borderColor, "text-gray-900 dark:text-white")}>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -136,7 +171,7 @@ export default function DashboardPage() {
                     Gerar Nova Rota
                 </CardTitle>
                 <CardDescription className="text-gray-500 dark:text-zinc-400">
-                    Escolha um advertorial e atribua uma URL personalizada (opcional).
+                    Crie uma nova URL para um advertorial.
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -180,12 +215,70 @@ export default function DashboardPage() {
             </CardContent>
         </Card>
 
-        {/* Card de Rotas Existentes */}
+        {/* Card 2: Atribuir Conteúdo a Rota Existente */}
         <Card className={cn(cardBg, borderColor, "text-gray-900 dark:text-white")}>
             <CardHeader>
-                <CardTitle>Rotas Automáticas Existentes</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                    <ArrowRightLeft className="h-5 w-5" />
+                    Atribuir Conteúdo a Rota Existente
+                </CardTitle>
                 <CardDescription className="text-gray-500 dark:text-zinc-400">
-                    Lista de URLs que já apontam para seus advertoriais.
+                    Altere o conteúdo de uma URL existente para o de outro advertorial.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div>
+                    <Label className="text-gray-600 dark:text-zinc-300">Rota Existente (URL)</Label>
+                    <Select value={selectedRoutePath} onValueChange={setSelectedRoutePath}>
+                        <SelectTrigger className={cn(inputBg, borderColor, "text-gray-900 dark:text-white")}>
+                            <SelectValue placeholder="Selecione uma rota existente" />
+                        </SelectTrigger>
+                        <SelectContent className={cn(selectContentBg, "text-gray-900 dark:text-white", borderColor)}>
+                            {existingRoutes.map((route) => (
+                                <SelectItem key={route.path} value={route.path} className="focus:bg-gray-100 dark:focus:bg-[#1e293b]">
+                                    {route.path} (Atual: {route.name})
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                <div>
+                    <Label className="text-gray-600 dark:text-zinc-300">Advertorial a ser Atribuído</Label>
+                    <Select value={selectedAdvertorialIdForAssignment} onValueChange={setSelectedAdvertorialIdForAssignment}>
+                        <SelectTrigger className={cn(inputBg, borderColor, "text-gray-900 dark:text-white")}>
+                            <SelectValue placeholder="Selecione um advertorial" />
+                        </SelectTrigger>
+                        <SelectContent className={cn(selectContentBg, "text-gray-900 dark:text-white", borderColor)}>
+                            {advertorials.map((adv) => (
+                                <SelectItem key={adv.id} value={adv.id} className="focus:bg-gray-100 dark:focus-bg-[#1e293b]">
+                                    {adv.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    <p className="text-xs text-gray-500 dark:text-zinc-500 mt-1">
+                        Se não escolher nenhum, a rota voltará ao seu conteúdo original (se houver).
+                    </p>
+                </div>
+
+                <Button 
+                    onClick={handleAssignContent} 
+                    disabled={isAssigning || !selectedRoutePath} 
+                    className={primaryButtonClasses}
+                >
+                    <ArrowRightLeft className="mr-2 h-4 w-4" />
+                    {isAssigning ? "Atribuindo..." : "Atribuir Conteúdo"}
+                </Button>
+            </CardContent>
+        </Card>
+
+        {/* Card 3: Rotas Existentes */}
+        <Card className={cn(cardBg, borderColor, "text-gray-900 dark:text-white")}>
+            <CardHeader>
+                <CardTitle>Rotas Existentes</CardTitle>
+                <CardDescription className="text-gray-500 dark:text-zinc-400">
+                    Lista de todas as URLs mapeadas no sistema.
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -195,19 +288,19 @@ export default function DashboardPage() {
                             <Skeleton key={i} className="h-12 w-full bg-gray-200 dark:bg-[#334155]" />
                         ))}
                     </div>
-                ) : autoRoutes.length === 0 ? (
+                ) : existingRoutes.length === 0 ? (
                     <p className="text-center text-gray-500 dark:text-zinc-500">
-                        Nenhuma rota automática encontrada. Crie uma nova acima.
+                        Nenhuma rota encontrada. Crie uma nova acima.
                     </p>
                 ) : (
                     <div className="space-y-3">
-                        {autoRoutes.map((route) => (
-                            <div key={route.id} className={cn("flex items-center justify-between p-3 rounded-md border", borderColor, "bg-gray-50 dark:bg-[#0f172a]")}>
+                        {existingRoutes.map((route) => (
+                            <div key={route.path} className={cn("flex items-center justify-between p-3 rounded-md border", borderColor, "bg-gray-50 dark:bg-[#0f172a]")}>
                                 <div>
                                     <p className="font-medium">{route.name}</p>
-                                    <code className="text-sm text-gray-600 dark:text-zinc-400">{route.url}</code>
+                                    <code className="text-sm text-gray-600 dark:text-zinc-400">{route.path}</code>
                                 </div>
-                                <a href={route.url} target="_blank" rel="noopener noreferrer">
+                                <a href={route.path} target="_blank" rel="noopener noreferrer">
                                     <Button variant="outline" size="sm" className={borderColor}>
                                         <ExternalLink className="h-4 w-4" />
                                     </Button>
