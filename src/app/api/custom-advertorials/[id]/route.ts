@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getDb } from '@/lib/database';
 import { CustomAdvertorial } from '@/lib/advertorial-types';
 import { Client } from 'pg';
+import { validate as isUUID } from 'uuid';
 
 // GET: Fetch a single custom advertorial by ID
 export async function GET(
@@ -10,6 +11,12 @@ export async function GET(
 ): Promise<NextResponse> {
   try {
     const { id } = await params;
+
+    // Validação de segurança: só busca por UUIDs válidos para evitar erros de SQL
+    if (!isUUID(id)) {
+      return NextResponse.json({ message: 'ID de advertorial inválido. Deve ser um UUID.' }, { status: 400 });
+    }
+
     const client: Client = await getDb();
     
     // Buscar da tabela custom_advertorials
@@ -40,6 +47,12 @@ export async function DELETE(
 ): Promise<NextResponse> {
   try {
     const { id } = await params;
+
+    // Validação de segurança: só deleta por UUIDs válidos
+    if (!isUUID(id)) {
+      return NextResponse.json({ message: 'ID de advertorial inválido. Deve ser um UUID.' }, { status: 400 });
+    }
+
     const client: Client = await getDb();
     
     // Verificar se o advertorial existe
