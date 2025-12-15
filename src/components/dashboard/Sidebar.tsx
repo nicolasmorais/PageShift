@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Settings, Wand2, LayoutGrid, Zap, BarChart, Activity } from "lucide-react"; // Importando Activity
+import { Settings, Wand2, LayoutGrid, Zap, BarChart, Activity } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { LogoutButton } from "@/components/auth/LogoutButton"; // Importando o botão de logout
 
 const mainNavItems = [
   {
@@ -98,7 +99,6 @@ export const Sidebar = () => {
       lightBg, lightBorderColor, lightTextColor,
       darkBg, darkBorderColor, darkTextColor
     )}>
-      {/* Removida a classe border-b daqui */}
       <div className={cn("flex h-20 items-center justify-center px-6")}>
         <Link href="/dashboard">
           <img
@@ -162,6 +162,11 @@ export const Sidebar = () => {
           </div>
         </div>
       </nav>
+      
+      {/* Botão de Logout no final da Sidebar */}
+      <div className="p-4 border-t border-gray-200 dark:border-[#334155]">
+        <LogoutButton />
+      </div>
     </aside>
   );
 };
