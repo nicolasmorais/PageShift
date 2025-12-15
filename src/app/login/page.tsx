@@ -1,47 +1,78 @@
-import { LoginForm } from '@/components/auth/LoginForm';
-import { Metadata } from 'next';
-import { cn } from '@/lib/utils';
-import { Toaster } from 'sonner';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Acesso - PageShift',
-};
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
-  // Cores do novo design: background-dark: #0f172a
-  // Removendo mainBg fixo para usar bg-background
-  const logoUrl = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29-cQ9d9YZNOknrfYOmNv38Sj0LQVfjHp.png";
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+
+      if (response.ok) {
+        toast.success('Login realizado com sucesso!');
+        router.push('/dashboard');
+      } else {
+        const data = await response.json();
+        toast.error(data.error || 'Senha incorreta');
+      }
+    } catch (error) {
+      toast.error('Erro ao fazer login');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <>
-      <Toaster richColors />
-      <div className={cn("relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden p-6 bg-background")}>
-        
-        {/* Main Content Container */}
-        <div className="w-full max-w-sm mx-auto space-y-8">
-          
-          {/* Logo */}
-          <div className="mb-8">
-            <img
-              src={logoUrl}
-              alt="One Conversion Logo"
-              className="h-10 w-auto"
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-md w-full space-y-8 p-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+            Acesso ao Dashboard
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+            Digite a senha para acessar
+          </p>
+        </div>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="password" className="sr-only">
+              Senha
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          {/* Title and Subtitle */}
-          <div className="mb-8">
-            <h1 className="text-gray-900 dark:text-white text-4xl font-bold leading-tight tracking-[-0.015em] text-left">
-              Acesse sua conta
-            </h1>
-            <p className="text-gray-500 dark:text-gray-400 text-lg font-normal leading-normal mt-2">
-              Insira a senha para acessar o painel.
-            </p>
+          <div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+            >
+              {isLoading ? 'Entrando...' : 'Entrar'}
+            </button>
           </div>
-          
-          <LoginForm />
-        </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 }
