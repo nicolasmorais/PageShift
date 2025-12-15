@@ -5,7 +5,7 @@ import { RouteMapping } from './advertorial-types';
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
-    console.warn("DATABASE_URL não está configurada. O aplicativo usará o lowdb (JSON) por padrão.");
+    console.warn("DATABASE_URL não está configurada. O aplicativo usará o PostgreSQL com valores padrão do docker-compose.");
 }
 
 let client: Client | null = null;
@@ -15,17 +15,17 @@ let client: Client | null = null;
  * @returns O cliente conectado.
  */
 export async function getPgClient(): Promise<Client> {
-    if (!connectionString) {
-        throw new Error("DATABASE_URL não configurada. Não é possível conectar ao PostgreSQL.");
-    }
-    
+    // FORÇAR USO DO POSTGRESQL - Se não tiver DATABASE_URL, usar valores padrão do docker-compose
+    const dbConnectionString = connectionString || 'postgres://user:password@db:5432/mydatabase';
+
     if (client) {
         return client;
     }
 
-    client = new Client({ connectionString });
-    
     try {
+        const { Client: PgClient } = await import('pg');
+        client = new PgClient({ connectionString: dbConnectionString });
+        
         await client.connect();
         console.log("Conexão PostgreSQL estabelecida com sucesso.");
         await ensureTablesExist(client);
@@ -88,13 +88,11 @@ async function ensureTablesExist(client: Client): Promise<void> {
  */
 export async function getPgRoutes(): Promise<RouteMapping[]> {
     const client = await getPgClient();
-    const result: QueryResult = await client.query('SELECT path, name, content_id FROM routes');
+    const result: QueryResult = await client.query('SELECT path, name, content_id as "contentId" FROM routes');
     
     return result.rows.map((row: any) => ({ // Explicitly typing row as any since QueryResult row type is generic
         path: row.path,
         name: row.name,
-        contentId: row.content_id,
+        contentId: row.contentId,
     }));
 }
-
-// Adicione outras funções CRUD aqui conforme a migração avança...
