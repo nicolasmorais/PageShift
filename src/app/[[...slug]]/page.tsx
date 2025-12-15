@@ -12,18 +12,36 @@ import { RouteMapping } from '@/lib/advertorial-types';
 // Componente Cliente que apenas renderiza o conteúdo correto
 // Ele não chama hooks de cliente diretamente, pois eles estão dentro dos componentes de página (V1Page, etc.)
 function ContentSwitcher({ contentId }: { contentId: string }) {
-  switch (contentId) {
-    case 'v1':
-      return <V1Page />;
-    case 'v2':
-      return <V2Page />;
-    case 'v3':
-      return <V3Page />;
-    case 'ap':
-      return <APPage />;
-    default:
-      // Para advertoriais personalizados, passamos o contentId (que é o ID do advertorial)
-      return <CustomAdvertorialPage advertorialId={contentId} />;
+  try {
+    console.log("ContentSwitcher: Renderizando contentId:", contentId);
+    
+    switch (contentId) {
+      case 'v1':
+        return <V1Page />;
+      case 'v2':
+        return <V2Page />;
+      case 'v3':
+        return <V3Page />;
+      case 'ap':
+        return <APPage />;
+      default:
+        // Para advertoriais personalizados, passamos o contentId (que é o ID do advertorial)
+        return <CustomAdvertorialPage advertorialId={contentId} />;
+    }
+  } catch (error) {
+    console.error("ContentSwitcher: Erro ao renderizar:", error);
+    return (
+      <div className="bg-white text-gray-800 font-merriweather p-8">
+        <h1 className="text-2xl font-bold text-red-600">Erro ao carregar o conteúdo</h1>
+        <p>Ocorreu um erro ao tentar carregar o conteúdo para: {contentId}</p>
+        <details className="mt-4">
+          <summary>Detalhes do erro</summary>
+          <pre className="mt-2 p-4 bg-gray-100 rounded text-sm">
+            {error instanceof Error ? error.message : String(error)}
+          </pre>
+        </details>
+      </div>
+    );
   }
 }
 
@@ -39,58 +57,80 @@ export default async function DynamicPage({
   params, 
   searchParams, 
 }: DynamicPageProps) {
-  // Await params promise
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
-  
-  // Constrói o path a partir dos segmentos da slug.
-  // Se slug for undefined ou vazio, é o caminho raiz '/'.
-  const path = slug ? `/${slug.join('/')}` : '/';
+  try {
+    console.log("DynamicPage: Iniciando renderização");
+    
+    // Await params promise
+    const resolvedParams = await params;
+    const { slug } = resolvedParams;
+    
+    // Constrói o path a partir dos segmentos da slug.
+    // Se slug for undefined ou vazio, é o caminho raiz '/'.
+    const path = slug ? `/${slug.join('/')}` : '/';
+    console.log("DynamicPage: Path construído:", path);
 
-  const client: Client = await getDb();
-  
-  // LÓGICA 1: Verifica se o path corresponde a uma rota automática (slug)
-  let contentId: string | null = null;
-  if (path !== '/') {
-    const slugWithoutSlash = path.replace(/^\//, '');
-    const autoRoutesResult = await client.query('SELECT value FROM settings WHERE key = $1', ['autoRoutes']);
-    if (autoRoutesResult.rows.length > 0) {
+    const client: Client = await getDb();
+    
+    // LÓGICA 1: Verifica se o path corresponde a uma rota automática (slug)
+    let contentId: string | null = null;
+    if (path !== '/') {
+      const slugWithoutSlash = path.replace(/^\//, '');
+      const autoRoutesResult = await client.query('SELECT value FROM settings WHERE key = $1', ['autoRoutes']);
+      if (autoRoutesResult.rows.length > 0) {
         const autoRoutes: { [slug: string]: string } = autoRoutesResult.rows[0].value;
         const advertorialIdFromSlug = autoRoutes[slugWithoutSlash];
         if (advertorialIdFromSlug) {
-            contentId = advertorialIdFromSlug;
+          contentId = advertorialIdFromSlug;
         }
+      }
     }
-  }
 
-  // LÓGICA 2: Se não for rota automática, verifica se o path corresponde a um ID de advertorial dinâmico
-  if (!contentId) {
-    const potentialAdvertorialId = path.replace(/^\//, '');
-    if (potentialAdvertorialId) {
+    // LÓGICA 2: Se não for rota automática, verifica se o path corresponde a um ID de advertorial dinâmico
+    if (!contentId) {
+      const potentialAdvertorialId = path.replace(/^\//, '');
+      if (potentialAdvertorialId) {
         const advertorialResult = await client.query('SELECT id FROM custom_advertorials WHERE id = $1', [potentialAdvertorialId]);
         if (advertorialResult.rows.length > 0) {
-            contentId = potentialAdvertorialId;
+          contentId = potentialAdvertorialId;
         }
+      }
     }
-  }
 
-  // LÓGICA 3 (Fallback): Se não for nada acima, busca a rota na tabela routes
-  if (!contentId) {
-    const routeResult = await client.query(
+    // LÓGICA 3 (Fallback): Se não for nada acima, busca a rota na tabela routes
+    if (!contentId) {
+      const routeResult = await client.query(
         'SELECT content_id as "contentId" FROM routes WHERE path = $1', 
         [path]
-    );
-    const route: RouteMapping | undefined = routeResult.rows[0];
-    if (route) {
+      );
+      const route: RouteMapping | undefined = routeResult.rows[0];
+      if (route) {
         contentId = route.contentId;
+      }
     }
-  }
 
-  // Se nenhuma rota mapeada for encontrada, retorna 404.
-  if (!contentId) {
-    return notFound();
-  }
+    // Se nenhuma rota mapeada for encontrada, retorna 404.
+    if (!contentId) {
+      console.log("DynamicPage: Nenhuma rota encontrada para path:", path);
+      return notFound();
+    }
 
-  // Renderiza o componente cliente com o contentId correto
-  return <ContentSwitcher contentId={contentId} />;
+    console.log("DynamicPage: ContentId encontrado:", contentId);
+
+    // Renderiza o componente cliente com o contentId correto
+    return <ContentSwitcher contentId={contentId} />;
+  } catch (error) {
+    console.error("DynamicPage: Erro ao processar requisição:", error);
+    return (
+      <div className="bg-white text-gray-800 font-merriweather p-8">
+        <h1 className="text-2xl font-bold text-red-600">Erro ao processar a requisição</h1>
+        <p>Ocorreu um erro ao tentar processar esta página. Por favor, tente novamente mais tarde.</p>
+        <details className="mt-4">
+          <summary>Detalhes do erro</summary>
+          <pre className="mt-2 p-4 bg-gray-100 rounded text-sm">
+            {error instanceof Error ? error.message : String(error)}
+          </pre>
+        </details>
+      </div>
+    );
+  }
 }
