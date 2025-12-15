@@ -1,5 +1,3 @@
-import { Low } from 'lowdb';
-import { JSONFile } from 'lowdb/node';
 import { DbSchema, defaultDbData } from './advertorial-types';
 import { Client } from 'pg';
 
