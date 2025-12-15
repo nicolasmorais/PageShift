@@ -7,36 +7,54 @@ const connectionString = process.env.DATABASE_URL;
 let client: Client | null = null;
 
 /**
- * Inicializa e retorna a instância do cliente PostgreSQL.
+ * Inicializa e retorna a instância do cliente PostgreSQL com lógica de retry.
  */
 export async function getDb(): Promise<Client> {
     // FORÇAR USO DO POSTGRESQL - Se não tiver DATABASE_URL, usar valores padrão do docker-compose
     const dbConnectionString = connectionString || 'postgres://user:password@db:5432/mydatabase';
 
     if (client) {
-        return client;
+        // Se o cliente já existe, verifica se a conexão ainda está válida
+        try {
+            await client.query('SELECT NOW()');
+            return client;
+        } catch (error) {
+            console.warn('Conexão PostgreSQL existente falhou. Tentando reconectar...', error);
+            client = null; // Reseta o cliente para forçar uma nova conexão
+        }
     }
 
     if (!dbConnectionString) {
         throw new Error("DATABASE_URL não configurada. O PostgreSQL é obrigatório para este projeto.");
     }
 
-    try {
-        // Importação dinâmica para evitar erro de dependência se pg não for usado
-        const { Client: PgClient } = await import('pg');
-        client = new PgClient({ connectionString: dbConnectionString });
-        await client.connect();
-        console.log("Conexão PostgreSQL estabelecida com sucesso.");
-        
-        // Criar tabelas se não existirem
-        await ensureTablesExist(client);
-        
-        return client;
-    } catch (error) {
-        console.error("Falha ao conectar ao PostgreSQL:", error);
-        client = null; // Reseta o cliente em caso de falha
-        throw new Error("Não foi possível conectar ao PostgreSQL. Verifique a configuração DATABASE_URL.");
+    let retries = 5;
+    let lastError: Error | null = null;
+
+    while (retries > 0) {
+        try {
+            // Importação dinâmica para evitar erro de dependência se pg não for usado
+            const { Client: PgClient } = await import('pg');
+            client = new PgClient({ connectionString: dbConnectionString });
+            
+            await client.connect();
+            console.log("Conexão PostgreSQL estabelecida com sucesso.");
+            
+            // Criar tabelas se não existirem
+            await ensureTablesExist(client);
+            
+            return client;
+        } catch (error: any) {
+            lastError = error;
+            console.error(`Falha ao conectar ao PostgreSQL (tentativas restantes: ${retries - 1}):`, error.message);
+            retries--;
+            // Espera 5 segundos antes de tentar novamente
+            await new Promise(resolve => setTimeout(resolve, 5000));
+        }
     }
+
+    // Se todas as tentativas falharem, lança o último erro
+    throw new Error(`Não foi possível conectar ao PostgreSQL após várias tentativas. Último erro: ${lastError?.message}`);
 }
 
 /**

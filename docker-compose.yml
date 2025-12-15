@@ -28,6 +28,7 @@ services:
       IPGEOLOCATION_API_KEY: d04e5f06615e4ad78f0eb2d479c61ecd
       
       # Variáveis de Conexão PostgreSQL (Usadas pelo serviço 'web')
+      # Garante que o contêiner 'web' use esta URL para se conectar ao contêiner 'db'
       DATABASE_URL: postgres://user:password@db:5432/mydatabase
       
     # Depende do serviço de banco de dados
