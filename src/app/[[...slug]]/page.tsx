@@ -9,8 +9,10 @@ import { APPage } from '@/components/page-versions/APPage';
 import { CustomAdvertorialPage } from '@/components/page-versions/CustomAdvertorialPage';
 import { RouteMapping } from '@/lib/advertorial-types';
 
+// IDs de páginas estáticas que não devem ser procurados como advertoriais dinâmicos
+const STATIC_PAGE_IDS = ['v1', 'v2', 'v3', 'ap'];
+
 // Componente Cliente que apenas renderiza o conteúdo correto
-// Ele não chama hooks de cliente diretamente, pois eles estão dentro dos componentes de página (V1Page, etc.)
 function ContentSwitcher({ contentId }: { contentId: string }) {
   try {
     console.log("ContentSwitcher: Renderizando contentId:", contentId);
@@ -86,9 +88,11 @@ export default async function DynamicPage({
     }
 
     // LÓGICA 2: Se não for rota automática, verifica se o path corresponde a um ID de advertorial dinâmico
+    // MAS APENAS SE NÃO FOR UMA PÁGINA ESTÁTICA
     if (!contentId) {
       const potentialAdvertorialId = path.replace(/^\//, '');
-      if (potentialAdvertorialId) {
+      // Só verifica na tabela custom_advertorials se não for uma página estática
+      if (potentialAdvertorialId && !STATIC_PAGE_IDS.includes(potentialAdvertorialId)) {
         const advertorialResult = await client.query('SELECT id FROM custom_advertorials WHERE id = $1', [potentialAdvertorialId]);
         if (advertorialResult.rows.length > 0) {
           contentId = potentialAdvertorialId;
