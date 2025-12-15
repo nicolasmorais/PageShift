@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/database';
 import { notFound } from 'next/navigation';
 import { Client } from 'pg';
+import { validate as isUUID } from 'uuid';
 
 import { V1Page } from '@/components/page-versions/V1Page';
 import { V2Page } from '@/components/page-versions/V2Page';
@@ -72,43 +73,53 @@ export default async function DynamicPage({
     console.log("DynamicPage: Path construído:", path);
 
     const client: Client = await getDb();
-    
-    // LÓGICA 1: Verifica se o path corresponde a uma rota automática (slug)
     let contentId: string | null = null;
+
+    // LÓGICA 1: Verifica se o path corresponde a uma rota automática (slug)
     if (path !== '/') {
       const slugWithoutSlash = path.replace(/^\//, '');
+      console.log("DynamicPage: Verificando rota automática para slug:", slugWithoutSlash);
+      
       const autoRoutesResult = await client.query('SELECT value FROM settings WHERE key = $1', ['autoRoutes']);
       if (autoRoutesResult.rows.length > 0) {
         const autoRoutes: { [slug: string]: string } = autoRoutesResult.rows[0].value;
         const advertorialIdFromSlug = autoRoutes[slugWithoutSlash];
         if (advertorialIdFromSlug) {
+          console.log("DynamicPage: Encontrada rota automática:", slugWithoutSlash, "->", advertorialIdFromSlug);
           contentId = advertorialIdFromSlug;
         }
       }
     }
 
-    // LÓGICA 2: Se não for rota automática, verifica se o path corresponde a um ID de advertorial dinâmico
-    // MAS APENAS SE NÃO FOR UMA PÁGINA ESTÁTICA
+    // LÓGICA 2: Se não for rota automática, busca na tabela routes (fallback principal)
     if (!contentId) {
-      const potentialAdvertorialId = path.replace(/^\//, '');
-      // Só verifica na tabela custom_advertorials se não for uma página estática
-      if (potentialAdvertorialId && !STATIC_PAGE_IDS.includes(potentialAdvertorialId)) {
-        const advertorialResult = await client.query('SELECT id FROM custom_advertorials WHERE id = $1', [potentialAdvertorialId]);
-        if (advertorialResult.rows.length > 0) {
-          contentId = potentialAdvertorialId;
-        }
-      }
-    }
-
-    // LÓGICA 3 (Fallback): Se não for nada acima, busca a rota na tabela routes
-    if (!contentId) {
+      console.log("DynamicPage: Buscando na tabela routes para path:", path);
       const routeResult = await client.query(
         'SELECT content_id as "contentId" FROM routes WHERE path = $1', 
         [path]
       );
       const route: RouteMapping | undefined = routeResult.rows[0];
       if (route) {
+        console.log("DynamicPage: Encontrada rota na tabela routes:", path, "->", route.contentId);
         contentId = route.contentId;
+      }
+    }
+
+    // LÓGICA 3: Se ainda não encontrou, verifica se é um ID de advertorial dinâmico válido
+    // SÓ se for um UUID válido e não for página estática
+    if (!contentId && path !== '/') {
+      const potentialAdvertorialId = path.replace(/^\//, '');
+      console.log("DynamicPage: Verificando se é advertorial dinâmico:", potentialAdvertorialId);
+      console.log("DynamicPage: É UUID válido?", isUUID(potentialAdvertorialId));
+      console.log("DynamicPage: É página estática?", STATIC_PAGE_IDS.includes(potentialAdvertorialId));
+      
+      if (isUUID(potentialAdvertorialId) && !STATIC_PAGE_IDS.includes(potentialAdvertorialId)) {
+        console.log("DynamicPage: Buscando advertorial dinâmico com ID:", potentialAdvertorialId);
+        const advertorialResult = await client.query('SELECT id FROM custom_advertorials WHERE id = $1', [potentialAdvertorialId]);
+        if (advertorialResult.rows.length > 0) {
+          console.log("DynamicPage: Encontrado advertorial dinâmico:", potentialAdvertorialId);
+          contentId = potentialAdvertorialId;
+        }
       }
     }
 
@@ -118,7 +129,7 @@ export default async function DynamicPage({
       return notFound();
     }
 
-    console.log("DynamicPage: ContentId encontrado:", contentId);
+    console.log("DynamicPage: ContentId final:", contentId);
 
     // Renderiza o componente cliente com o contentId correto
     return <ContentSwitcher contentId={contentId} />;
