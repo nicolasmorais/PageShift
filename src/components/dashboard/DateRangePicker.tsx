@@ -26,7 +26,7 @@ export function DateRangePicker({
   setDate,
 }: DateRangePickerProps) {
   // Cores Dinâmicas
-  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+  const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white';
 
   return (
     <div className={cn("grid gap-2", className)}>

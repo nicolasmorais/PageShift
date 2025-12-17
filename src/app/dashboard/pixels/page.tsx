@@ -71,7 +71,7 @@ export default function PixelManagerPage() {
   const cardBg = 'bg-white dark:bg-[#1e293b]';
   const borderColor = 'border-gray-200 dark:border-[#334155]';
   const inputBg = 'bg-gray-100 dark:bg-[#020617]'; 
-  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+  const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white';
   const textColor = 'text-gray-900 dark:text-white';
   const labelColor = 'text-gray-600 dark:text-zinc-300';
   const descriptionColor = 'text-gray-500 dark:text-zinc-400';
@@ -95,9 +95,7 @@ export default function PixelManagerPage() {
         </div>
 
         <Card className={cn(cardBg, borderColor, textColor)}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Zap className="h-5 w-5 text-blue-500" /> Pixels de Rastreamento</CardTitle>
-          </CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2"><Zap className="h-5 w-5 text-blue-500" /> Pixels de Rastreamento</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <p className={descriptionColor}>Estes pixels serão injetados em *todas* as páginas do seu site para rastreamento de PageView.</p>
             
@@ -124,9 +122,7 @@ export default function PixelManagerPage() {
         </Card>
         
         <Card className={cn(cardBg, borderColor, textColor)}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Code className="h-5 w-5 text-purple-500" /> Scripts Globais Adicionais</CardTitle>
-          </CardHeader>
+          <CardHeader><CardTitle className="flex items-center gap-2"><Code className="h-5 w-5 text-purple-500" /> Scripts Globais Adicionais</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <p className={descriptionColor}>Insira aqui scripts de rastreamento completos (ex: Google Analytics, TikTok, etc.). O conteúdo será injetado no final do &lt;head&gt;.</p>
             <Textarea 

@@ -14,10 +14,10 @@ export const DashboardSwitch = React.forwardRef<
     <Switch
       ref={ref}
       className={cn(
-        // Light Mode: Fundo desativado cinza claro, Fundo ativado azul primário
-        "data-[state=unchecked]:bg-gray-300 data-[state=checked]:bg-[#38bdf8]", 
-        // Dark Mode: Fundo desativado cinza escuro, Fundo ativado azul primário
-        "dark:data-[state=unchecked]:bg-[#020617] dark:data-[state=checked]:bg-[#38bdf8]",
+        // Light Mode: Fundo desativado cinza claro, Fundo ativado com a nova cor primária
+        "data-[state=unchecked]:bg-gray-300 data-[state=checked]:bg-[#6B16ED]", 
+        // Dark Mode: Fundo desativado cinza escuro, Fundo ativado com a nova cor primária
+        "dark:data-[state=unchecked]:bg-[#020617] dark:data-[state=checked]:bg-[#6B16ED]",
         // Garante que o thumb seja branco em ambos os modos
         "[&>span]:data-[state=checked]:bg-white [&>span]:data-[state=unchecked]:bg-white",
         className

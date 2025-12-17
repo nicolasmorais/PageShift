@@ -19,12 +19,14 @@ import {
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
 import { BarChart, TrendingUp, LayoutGrid, MapPin, Route, Filter } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { PageViewEvent, RouteMapping, CustomAdvertorial } from '@/lib/advertorial-types';
+import { formatDistanceToNow, parseISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { Button } from '@/components/ui/button';
 import { DateRangePicker } from '@/components/dashboard/DateRangePicker';
 import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { PageViewEvent, RouteMapping, CustomAdvertorial } from '@/lib/advertorial-types';
 
 interface AnalyticsData {
     contentId: string;

@@ -68,7 +68,7 @@ export default function CustomAdvertorialsPage() {
   const borderColor = 'border-gray-200 dark:border-[#334155]';
   const hoverBg = 'hover:bg-gray-100 dark:hover:bg-[#1e293b]';
   const skeletonBg = 'bg-gray-200 dark:bg-[#334155]';
-  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+  const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white';
   const codeBg = 'bg-gray-100 dark:bg-[#020617]'; 
   const textColor = 'text-gray-900 dark:text-white';
   const secondaryTextColor = 'text-gray-500 dark:text-zinc-400';

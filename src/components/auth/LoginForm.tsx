@@ -44,10 +44,10 @@ export const LoginForm = () => {
   const inputClasses = "flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl h-16 p-4 text-xl font-normal leading-normal border-none";
   
   // Cores do Input: Claro (fundo cinza, texto escuro) / Escuro (fundo azul escuro, texto branco)
-  const inputThemeClasses = "bg-gray-100 text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-[#38bdf8] focus:border-[#38bdf8] dark:bg-[#1e293b] dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-[#38bdf8]/50 dark:focus:border-[#38bdf8]";
+  const inputThemeClasses = "bg-gray-100 text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-[#6B16ED] focus:border-[#6B16ED] dark:bg-[#1e293b] dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-[#6B16ED]/50 dark:focus:border-[#6B16ED]";
   
   // Botão Primário
-  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white'; // sky-400
+  const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white'; // Nova cor primária
   
   // Offset do anel de foco (deve ser o fundo da página)
   const focusRingOffset = 'focus:ring-offset-background dark:focus:ring-offset-[#0f172a]'; 
@@ -84,7 +84,7 @@ export const LoginForm = () => {
       <Button
         type="submit"
         className={cn(
-          "h-16 px-6 text-xl font-bold transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#38bdf8] rounded-xl",
+          "h-16 px-6 text-xl font-bold transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#6B16ED] rounded-xl",
           primaryButtonClasses,
           focusRingOffset,
           isSubmitting && "opacity-70 cursor-not-allowed"

@@ -61,7 +61,7 @@ export function RouteCard({ route, onSave, onDelete, contentOptions }: RouteCard
   const borderColor = 'border-gray-200 dark:border-[#334155]';
   const inputBg = 'bg-gray-100 dark:bg-[#020617]'; 
   const selectContentBg = 'bg-white dark:bg-[#1e293b]'; 
-  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+  const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white';
   const deleteButtonClasses = 'text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20';
 
   return (

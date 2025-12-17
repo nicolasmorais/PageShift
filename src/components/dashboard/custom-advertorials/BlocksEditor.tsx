@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Image, Text, DollarSign, GripVertical, Code } from 'lucide-react'; // Importando Code
+import { AlertTriangle, Image, Text, DollarSign, GripVertical, Code } from 'lucide-react';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import { ContentBlock, BlockType } from '@/lib/advertorial-types';
 import { BlockEditorComponent } from './BlockEditorComponent';
@@ -45,7 +45,7 @@ export const BlocksEditor = ({ blocks, setBlocks, onSave, isSaving, name }: Bloc
     const borderColor = 'border-gray-200 dark:border-[#334155]';
     const blockBg = 'bg-gray-50 dark:bg-[#0f172a]'; // Fundo do bloco interno
     const secondaryButtonClasses = 'text-gray-900 bg-gray-200 hover:bg-gray-300 dark:text-white dark:bg-[#334155] dark:hover:bg-[#475569]'; 
-    const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+    const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white';
     const textColor = 'text-gray-900 dark:text-white';
 
     return (

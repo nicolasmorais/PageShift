@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from '@/components/ui/textarea';
 import { Toaster, toast } from "sonner";
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils'; // Import cn
@@ -111,7 +111,7 @@ export default function ApprovalPageEditor() {
   const cardBg = 'bg-white dark:bg-[#1e293b]';
   const borderColor = 'border-gray-200 dark:border-[#334155]';
   const inputBg = 'bg-gray-100 dark:bg-[#020617]'; 
-  const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+  const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white';
   const textColor = 'text-gray-900 dark:text-white';
   const labelColor = 'text-gray-600 dark:text-zinc-300';
   const descriptionColor = 'text-gray-500 dark:text-zinc-400';
@@ -189,7 +189,7 @@ export default function ApprovalPageEditor() {
                     />
                 </div>
                 
-                <div>
+                <div className="pt-2">
                     <Label className={labelColor}>Scripts Adicionais (Local)</Label>
                     <Textarea 
                         className={cn(inputBg, borderColor, textColor, "font-mono text-sm")} 

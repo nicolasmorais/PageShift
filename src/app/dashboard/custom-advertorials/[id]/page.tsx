@@ -14,8 +14,7 @@ import { cn } from '@/lib/utils';
 import { HeaderEditor } from '@/components/dashboard/custom-advertorials/HeaderEditor';
 import { BlocksEditor } from '@/components/dashboard/custom-advertorials/BlocksEditor';
 import { FooterEditor } from '@/components/dashboard/custom-advertorials/FooterEditor';
-import { PixelEditor } from '@/components/dashboard/custom-advertorials/PixelEditor'; // NEW: Import PixelEditor
-
+import { PixelEditor } from '@/components/dashboard/custom-advertorials/PixelEditor';
 
 export default function CustomAdvertorialEditor() {
     const params = useParams();
@@ -31,7 +30,7 @@ export default function CustomAdvertorialEditor() {
     const [header, setHeader] = useState<CustomAdvertorialHeader>({ preTitle: '', title: '', subheadline: '', fontFamily: 'sans' });
     const [blocks, setBlocks] = useState<ContentBlock[]>([]);
     const [footer, setFooter] = useState<CustomAdvertorialFooter | null>(null);
-    const [pixels, setPixels] = useState<PagePixelConfig>({ metaPixelId: '', taboolaPixelId: '', customScripts: '', useGlobalPixels: true }); // NEW: Pixel state
+    const [pixels, setPixels] = useState<PagePixelConfig>({ metaPixelId: '', taboolaPixelId: '', customScripts: '', useGlobalPixels: true });
 
     // Use the default footer structure from advertorial-types.ts
     const defaultFooter: CustomAdvertorialFooter = useMemo(() => defaultCustomAdvertorialFooter, []);
@@ -193,7 +192,7 @@ export default function CustomAdvertorialEditor() {
     };
 
     // Cores Dinâmicas
-    const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+    const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white';
     const skeletonBg = 'bg-gray-200 dark:bg-[#334155]'; 
     const mainBg = 'bg-[#f8fafc] dark:bg-[#0f172a]'; // Fundo principal dinâmico
 

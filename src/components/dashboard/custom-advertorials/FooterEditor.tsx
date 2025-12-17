@@ -36,7 +36,7 @@ export const FooterEditor = ({
     const cardBg = 'bg-white dark:bg-[#1e293b]';
     const borderColor = 'border-gray-200 dark:border-[#334155]';
     const inputBg = 'bg-gray-100 dark:bg-[#020617]'; 
-    const primaryButtonClasses = 'bg-[#38bdf8] hover:bg-[#0ea5e9] text-white';
+    const primaryButtonClasses = 'bg-[#6B16ED] hover:bg-[#5512C7] text-white';
     const textColor = 'text-gray-900 dark:text-white';
     const labelColor = 'text-gray-600 dark:text-zinc-300';
 
