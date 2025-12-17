@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package.json package-lock.json* ./
-RUN npm install --production=false
+RUN npm install --production=false --legacy-peer-deps
 
 # Copy source code
 COPY . .
@@ -26,7 +26,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/public ./public
 
 # Copy necessary files for the socket server (ts-node, socket-server.ts, tsconfig.json, src/lib)
-# We need ts-node and typescript to run the socket-server.ts
+# We need ts-node and typescript to run socket-server.ts
 RUN npm install -g ts-node typescript
 
 # Copy source files for the socket server and API routes
@@ -36,7 +36,7 @@ COPY src/lib ./src/lib
 COPY src/app/api ./src/app/api
 COPY src/hooks ./src/hooks
 
-# Expose the ports
+# Expose ports
 EXPOSE 3000
 EXPOSE 3001
 
