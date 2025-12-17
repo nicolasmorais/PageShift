@@ -39,6 +39,11 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   title: "PageShift",
   description: "Gerencie e alterne o conteúdo de suas páginas dinamicamente.",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -49,6 +54,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         {/* Os scripts de pixel agora são injetados dentro das páginas específicas (ex: CustomAdvertorialPage) */}
       </head>
       <body
