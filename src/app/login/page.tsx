@@ -26,14 +26,14 @@ export default function LoginPage() {
         {/* Main Content Container */}
         <div className="w-full max-w-sm mx-auto space-y-8">
           
-          {/* Logo */}
-          <div className="mb-8 flex justify-center">
+          {/* Logo - Alinhada à esquerda e aumentada */}
+          <div className="mb-8 flex justify-start">
             <Image
               src={logoUrl}
               alt="PageShift Logo"
-              width={120}
-              height={40}
-              className="h-10 w-auto"
+              width={180} // 1.5x de 120
+              height={60}  // 1.5x de 40
+              className="h-[60px] w-auto" // Usando h-[60px] para garantir 1.5x (40px * 1.5 = 60px)
               priority
             />
           </div>
