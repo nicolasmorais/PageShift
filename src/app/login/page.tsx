@@ -31,9 +31,9 @@ export default function LoginPage() {
             <Image
               src={logoUrl}
               alt="PageShift Logo"
-              width={180} // 1.5x de 120
-              height={60}  // 1.5x de 40
-              className="h-[60px] w-auto" // Usando h-[60px] para garantir 1.5x (40px * 1.5 = 60px)
+              width={150} // 1.25x de 120
+              height={50}  // 1.25x de 40
+              className="h-[50px] w-auto" // Usando h-[50px] para garantir 1.25x
               priority
             />
           </div>
