@@ -27,6 +27,7 @@ import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { PageViewEvent, RouteMapping, CustomAdvertorial } from '@/lib/advertorial-types';
+import { cn } from '@/lib/utils'; // Importando a função cn
 
 interface AnalyticsData {
     contentId: string;
