@@ -1,64 +1,44 @@
-# Use a imagem base oficial do Node.js
-FROM node:18-alpine AS base
-
-# Instala dependências necessárias para o Next.js
-RUN apk add --no-cache libc6-compat
-
-# Define o diretório de trabalho
+# Stage 1: Build the Next.js application
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copia os arquivos de configuração do npm
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+# Install dependencies
+COPY package.json yarn.lock package-lock.json* ./
+RUN npm install --production=false
 
-# Instala dependências com legacy-peer-deps para evitar conflitos
-# Mudando de npm ci para npm install para evitar problemas com lock file
-RUN npm install --legacy-peer-deps
-
-# Constrói a aplicação
-FROM base AS builder
-WORKDIR /app
-
-# Cria um usuário não-root para segurança
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Copia os node_modules da imagem base
-COPY --from=base /app/node_modules ./node_modules
-
-# Copia o resto dos arquivos do projeto
+# Copy source code
 COPY . .
 
-# Gera o build da aplicação Next.js
+# Build Next.js application
 RUN npm run build
 
-# Imagem de produção
-FROM base AS runner
+# Stage 2: Production image
+FROM node:20-alpine AS runner
 WORKDIR /app
 
+# Set environment variables
 ENV NODE_ENV production
 
-# Cria um usuário não-root para segurança
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Copia os arquivos construídos
+# Copy Next.js build output
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/public ./public
 
-# Cria o diretório .next automaticamente
-RUN mkdir .next
+# Copy necessary files for the socket server (ts-node, socket-server.ts, tsconfig.json, src/lib)
+# We need ts-node and typescript to run the socket-server.ts
+RUN npm install -g ts-node typescript
 
-# Copia os arquivos do build
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Copy source files for the socket server and API routes
+COPY tsconfig.json ./
+COPY socket-server.ts ./
+COPY src/lib ./src/lib
+COPY src/app/api ./src/app/api
+COPY src/hooks ./src/hooks
 
-# Define o usuário para executar a aplicação
-USER nextjs
-
-# Expõe a porta 3000
+# Expose the ports
 EXPOSE 3000
+EXPOSE 3001
 
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-
-# Comando para iniciar a aplicação
-CMD ["node", "server.js"]
+# Command to run the Next.js application (used by the 'web' service)
+CMD ["npm", "start"]

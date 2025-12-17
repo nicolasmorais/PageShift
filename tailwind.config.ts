@@ -93,12 +93,27 @@ export default {
             'gradient-move': {
                 '0%, 100%': { 'background-position': '0% 50%' },
                 '50%': { 'background-position': '100% 50%' },
+            },
+            'pulse': { // Adicionando keyframe 'pulse'
+                '0%': { 
+                    transform: 'scale(0.9)',
+                    'box-shadow': '0 0 0 0 rgba(107, 22, 237, 0.7)',
+                },
+                '70%': { 
+                    transform: 'scale(1)',
+                    'box-shadow': '0 0 0 10px rgba(107, 22, 237, 0)',
+                },
+                '100%': { 
+                    transform: 'scale(0.9)',
+                    'box-shadow': '0 0 0 0 rgba(107, 22, 237, 0)',
+                }
             }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
             'gradient-move': 'gradient-move 15s ease infinite',
+            'pulse': 'pulse 2s infinite', // Adicionando animação 'pulse'
   		}
   	}
   },

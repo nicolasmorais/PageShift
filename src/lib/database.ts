@@ -105,6 +105,31 @@ async function ensureTablesExist(client: Client): Promise<void> {
     `);
     console.log("Tabela 'custom_advertorials' verificada/criada.");
     
+    // Tabela para VISITS (Analytics em tempo real)
+    await client.query(`
+        CREATE TABLE IF NOT EXISTS visits (
+            id UUID PRIMARY KEY,
+            visitor_id UUID NOT NULL,
+            ip VARCHAR(50),
+            city VARCHAR(100),
+            region VARCHAR(100),
+            country VARCHAR(100),
+            latitude NUMERIC(10, 7),
+            longitude NUMERIC(10, 7),
+            device_type VARCHAR(50),
+            os VARCHAR(100),
+            browser VARCHAR(100),
+            user_agent TEXT,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        );
+    `);
+    
+    // Criar índices
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_visits_created_at ON visits (created_at);`);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_visits_country ON visits (country);`);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_visits_city ON visits (city);`);
+    console.log("Tabela 'visits' e índices verificados/criados.");
+    
     // Inserir dados padrão se não existirem
     await insertDefaultData(client);
     

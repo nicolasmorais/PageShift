@@ -1,12 +1,12 @@
 "use client";
 
-import { usePageTracker } from '@/hooks/use-page-tracker';
+import { useAnalyticsTracker } from '@/hooks/use-analytics-tracker';
 
 interface PageTrackerProps {
   contentId: string;
 }
 
 export function PageTracker({ contentId }: PageTrackerProps) {
-  usePageTracker(contentId);
+  useAnalyticsTracker(contentId);
   return null; // Não renderiza nada, apenas faz o tracking
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Settings, Wand2, LayoutGrid, Zap, BarChart, Activity } from "lucide-react";
+import { Settings, Wand2, LayoutGrid, Zap, BarChart, Activity, Map } from "lucide-react"; // Importando Map
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { LogoutButton } from "@/components/auth/LogoutButton"; // Importando o botão de logout
@@ -20,7 +20,12 @@ const mainNavItems = [
   { // Analytics link
     href: "/dashboard/analytics",
     icon: BarChart,
-    label: "Analytics",
+    label: "Analytics Agregado",
+  },
+  { // Realtime Analytics link
+    href: "/dashboard/realtime-analytics",
+    icon: Map,
+    label: "Analytics em Tempo Real",
   },
 ];
 

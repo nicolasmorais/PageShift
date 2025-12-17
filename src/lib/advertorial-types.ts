@@ -41,6 +41,24 @@ export interface PageViewEvent {
     regionName?: string;
 }
 
+// NEW: Interface para dados de visita detalhados (Analytics em tempo real)
+export interface VisitData {
+    id: string;
+    visitorId: string;
+    ip?: string;
+    city?: string;
+    region?: string;
+    country?: string;
+    latitude?: number;
+    longitude?: number;
+    deviceType: 'mobile' | 'desktop' | 'tablet' | 'unknown';
+    os: string;
+    browser: string;
+    userAgent: string;
+    createdAt: string;
+}
+
+
 // Interfaces for Custom Advertorials
 export interface CustomAdvertorialHeader {
   preTitle: string;

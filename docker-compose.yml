@@ -26,6 +26,8 @@ services:
       DATABASE_DIR: /app/data
       # Chave de API para ipgeolocation.io (DEVE SER DEFINIDA NO .env ou Dyad UI)
       IPGEOLOCATION_API_KEY: d04e5f06615e4ad78f0eb2d479c61ecd
+      # Chave de API para Mapbox (DEVE SER DEFINIDA NO .env ou Dyad UI)
+      MAPBOX_TOKEN: pk.eyJ1IjoidGVzdGV1c2VyIiwiYSI6ImNsd252Z296YjB0Z2gya282Z296Y296Y28ifQ.1234567890abcdef
       
       # Variáveis de Conexão PostgreSQL (Usadas pelo serviço 'web')
       # Garante que o contêiner 'web' use esta URL para se conectar ao contêiner 'db'
@@ -36,6 +38,23 @@ services:
       - db
 
     # Política de reinicialização do contêiner
+    restart: unless-stopped
+
+  socket:
+    # Usaremos a mesma imagem do Next.js, mas com um comando diferente
+    image: ghcr.io/your-github-username/your-repo-name:latest
+    container_name: dyad-app-socket
+    command: npm run socket-server
+    ports:
+      - "3001:3001" # Porta para o Socket.IO
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://user:password@db:5432/mydatabase
+      SOCKET_PORT: 3001
+      # O Next.js precisa saber onde o socket server está
+      NEXT_PUBLIC_SOCKET_URL: http://localhost:3001 # Usado pelo cliente Next.js
+    depends_on:
+      - db
     restart: unless-stopped
 
   db:
