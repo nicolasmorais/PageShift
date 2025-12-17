@@ -37,8 +37,8 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "PageShift",
-  description: "Gerencie e alterne o conteúdo de suas páginas dinamicamente.",
+  title: "PageShift - Gerenciamento de Advertoriais",
+  description: "Plataforma completa para gerenciar e otimizar seus advertoriais dinamicamente.",
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',

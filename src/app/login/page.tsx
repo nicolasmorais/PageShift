@@ -4,13 +4,14 @@ import { cn } from '@/lib/utils';
 import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
-  title: 'Acesso - PageShift',
+  title: 'Login - PageShift',
+  description: 'Acesse o painel de gerenciamento de advertoriais',
 };
 
 export default function LoginPage() {
   // Cores do novo design: background-dark: #0f172a
   // Removendo mainBg fixo para usar bg-background
-  const logoUrl = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29-cWKpykzfXjyKf02ITuUtmE2iq5JYZn.png";
+  const logoUrl = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png";
 
   return (
     <>
@@ -24,7 +25,7 @@ export default function LoginPage() {
           <div className="mb-8">
             <img
               src={logoUrl}
-              alt="One Conversion Logo"
+              alt="PageShift Logo"
               className="h-10 w-auto"
             />
           </div>
@@ -35,7 +36,7 @@ export default function LoginPage() {
               Acesse sua conta
             </h1>
             <p className="text-gray-500 dark:text-gray-400 text-lg font-normal leading-normal mt-2">
-              Insira a senha para acessar o painel.
+              Insira a senha para acessar o painel de gerenciamento de advertoriais.
             </p>
           </div>
           
