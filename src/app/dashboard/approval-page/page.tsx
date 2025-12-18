@@ -123,7 +123,7 @@ export default function ApprovalPageEditor() {
     <>
       <Toaster richColors />
       <div className="space-y-6">
-        <div className="flex items-center justify-between sticky top-4 z-10 py-2">
+        <div className="flex items-center justify-between sticky top-0 z-10 py-4 bg-background border-b border-gray-100 dark:border-gray-800">
           <div>
             <h1 className={cn("text-2xl font-bold", textColor)}>Editor da Página de Aprovação</h1>
             <p className={descriptionColor}>Modifique o conteúdo exibido na página de aprovação.</p>
