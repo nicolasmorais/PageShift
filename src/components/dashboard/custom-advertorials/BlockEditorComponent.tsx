@@ -6,8 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Trash2, AlertTriangle, Image, Text, DollarSign, Code } from 'lucide-react'; // Importando Code
+import { Button } from "@/components/ui/button";
+import { Trash2, AlertTriangle, Image, Text, DollarSign, Code } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface BlockEditorComponentProps {
@@ -24,7 +24,7 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
             case 'image': return Image;
             case 'alert': return AlertTriangle;
             case 'pricing': return DollarSign;
-            case 'html': return Code; // <-- Novo ícone
+            case 'html': return Code;
             default: return Text;
         }
     }, [block.type]);
@@ -140,7 +140,20 @@ export const BlockEditorComponent = ({ block, index, onUpdate, onDelete }: Block
                     <div><Label className={labelColor}>Preço</Label><Input className={cn(inputBg, borderColor, textColor)} value={block.price || ''} onChange={e => handleValueChange('price', e.target.value)} /></div>
                     <div><Label className={labelColor}>Texto de Pagamento</Label><Input className={cn(inputBg, borderColor, textColor)} value={block.paymentType || ''} onChange={e => handleValueChange('paymentType', e.target.value)} /></div>
                     <div><Label className={labelColor}>Texto do Botão</Label><Input className={cn(inputBg, borderColor, textColor)} value={block.buttonText || ''} onChange={e => handleValueChange('buttonText', e.target.value)} /></div>
-                    <div><Label className={labelColor}>URL do Botão</Label><Input className={cn(inputBg, borderColor, textColor)} value={block.buttonUrl || ''} onChange={e => handleValueChange('buttonUrl', e.target.value)} /></div>
+                    <div><Label className={labelColor}>URL do Botão (Legado)</Label><Input className={cn(inputBg, borderColor, textColor)} value={block.buttonUrl || ''} onChange={e => handleValueChange('buttonUrl', e.target.value)} /></div>
+                    {/* NOVO CAMPO AQUI */}
+                    <div>
+                        <Label className={labelColor}>URL do Checkout (Base para UTMs)</Label>
+                        <Input 
+                            className={cn(inputBg, borderColor, textColor)} 
+                            value={block.checkoutUrl || ''} 
+                            onChange={e => handleValueChange('checkoutUrl', e.target.value)} 
+                            placeholder="https://seusite.com/checkout"
+                        />
+                        <p className="text-xs text-gray-500 dark:text-zinc-500 mt-1">
+                            As UTMs da URL atual (ex: utm_source, utm_medium) serão automaticamente anexadas a este link.
+                        </p>
+                    </div>
                     <div><Label className={labelColor}>Texto Abaixo do Botão</Label><Input className={cn(inputBg, borderColor, textColor)} value={block.postButtonText || ''} onChange={e => handleValueChange('postButtonText', e.target.value)} /></div>
                 </>
             )}
