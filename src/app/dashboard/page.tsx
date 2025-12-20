@@ -42,6 +42,7 @@ export default function DashboardPage() {
   const [advertorials, setAdvertorials] = useState<CustomAdvertorial[]>([]);
   const [existingRoutes, setExistingRoutes] = useState<ExistingRoute[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isAssigning, setIsAssigning] = useState<boolean>(false); // Added missing state
 
   // States for "Atribuir Conteúdo a Rota Existente"
   const [selectedRoutePath, setSelectedRoutePath] = useState<string>('');
