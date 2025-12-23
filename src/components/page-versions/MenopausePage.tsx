@@ -72,11 +72,9 @@ export function MenopausePage() {
             <p className="text-lg md:text-xl text-gray-600 mb-8 font-medium">
               (Sem hormônios, sem médico, sem gastar fortunas em consultas que não resolvem nada)
             </p>
-            <div className="bg-pink-600/10 text-pink-700 py-3 px-6 rounded-full inline-block font-bold text-sm md:text-base mb-10 border border-pink-200">
-              🎯 Descubra o método simples que 3.127 mulheres já usaram
-            </div>
 
-            <div className="relative max-w-2xl mx-auto mb-12">
+            {/* IMAGEM 1 - HERO */}
+            <div className="relative max-w-2xl mx-auto mb-10">
               <img 
                 src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_11_16%20%281%29-YiIF5Dx6Ex8EfF18VGsiRtoYLJUhpE.png" 
                 alt="Transformação Menopausa" 
@@ -85,6 +83,10 @@ export function MenopausePage() {
               <div className="absolute -bottom-6 -right-6 bg-yellow-400 text-gray-900 p-4 rounded-2xl shadow-xl z-20 font-black text-sm rotate-12 hidden md:block">
                 ALÍVIO <br /> GARANTIDO
               </div>
+            </div>
+
+            <div className="bg-pink-600/10 text-pink-700 py-3 px-6 rounded-full inline-block font-bold text-sm md:text-base mb-10 border border-pink-200">
+              🎯 Descubra o método simples que 3.127 mulheres já usaram
             </div>
 
             <Button 
@@ -104,6 +106,16 @@ export function MenopausePage() {
         <section className="py-20 px-6 bg-gray-50">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-black text-center mb-10">Me responda com sinceridade:</h2>
+            
+            {/* IMAGEM 2 - DOR/PROBLEMA */}
+            <div className="mb-12">
+                <img 
+                    src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_22_45%20%282%29-5Mq5Tv2MbDtdy5EOR55c9k8LNw1OiD.png" 
+                    alt="Sintomas da Menopausa" 
+                    className="w-full h-auto rounded-3xl shadow-xl border border-gray-200"
+                />
+            </div>
+
             <div className="space-y-6">
               {[
                 "Você já acordou encharcada de suor às 3h da manhã, sentindo que seu corpo está pegando fogo por dentro?",
@@ -128,22 +140,38 @@ export function MenopausePage() {
         {/* PROMESSA ✨ */}
         <section className="py-20 px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black mb-6">Imagine acordar daqui 7 dias e...</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                { icon: Zap, text: "Passar o dia inteiro sem um único calorão que te faça suar ou te envergonhar" },
-                { icon: Moon, text: "Dormir a noite toda sem acordar com o corpo em chamas ou lençóis molhados" },
-                { icon: Zap, text: "Ter energia de verdade - disposição natural para viver o seu dia" },
-                { icon: Smile, text: "Se sentir calma e no controle em vez de explodir por qualquer coisa" },
-                { icon: ShieldCheck, text: "Voltar a se reconhecer quando olha no espelho - a mulher forte que você sempre foi" }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4 p-5 bg-pink-50 rounded-2xl border border-pink-100">
-                  <div className="shrink-0 bg-white p-2 rounded-xl text-pink-600 shadow-sm"><item.icon size={24} /></div>
-                  <p className="text-gray-800 font-bold leading-tight">{item.text}</p>
+            <div className="bg-pink-900 text-white rounded-[3rem] p-8 md:p-16 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-10 opacity-10">
+                    <Smile size={180} />
                 </div>
-              ))}
+                
+                <div className="text-center mb-12 relative z-10">
+                    <h2 className="text-3xl md:text-4xl font-black mb-6">Imagine acordar daqui 7 dias e...</h2>
+                </div>
+
+                {/* IMAGEM 3 - TRANSFORMAÇÃO/IMAGINE */}
+                <div className="mb-12 relative z-10 flex justify-center">
+                    <img 
+                        src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_28_04%20%281%29-K5eDlKovVcScONN51oldmatjmk2e2p.png" 
+                        alt="Vida Renovada" 
+                        className="max-w-full h-auto rounded-3xl shadow-2xl border-4 border-pink-800"
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                {[
+                    { icon: Zap, text: "Passar o dia inteiro sem um único calorão que te faça suar ou te envergonhar" },
+                    { icon: Moon, text: "Dormir a noite toda sem acordar com o corpo em chamas ou lençóis molhados" },
+                    { icon: Zap, text: "Ter energia de verdade - disposição natural para viver o seu dia" },
+                    { icon: Smile, text: "Se sentir calma e no controle em vez de explodir por qualquer coisa" },
+                    { icon: ShieldCheck, text: "Voltar a se reconhecer quando olha no espelho - a mulher forte que você sempre foi" }
+                ].map((item, i) => (
+                    <div key={i} className="flex gap-4 p-5 bg-white/10 rounded-2xl border border-white/10 backdrop-blur-sm">
+                    <div className="shrink-0 bg-pink-600 p-2 rounded-xl text-white shadow-sm"><item.icon size={24} /></div>
+                    <p className="text-gray-100 font-bold leading-tight">{item.text}</p>
+                    </div>
+                ))}
+                </div>
             </div>
           </div>
         </section>
@@ -165,8 +193,8 @@ export function MenopausePage() {
                   </h3>
                   <div className="space-y-4">
                     {[
-                      { t: "O Protocolo 3-5-7", d: "Os 3 ajustes de 5 minutos que você faz em 7 dias para zerar os calorões (Página 12)" },
-                      { t: "A Lista Vermelha", d: "Os 8 alimentos que você come TODO DIA e que jogam gasolina no fogo (Página 23)" },
+                      { t: "O Protocolo 3-5-7", d: "Os 3 ajustes de 5 minutos que você faz em 7 dias para zerar os calorões (Página 12 - você pode começar HOJE)" },
+                      { t: "A Lista Vermelha", d: "Os 8 alimentos que você come TODO DIA e que estão jogando gasolina no fogo (Página 23)" },
                       { t: "SOS Calorão", d: "O que fazer nos primeiros 90 segundos quando o calor chega (Página 31)" },
                       { t: "O Segredo do Sono", d: "A rotina noturna de 7 minutos que corrige seu despertar às 3h (Página 41)" },
                       { t: "Dose Certa de Movimento", d: "Exercícios de 5 minutos que regulam hormônios naturalmente (Página 56)" }
