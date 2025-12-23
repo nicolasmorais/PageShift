@@ -34,13 +34,22 @@ export function MenopausePage() {
         {/* SECTION 1 - HERO */}
         <header className="relative overflow-hidden bg-gradient-to-b from-pink-50 to-white pt-16 pb-24">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <h1 className="font-roboto font-black text-4xl md:text-6xl text-gray-900 leading-tight mb-6">
-              Menopausa Nunca Mais <br />
-              <span className="text-pink-600">Fora de Controle</span>
+            <h1 className="font-roboto font-black text-4xl md:text-5xl text-gray-900 leading-tight mb-6">
+              Chega de calorão, insônia e sofrimento. <br />
+              <span className="text-pink-600">Nosso guia te ajuda a retomar o controle da sua vida — mesmo sem médico</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-10 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">
               Alivie os principais sintomas em até 7 dias, com orientações simples que você pode aplicar em casa, sem médico.
             </p>
+
+            {/* Imagem do Hero */}
+            <div className="mb-10 max-w-2xl mx-auto">
+              <img 
+                src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_11_16%20%281%29-YiIF5Dx6Ex8EfF18VGsiRtoYLJUhpE.png" 
+                alt="Mulher sorrindo e aproveitando a vida" 
+                className="w-full h-auto rounded-3xl shadow-2xl border-4 border-white"
+              />
+            </div>
 
             <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-xl border border-pink-100 inline-block text-left max-w-lg w-full mb-10">
               <p className="font-bold text-lg mb-4 text-pink-700">Você sente:</p>
@@ -86,6 +95,15 @@ export function MenopausePage() {
               <h2 className="font-roboto text-3xl md:text-4xl font-black mb-4">Você já passou por isso?</h2>
             </div>
             
+            {/* Imagem do Problema */}
+            <div className="mb-10">
+              <img 
+                src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_22_45%20%282%29-5Mq5Tv2MbDtdy5EOR55c9k8LNw1OiD.png" 
+                alt="Ilustração de sintomas e incômodos da menopausa" 
+                className="w-full h-auto rounded-3xl shadow-lg mb-8"
+              />
+            </div>
+
             <div className="space-y-6">
               {[
                 "Foi a uma consulta rápida onde o médico mal olhou para você?",
@@ -111,30 +129,39 @@ export function MenopausePage() {
         {/* SECTION 3 - TRANSFORMAÇÃO */}
         <section className="py-20">
           <div className="max-w-4xl mx-auto px-6">
-            <div className="bg-pink-900 rounded-[3rem] p-10 md:p-16 text-white text-center relative overflow-hidden">
+            <div className="bg-pink-900 rounded-[3rem] p-8 md:p-16 text-white text-center relative overflow-hidden shadow-2xl">
               <div className="absolute top-0 right-0 p-8 opacity-10">
                 <Smile size={200} />
               </div>
               
-              <h2 className="font-roboto text-3xl md:text-5xl font-black mb-8 relative z-10">
+              <h2 className="font-roboto text-3xl md:text-5xl font-black mb-10 relative z-10">
                 Imagine acordar e:
               </h2>
+
+              {/* Imagem da Transformação (conforme o print) */}
+              <div className="mb-10 relative z-10 max-w-xl mx-auto">
+                <img 
+                  src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_28_04%20%281%29-K5eDlKovVcScONN51oldmatjmk2e2p.png" 
+                  alt="Visão de futuro e bem-estar" 
+                  className="w-full h-auto rounded-2xl shadow-xl"
+                />
+              </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left relative z-10 mb-10">
                 {[
                   "Não sentir aquele calor sufocante logo cedo",
                   "Ter mais ânimo para levantar da cama e viver o dia",
                   "Parar de achar que está enlouquecendo ou “quebrada”",
                   "Voltar a se sentir normal, confiante e no controle"
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-4 bg-white/10 p-4 rounded-xl">
-                    <Check className="h-6 w-6 text-pink-400 shrink-0" />
+                  <div key={i} className="flex items-center gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/5">
+                    <Check className="h-5 w-5 text-pink-400 shrink-0" />
                     <span className="text-lg font-medium">{item}</span>
                   </div>
                 ))}
               </div>
 
-              <p className="mt-12 text-xl leading-relaxed font-medium">
+              <p className="mt-6 text-xl leading-relaxed font-medium relative z-10">
                 Você pode reverter isso, e começa com orientações simples aplicadas no seu dia a dia.
               </p>
             </div>
