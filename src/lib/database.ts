@@ -146,23 +146,24 @@ async function insertDefaultData(client: Client): Promise<void> {
     const routeCountResult = await client.query('SELECT COUNT(*) FROM routes');
     const routeCount = parseInt(routeCountResult.rows[0].count);
     
-    if (routeCount === 0) {
-        console.log("Inserindo rotas padrão...");
+    if (routeCount < 6) { // Aumentado para acomodar novas rotas padrão
+        console.log("Inserindo/Atualizando rotas padrão...");
         const defaultRoutes = [
             { path: '/', name: 'Página Principal', content_id: 'v1' },
             { path: '/v1', name: 'Rota do Advertorial V1', content_id: 'v1' },
             { path: '/v2', name: 'Rota do Advertorial V2', content_id: 'v2' },
             { path: '/v3', name: 'Rota do Advertorial V3', content_id: 'v3' },
             { path: '/aprovado', name: 'Página de Aprovação (Preview)', content_id: 'ap' },
+            { path: '/menopausa', name: 'Vendas: Menopausa Nunca Mais', content_id: 'menopausa' }, // NEW
         ];
 
         for (const route of defaultRoutes) {
             await client.query(
-                'INSERT INTO routes (path, name, content_id) VALUES ($1, $2, $3)',
+                'INSERT INTO routes (path, name, content_id) VALUES ($1, $2, $3) ON CONFLICT (path) DO UPDATE SET content_id = $3, name = $2',
                 [route.path, route.name, route.content_id]
             );
         }
-        console.log("Rotas padrão inseridas.");
+        console.log("Rotas padrão inseridas/atualizadas.");
     }
 
     // Verificar se já existe configuração de approval page

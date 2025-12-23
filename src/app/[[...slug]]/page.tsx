@@ -6,12 +6,13 @@ import { validate as isUUID } from 'uuid';
 import { V1Page } from '@/components/page-versions/V1Page';
 import { V2Page } from '@/components/page-versions/V2Page';
 import { V3Page } from '@/components/page-versions/V3Page';
+import { MenopausePage } from '@/components/page-versions/MenopausePage'; // NEW
 import APPage from '@/components/page-versions/APPage';
 import CustomAdvertorialPage from '@/components/page-versions/CustomAdvertorialPage';
 import { RouteMapping } from '@/lib/advertorial-types';
 
 // IDs de páginas estáticas que não devem ser procurados como advertoriais dinâmicos
-const STATIC_PAGE_IDS = ['v1', 'v2', 'v3', 'ap'];
+const STATIC_PAGE_IDS = ['v1', 'v2', 'v3', 'ap', 'menopausa'];
 
 // Componente que renderiza o conteúdo correto
 function ContentSwitcher({ contentId }: { contentId: string }) {
@@ -27,6 +28,8 @@ function ContentSwitcher({ contentId }: { contentId: string }) {
         return <V3Page />;
       case 'ap':
         return <APPage />;
+      case 'menopausa': // NEW
+        return <MenopausePage />;
       default:
         // Para advertoriais personalizados, passamos o contentId (que é o ID do advertorial)
         return <CustomAdvertorialPage advertorialId={contentId} />;
