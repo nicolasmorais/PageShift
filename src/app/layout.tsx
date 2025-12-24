@@ -54,7 +54,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        {/* Os scripts de pixel agora são injetados dentro das páginas específicas (ex: CustomAdvertorialPage) */}
+        {/* Graphik Trial Font */}
+        <link href="https://fonts.cdnfonts.com/css/graphik-trial" rel="stylesheet" />
+        
         {/* Swetrix Tracking Script */}
         <script src="https://swetrix.org/swetrix.js" defer></script>
         <script

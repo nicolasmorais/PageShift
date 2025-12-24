@@ -13,8 +13,9 @@ export default {
         sans: ["var(--font-space-grotesk)"],
         mono: ["var(--font-geist-mono)"],
         merriweather: ["var(--font-merriweather)"],
-        roboto: ["var(--font-roboto)"], // NEW
-        'open-sans': ["var(--font-open-sans)"], // NEW
+        roboto: ["var(--font-roboto)"],
+        'open-sans': ["var(--font-open-sans)"],
+        graphik: ["'Graphik Trial'", "sans-serif"], // NEW
       },
   		colors: {
   			background: 'hsl(var(--background))',
@@ -94,7 +95,7 @@ export default {
                 '0%, 100%': { 'background-position': '0% 50%' },
                 '50%': { 'background-position': '100% 50%' },
             },
-            'pulse': { // Adicionando keyframe 'pulse'
+            'pulse': {
                 '0%': { 
                     transform: 'scale(0.9)',
                     'box-shadow': '0 0 0 0 rgba(107, 22, 237, 0.7)',
@@ -113,7 +114,7 @@ export default {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
             'gradient-move': 'gradient-move 15s ease infinite',
-            'pulse': 'pulse 2s infinite', // Adicionando animação 'pulse'
+            'pulse': 'pulse 2s infinite',
   		}
   	}
   },

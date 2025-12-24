@@ -46,7 +46,7 @@ export function MenopausePage() {
   return (
     <>
       <PageTracker contentId="menopausa" />
-      <div className="bg-white text-gray-900 font-sans selection:bg-pink-100 antialiased">
+      <div className="bg-white text-gray-900 font-graphik selection:bg-pink-100 antialiased">
         
         {/* TOP BAR URGÊNCIA */}
         <div className="bg-red-600 text-white text-center py-2 px-4 text-xs md:text-sm font-bold sticky top-0 z-50 shadow-lg">
@@ -66,7 +66,7 @@ export function MenopausePage() {
         {/* HERO SECTION */}
         <header className="bg-gradient-to-b from-pink-50 to-white pt-12 pb-20 px-6 border-b border-pink-100">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-sans font-black text-3xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-6">
+            <h1 className="font-graphik font-black text-3xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-6">
               Você Pode Acabar com os Calorões da Menopausa em <span className="text-pink-600">Apenas 7 Dias</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 font-medium">
