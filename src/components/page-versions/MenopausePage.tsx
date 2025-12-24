@@ -21,7 +21,6 @@ import {
   Dumbbell,
   Zap,
   Smile,
-  PlayCircle,
   Video
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -67,7 +66,7 @@ export function MenopausePage() {
         </div>
 
         {/* HERO SECTION */}
-        <header className="bg-gradient-to-b from-pink-50 to-white pt-12 pb-12 px-6 border-b border-pink-100">
+        <header className="bg-gradient-to-b from-pink-50 to-white pt-12 pb-20 px-6 border-b border-pink-100">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-graphik font-black text-3xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-6">
               Você Pode Acabar com os Calorões da Menopausa em <span className="text-pink-600">Apenas 7 Dias</span>
@@ -76,21 +75,16 @@ export function MenopausePage() {
               (Sem hormônios, sem médico, sem gastar fortunas em consultas que não resolvem nada)
             </p>
 
-            {/* VÍDEO PRINCIPAL */}
-            <div className="max-w-3xl mx-auto mb-10">
-              <div className="relative aspect-video w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                <iframe 
-                  src={videoUrl} 
-                  width="100%" 
-                  height="100%" 
-                  frameBorder="0" 
-                  allow="autoplay" 
-                  allowFullScreen
-                ></iframe>
+            {/* IMAGEM DE TRANSFORMAÇÃO (HERO) */}
+            <div className="relative max-w-2xl mx-auto mb-10">
+              <img 
+                src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_11_16%20%281%29-YiIF5Dx6Ex8EfF18VGsiRtoYLJUhpE.png" 
+                alt="Transformação Menopausa" 
+                className="rounded-3xl shadow-2xl border-4 border-white relative z-10"
+              />
+              <div className="absolute -bottom-6 -right-6 bg-yellow-400 text-gray-900 p-4 rounded-2xl shadow-xl z-20 font-black text-sm rotate-12 hidden md:block">
+                ALÍVIO <br /> GARANTIDO
               </div>
-              <p className="mt-4 text-gray-500 text-sm font-bold animate-pulse flex items-center justify-center gap-2">
-                <PlayCircle className="h-4 w-4 text-pink-600" /> TOQUE NO PLAY E ASSISTA O VÍDEO
-              </p>
             </div>
 
             <Button 
