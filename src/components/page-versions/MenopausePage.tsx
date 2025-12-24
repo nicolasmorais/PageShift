@@ -20,7 +20,9 @@ import {
   Moon,
   Dumbbell,
   Zap,
-  Smile
+  Smile,
+  PlayCircle,
+  Video
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -29,6 +31,7 @@ import { PageTracker } from "./PageTracker";
 
 export function MenopausePage() {
   const [timeLeft, setTimeLeft] = useState(1187); // 19:47 em segundos
+  const videoUrl = "https://wandering-meerkat-skid.vercel.app/embed/bb6f639e-5462-4883-a2c9-1f461595b97d";
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -64,7 +67,7 @@ export function MenopausePage() {
         </div>
 
         {/* HERO SECTION */}
-        <header className="bg-gradient-to-b from-pink-50 to-white pt-12 pb-20 px-6 border-b border-pink-100">
+        <header className="bg-gradient-to-b from-pink-50 to-white pt-12 pb-12 px-6 border-b border-pink-100">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-graphik font-black text-3xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-6">
               Você Pode Acabar com os Calorões da Menopausa em <span className="text-pink-600">Apenas 7 Dias</span>
@@ -73,16 +76,21 @@ export function MenopausePage() {
               (Sem hormônios, sem médico, sem gastar fortunas em consultas que não resolvem nada)
             </p>
 
-            {/* IMAGEM 1 - HERO */}
-            <div className="relative max-w-2xl mx-auto mb-10">
-              <img 
-                src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_11_16%20%281%29-YiIF5Dx6Ex8EfF18VGsiRtoYLJUhpE.png" 
-                alt="Transformação Menopausa" 
-                className="rounded-3xl shadow-2xl border-4 border-white relative z-10"
-              />
-              <div className="absolute -bottom-6 -right-6 bg-yellow-400 text-gray-900 p-4 rounded-2xl shadow-xl z-20 font-black text-sm rotate-12 hidden md:block">
-                ALÍVIO <br /> GARANTIDO
+            {/* VÍDEO PRINCIPAL */}
+            <div className="max-w-3xl mx-auto mb-10">
+              <div className="relative aspect-video w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                <iframe 
+                  src={videoUrl} 
+                  width="100%" 
+                  height="100%" 
+                  frameBorder="0" 
+                  allow="autoplay" 
+                  allowFullScreen
+                ></iframe>
               </div>
+              <p className="mt-4 text-gray-500 text-sm font-bold animate-pulse flex items-center justify-center gap-2">
+                <PlayCircle className="h-4 w-4 text-pink-600" /> TOQUE NO PLAY E ASSISTA O VÍDEO
+              </p>
             </div>
 
             <Button 
@@ -98,12 +106,53 @@ export function MenopausePage() {
           </div>
         </header>
 
+        {/* SEÇÃO DE DEPOIMENTOS EM VÍDEO */}
+        <section className="py-20 px-6 bg-white border-b border-gray-100">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <span className="text-pink-600 font-black text-sm uppercase tracking-widest bg-pink-50 px-4 py-2 rounded-full border border-pink-100 mb-4 inline-block">
+                Resultados Reais
+              </span>
+              <h2 className="text-3xl md:text-5xl font-black text-gray-900 mt-4">
+                Elas Também Voltaram a Sorrir
+              </h2>
+              <p className="text-gray-500 text-lg mt-4 max-w-2xl mx-auto">
+                Assista aos depoimentos de mulheres que aplicaram o nosso método e hoje vivem livres dos sintomas da menopausa.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="group">
+                  <div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-xl border border-gray-200 bg-gray-100 group-hover:shadow-2xl group-hover:scale-[1.02] transition-all duration-300">
+                    <iframe 
+                      src={videoUrl} 
+                      width="100%" 
+                      height="100%" 
+                      frameBorder="0" 
+                      allow="autoplay" 
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between px-2">
+                    <div className="flex gap-1 text-yellow-400">
+                      {[...Array(5)].map((_, idx) => <Star key={idx} size={14} fill="currentColor" />)}
+                    </div>
+                    <span className="text-xs font-bold text-gray-400 uppercase tracking-tighter flex items-center gap-1">
+                      <Video size={12} /> Depoimento Verificado
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* DOR AMPLIFICADA */}
         <section className="py-20 px-6 bg-gray-50">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-black text-center mb-10">Me responda com sinceridade:</h2>
             
-            {/* IMAGEM 2 - DOR/PROBLEMA */}
             <div className="mb-12">
                 <img 
                     src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_22_45%20%282%29-5Mq5Tv2MbDtdy5EOR55c9k8LNw1OiD.png" 
@@ -145,7 +194,6 @@ export function MenopausePage() {
                     <h2 className="text-3xl md:text-4xl font-black mb-6">Imagine acordar daqui 3 dias e...</h2>
                 </div>
 
-                {/* IMAGEM 3 - TRANSFORMAÇÃO/IMAGINE */}
                 <div className="mb-12 relative z-10 flex justify-center">
                     <img 
                         src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%2022%20de%20dez.%20de%202025%2C%2023_28_04%20%281%29-K5eDlKovVcScONN51oldmatjmk2e2p.png" 
