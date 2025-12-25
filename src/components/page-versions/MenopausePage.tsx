@@ -120,17 +120,16 @@ export function MenopausePage() {
               </p>
             </div>
 
-            {/* Grid ajustado para vídeos verticais */}
+            {/* Grid ajustado para vídeos verticais 9:16 */}
             <div className="flex flex-wrap justify-center gap-8 md:gap-12">
               {TESTIMONIAL_VIDEOS.map((url, i) => (
                 <div key={i} className="group w-full max-w-[300px]">
-                  <div className="relative aspect-[9/16] w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-100 bg-gray-900 group-hover:shadow-pink-200 transition-all duration-300">
+                  <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-gray-100 bg-gray-900 group-hover:shadow-pink-200 transition-all duration-300">
                     <iframe 
                       src={url} 
-                      width="100%" 
-                      height="100%" 
+                      className="absolute inset-0 w-full h-full"
                       frameBorder="0" 
-                      allow="autoplay" 
+                      allow="autoplay; fullscreen" 
                       allowFullScreen
                     ></iframe>
                   </div>
