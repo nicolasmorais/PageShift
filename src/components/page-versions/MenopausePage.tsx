@@ -30,9 +30,18 @@ import { Card, CardContent } from '@/components/ui/card';
 import { PageTracker } from "./PageTracker";
 
 const TESTIMONIAL_VIDEOS = [
-  "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/729b9773-837a-4701-be78-26a8f00395be-DP3.mp4",
-  "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/e6acb5f6-e381-4d6d-94e4-81538e8856e8-dp-menopausa-001.mp4",
-  "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/bfb848bc-e1f8-4c87-a126-5a8bb2d16495-DP2.mp4"
+  {
+    url: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/729b9773-837a-4701-be78-26a8f00395be-DP3.mp4",
+    poster: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/depoimento1-poster-8a7b3c5d2e9f4b6a1c2d3e4f5a6b7c8d9e0f1.jpg"
+  },
+  {
+    url: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/e6acb5f6-e381-4d6d-94e4-81538e8856e8-dp-menopausa-001.mp4",
+    poster: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/depoimento2-poster-9b8c7d6e3f2a1b4c5d6e7f8a9b0c1d2e3f4.jpg"
+  },
+  {
+    url: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/bfb848bc-e1f8-4c87-a126-5a8bb2d16495-DP2.mp4",
+    poster: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/depoimento3-poster-5d6e7f8a9b2c3d4e5f6a7b8c9d0e1f2a3b4.jpg"
+  }
 ];
 
 export function MenopausePage() {
@@ -110,19 +119,29 @@ export function MenopausePage() {
               </p>
             </div>
 
-            {/* Grid ajustado para vídeos verticais 9:16 */}
+            {/* Grid ajustado para frames/imagens estáticas */}
             <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-              {TESTIMONIAL_VIDEOS.map((url, i) => (
+              {TESTIMONIAL_VIDEOS.map((video, i) => (
                 <div key={i} className="group w-full max-w-[300px]">
                   <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-gray-100 bg-gray-900 group-hover:shadow-pink-200 transition-all duration-300">
-                    <video
-                      src={url}
-                      className="absolute inset-0 w-full h-full object-cover rounded-[2rem]"
-                      controls
-                      playsInline
-                      preload="metadata"
-                      poster="https://via.placeholder.com/300x534/f87171/ffffff?text=▶%20Assista+ao+Depoimento"
-                    />
+                    {/* Frame/Poster do vídeo */}
+                    <div className="relative w-full h-full">
+                      <img
+                        src={video.poster}
+                        alt={`Depoimento ${i + 1}`}
+                        className="absolute inset-0 w-full h-full object-cover rounded-[2rem]"
+                      />
+                      
+                      {/* Overlay com ícone de play */}
+                      <div className="absolute inset-0 bg-black/30 rounded-[2rem] flex items-center justify-center">
+                        <div className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-xl transform group-hover:scale-110 transition-transform duration-300">
+                          <Play className="h-8 w-8 text-pink-600" />
+                        </div>
+                      </div>
+                      
+                      {/* Efeitos de borda */}
+                      <div className="absolute inset-0 border-2 border-white/20 rounded-[2rem] pointer-events-none"></div>
+                    </div>
                   </div>
                   <div className="mt-6 flex flex-col items-center gap-2">
                     <div className="flex gap-1 text-yellow-400">
