@@ -40,9 +40,18 @@ export const metadata: Metadata = {
   title: "PageShift - Gerenciamento de Advertoriais",
   description: "Plataforma completa para gerenciar e otimizar seus advertoriais dinamicamente.",
   icons: {
-    icon: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
-    shortcut: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
-    apple: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
+    icon: [
+      {
+        url: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
+        href: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
+      }
+    ],
+    apple: [
+      {
+        url: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
+        href: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
+      }
+    ],
   },
 };
 
@@ -56,28 +65,6 @@ export default function RootLayout({
       <head>
         {/* Graphik Trial Font */}
         <link href="https://fonts.cdnfonts.com/css/graphik-trial" rel="stylesheet" />
-        
-        {/* Swetrix Tracking Script - Corrigido para HTTPS */}
-        <script src="https://swetrix.org/swetrix.js" defer></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              document.addEventListener('DOMContentLoaded', function() {
-                swetrix.init('FUBK8k33p9FP', {
-                  apiURL: 'https://swetrixapi-jso0o0co04ww0kw8w4w0s4kg.147.93.179.152.sslip.io/log',
-                });
-                swetrix.trackViews();
-              });
-            `,
-          }}
-        />
-        <noscript>
-          <img
-            src="https://swetrixapi-jso0o0co04ww0kw8w4w0s4kg.147.93.179.152.sslip.io/log/noscript?pid=FUBK8k33p9FP"
-            alt=""
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </noscript>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${spaceGrotesk.variable} ${roboto.variable} ${openSans.variable} font-sans antialiased`}

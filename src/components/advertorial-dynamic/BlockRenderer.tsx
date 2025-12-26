@@ -95,7 +95,7 @@ export const BlockRenderer = ({ block }: BlockRendererProps) => {
 
     switch (block.type) {
         case 'text':
-            const formattedText = block.value
+            const formattedText = (block.value || '')
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n/g, '<br />');
             
@@ -106,6 +106,9 @@ export const BlockRenderer = ({ block }: BlockRendererProps) => {
             );
 
         case 'image':
+            // Se não houver valor, não renderiza para evitar erro 400
+            if (!block.value || block.value === '') return null;
+            
             return (
                 <div className="space-y-2">
                     <img
@@ -176,6 +179,7 @@ export const BlockRenderer = ({ block }: BlockRendererProps) => {
             );
             
         case 'html':
+            if (!block.value) return null;
             return (
                 <div className="my-8" dangerouslySetInnerHTML={{ __html: block.value }} />
             );
