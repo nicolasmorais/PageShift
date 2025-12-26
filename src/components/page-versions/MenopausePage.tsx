@@ -171,7 +171,7 @@ export function MenopausePage() {
         <header className="bg-gradient-to-b from-pink-50 to-white pt-12 pb-20 px-6 border-b border-pink-100">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-space-grotesk font-black text-3xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-6">
-              Diga Adeus aos Calorões da Menopausa em 7 Dias — Naturalmente, Sem Hormônios e Sem Gastar Fortunas!
+              Diga <strong className="text-pink-600">Adeus</strong> aos Calorões da Menopausa em 7 Dias — <strong className="text-pink-600">Naturalmente</strong>, Sem Hormônios e Sem Gastar Fortunas!
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 font-medium">
               Em apenas 7 dias, você dorme melhor, controla o humor e acaba com o suor noturno — tudo com um guia simples e 100% natural
