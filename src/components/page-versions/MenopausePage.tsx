@@ -170,10 +170,10 @@ export function MenopausePage() {
         {/* HERO SECTION */}
         <header className="bg-gradient-to-b from-pink-50 to-white pt-12 pb-20 px-6 border-b border-pink-100">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-space-grotesk font-black text-3xl md:text-5xl lg:text-6xl text-gray-900 leading-tight mb-6">
+            <h1 className="font-space-grotesk font-black text-2xl md:text-4xl lg:text-5xl text-gray-900 leading-tight mb-6">
               Diga <strong className="text-pink-600">Adeus</strong> aos Calorões da Menopausa em 7 Dias — <strong className="text-pink-600">Naturalmente</strong>, Sem Hormônios e Sem Gastar Fortunas!
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-8 font-medium">
+            <p className="text-base md:text-lg text-gray-600 mb-8 font-medium">
               Em apenas 7 dias, você dorme melhor, controla o humor e acaba com o suor noturno — tudo com um guia simples e 100% natural
             </p>
 
@@ -416,7 +416,7 @@ export function MenopausePage() {
         {/* PRECIFICAÇÃO 🔥 */}
         <section id="pricing" className="py-24 px-6 bg-pink-600 text-white">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-black mb-6">OFERTA ESPECIAL</h2>
+            <h2 className="text-3xl md:text-4xl font-black mb-6">OFERTA ESPECIAL</h2>
             <p className="text-pink-200 text-xl font-bold mb-10">Expira em {formatTime(timeLeft)}</p>
             
             <div className="bg-white text-gray-900 rounded-[3rem] p-10 md:p-16 shadow-2xl relative">
@@ -429,8 +429,8 @@ export function MenopausePage() {
                   <p className="text-gray-400 line-through text-2xl font-bold">R$ 147,00</p>
                   <p className="text-gray-400 line-through text-xl opacity-50">R$ 47,00</p>
                 </div>
-                <div className="text-pink-600 text-7xl md:text-8xl font-black">
-                  <span className="text-3xl font-bold align-top mt-4 inline-block">R$</span>19,90
+                <div className="text-pink-600 text-6xl md:text-7xl font-black">
+                  <span className="text-2xl font-bold align-top mt-4 inline-block">R$</span>19,90
                 </div>
               </div>
 
@@ -443,7 +443,7 @@ export function MenopausePage() {
                 ))}
               </div>
 
-              <Button className="w-full h-24 bg-green-600 hover:bg-green-700 text-white text-2xl md:text-3xl font-black rounded-[2rem] shadow-2xl mb-6">
+              <Button className="w-full h-20 bg-green-600 hover:bg-green-700 text-white text-xl md:text-2xl font-black rounded-[2rem] shadow-2xl mb-6">
                 <a href="https://oneconversion.pro/checkout?product_id=26455e6c-ddf9-4304-a72e-66a7ffa6beac" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
                   QUERO MEU ACESSO AGORA!
                 </a>
@@ -499,7 +499,7 @@ export function MenopausePage() {
         {/* CTA FINAL ⏰ */}
         <section className="py-24 px-6 bg-pink-50 border-t border-pink-100">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl font-black mb-8">Qual caminho você escolhe?</h2>
+            <h2 className="text-3xl md:text-4xl font-black mb-8">Qual caminho você escolhe?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left mb-12">
               <div className="p-8 bg-white rounded-3xl border border-gray-100 opacity-60">
                 <p className="font-black text-red-500 mb-4">OPÇÃO 1</p>
@@ -511,7 +511,7 @@ export function MenopausePage() {
               </div>
             </div>
             
-            <Button className="w-full h-24 bg-green-600 hover:bg-green-700 text-white text-2xl md:text-3xl font-black rounded-[2rem] shadow-2xl mb-8">
+            <Button className="w-full h-20 bg-green-600 hover:bg-green-700 text-white text-xl md:text-2xl font-black rounded-[2rem] shadow-2xl mb-8">
               <a href="https://oneconversion.pro/checkout?product_id=26455e6c-ddf9-4304-a72e-66a7ffa6beac" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
                 QUERO MEU ACESSO POR R$ 19,90!
               </a>
