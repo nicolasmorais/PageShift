@@ -13,23 +13,22 @@ export async function GET(): Promise<NextResponse> {
     let advertorialCount = 0;
     let pageViewCount = 0;
     let lastView = 'N/A';
-    let authStatus = 'Padrão/Não Configurado';
+    let authStatus: 'Configurado' | 'Padrão/Não Configurado' = 'Padrão/Não Configurado';
     
-    // Buscar dados das tabelas PostgreSQL
     const client = db as Client;
     
     try {
       // Contar rotas
       const routeResult = await client.query('SELECT COUNT(*) FROM routes');
-      routeCount = parseInt(routeResult.rows[0].count);
+      routeCount = parseInt(routeResult.rows[0]?.count || '0');
       
       // Contar advertoriais
       const advertorialResult = await client.query('SELECT COUNT(*) FROM custom_advertorials');
-      advertorialCount = parseInt(advertorialResult.rows[0].count);
+      advertorialCount = parseInt(advertorialResult.rows[0]?.count || '0');
       
       // Contar page views
       const pageViewResult = await client.query('SELECT COUNT(*) FROM page_views');
-      pageViewCount = parseInt(pageViewResult.rows[0].count);
+      pageViewCount = parseInt(pageViewResult.rows[0]?.count || '0');
       
       // Última visualização
       if (pageViewCount > 0) {
@@ -43,10 +42,10 @@ export async function GET(): Promise<NextResponse> {
       const authResult = await client.query('SELECT value FROM settings WHERE key = $1', ['auth']);
       if (authResult.rows.length > 0) {
         const authData = authResult.rows[0].value;
-        authStatus = authData.passwordHash ? 'Configurado' : 'Padrão/Não Configurado';
+        authStatus = (authData && authData.passwordHash) ? 'Configurado' : 'Padrão/Não Configurado';
       }
     } catch (error) {
-      console.error('Erro ao buscar dados do PostgreSQL:', error);
+      console.error('Erro ao buscar dados das tabelas:', error);
     }
     
     return NextResponse.json({
@@ -66,7 +65,10 @@ export async function GET(): Promise<NextResponse> {
     return NextResponse.json({ 
       status: 'ERROR', 
       database: 'DOWN',
-      message: 'Falha ao conectar ou ler o banco de dados.' 
+      authStatus: 'Padrão/Não Configurado',
+      metrics: { routes: 0, advertorials: 0, pageViews: 0, lastPageView: 'N/A' },
+      message: 'Falha ao conectar ou ler o banco de dados.',
+      timestamp: new Date().toISOString()
     }, { status: 500 });
   }
 }
