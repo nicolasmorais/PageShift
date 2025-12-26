@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Check, 
   X,
@@ -44,6 +44,58 @@ const TESTIMONIAL_VIDEOS = [
   }
 ];
 
+// Componente para o vídeo com播放 controls
+const VideoPlayer = ({ video, index }: { video: typeof TESTIMONIAL_VIDEOS[0], index: number }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.error('Erro ao reproduzir vídeo:', error);
+      });
+    }
+  };
+
+  return (
+    <div className="group w-full max-w-[300px]">
+      <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-gray-100 bg-gray-900">
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover rounded-[2rem]"
+          poster={video.poster}
+          controls
+          playsInline
+          preload="metadata"
+        >
+          <source src={video.url} type="video/mp4" />
+          Seu navegador não suporta o elemento de vídeo.
+        </video>
+        
+        {/* Overlay customizado quando não está tocando */}
+        <div 
+          className="absolute inset-0 bg-black/30 rounded-[2rem] flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={handlePlay}
+        >
+          <div className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-xl pointer-events-auto">
+            <Play className="h-8 w-8 text-pink-600" />
+          </div>
+        </div>
+        
+        {/* Efeitos de borda */}
+        <div className="absolute inset-0 border-2 border-white/20 rounded-[2rem] pointer-events-none"></div>
+      </div>
+      <div className="mt-6 flex flex-col items-center gap-2">
+        <div className="flex gap-1 text-yellow-400">
+          {[...Array(5)].map((_, idx) => <Star key={idx} size={16} fill="currentColor" />)}
+        </div>
+        <span className="text-sm font-black text-gray-400 uppercase tracking-tighter flex items-center gap-2">
+          <Video size={14} className="text-pink-600" /> Depoimento Verificado
+        </span>
+      </div>
+    </div>
+  );
+};
+
 export function MenopausePage() {
   const [timeLeft, setTimeLeft] = useState(1187); // 19:47 em segundos
 
@@ -60,21 +112,43 @@ export function MenopausePage() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Efeito para carregar o Taboola Pixel
+  useEffect(() => {
+    // Verificar se o _tfa existe globalmente
+    if (typeof window !== 'undefined' && window._tfa) {
+      window._tfa.push({notify: 'event', name: 'view_content', id: 1959176});
+    }
+  }, []);
+
   return (
     <>
       <PageTracker contentId="menopausa" />
       
-      {/* Taboola Pixel Code - Using Head component */}
-      <head>
-        <script dangerouslySetInnerHTML={{
+      {/* Script do Taboola Pixel - Carregado dinamicamente */}
+      <script
+        dangerouslySetInnerHTML={{
           __html: `
-            _tfa.push({notify: 'event', name: 'view_content', id: 1959176});
+            !function(t, f, a, x) {
+              if (!document.getElementById(x)) {
+                t.async = 1; t.src = a; t.id = x;
+                f.parentNode.insertBefore(t, f);
+              }
+            }(document.createElement('script'),
+            document.getElementsByTagName('script')[0],
+            '//cdn.taboola.com/libtrc/unip/1959176/tfa.js',
+            'tb_tfa_script');
           `
-        }} />
-        <noscript>
-          <img src="https://trc.taboola.com/1959176/log/3/unip?en=view_content" width="0" height="0" style={{ display: 'none' }} />
-        </noscript>
-      </head>
+        }}
+      />
+      
+      <noscript>
+        <img 
+          src="https://trc.taboola.com/1959176/log/3/unip?en=view_content" 
+          width="0" 
+          height="0" 
+          style={{ display: 'none' }} 
+        />
+      </noscript>
       
       <div className="bg-white text-gray-900 font-space-grotesk selection:bg-pink-100 antialiased">
         
@@ -132,39 +206,10 @@ export function MenopausePage() {
               </p>
             </div>
 
-            {/* Grid ajustado para frames/imagens estáticas */}
+            {/* Grid com vídeos funcionais */}
             <div className="flex flex-wrap justify-center gap-8 md:gap-12">
               {TESTIMONIAL_VIDEOS.map((video, i) => (
-                <div key={i} className="group w-full max-w-[300px]">
-                  <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-gray-100 bg-gray-900">
-                    {/* Frame/Poster do vídeo */}
-                    <div className="relative w-full h-full">
-                      <img
-                        src={video.poster}
-                        alt={`Depoimento ${i + 1}`}
-                        className="absolute inset-0 w-full h-full object-cover rounded-[2rem]"
-                      />
-                      
-                      {/* Overlay com ícone de play */}
-                      <div className="absolute inset-0 bg-black/30 rounded-[2rem] flex items-center justify-center">
-                        <div className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-xl">
-                          <Play className="h-8 w-8 text-pink-600" />
-                        </div>
-                      </div>
-                      
-                      {/* Efeitos de borda */}
-                      <div className="absolute inset-0 border-2 border-white/20 rounded-[2rem] pointer-events-none"></div>
-                    </div>
-                  </div>
-                  <div className="mt-6 flex flex-col items-center gap-2">
-                    <div className="flex gap-1 text-yellow-400">
-                      {[...Array(5)].map((_, idx) => <Star key={idx} size={16} fill="currentColor" />)}
-                    </div>
-                    <span className="text-sm font-black text-gray-400 uppercase tracking-tighter flex items-center gap-2">
-                      <Video size={14} className="text-pink-600" /> Depoimento Verificado
-                    </span>
-                  </div>
-                </div>
+                <VideoPlayer key={i} video={video} index={i} />
               ))}
             </div>
           </div>
@@ -497,4 +542,11 @@ export function MenopausePage() {
       </div>
     </>
   );
+}
+
+// Adicionando tipagem para o objeto global window
+declare global {
+  interface Window {
+    _tfa?: any[];
+  }
 }
