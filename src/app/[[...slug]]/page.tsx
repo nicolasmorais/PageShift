@@ -11,11 +11,13 @@ import APPage from '@/components/page-versions/APPage';
 import CustomAdvertorialPage from '@/components/page-versions/CustomAdvertorialPage';
 import { RouteMapping } from '@/lib/advertorial-types';
 
-// IDs de páginas estáticas
-const STATIC_PAGE_IDS = ['v1', 'v2', 'v3', 'ap', 'menopausa'];
+// IDs de páginas estáticas - REMOVIDO 'menopausa' daqui para permitir override
+const STATIC_PAGE_IDS = ['v1', 'v2', 'v3', 'ap'];
 
 // Componente que renderiza o conteúdo correto
 function ContentSwitcher({ contentId }: { contentId: string }) {
+  console.log("ContentSwitcher: Renderizando contentId:", contentId);
+  
   try {
     switch (contentId) {
       case 'v1':
@@ -53,28 +55,36 @@ export default async function DynamicPage({
   params, 
   searchParams, 
 }: DynamicPageProps) {
+  console.log("=== DynamicPage Iniciado ===");
+  
   try {
     const resolvedParams = await params;
     const { slug } = resolvedParams;
     
+    console.log("Slug recebido:", slug);
+    
     // Página inicial padrão
     if (!slug || slug.length === 0) {
+      console.log("Renderizando página inicial (V1)");
       return <V1Page />;
     }
     
     const path = `/${slug.join('/')}`;
     const slugKey = slug.join('/');
+    
+    console.log("Path:", path);
+    console.log("SlugKey:", slugKey);
 
-    // LÓGICA 0: Verificação prioritária de páginas estáticas (Hardcoded)
-    if (STATIC_PAGE_IDS.includes(slugKey)) {
-      return <ContentSwitcher contentId={slugKey} />;
-    }
-
+    // VERIFICAÇÃO ESPECIAL: Se for 'menopausa', permite override pelas auto routes
+    const isMenopause = slugKey === 'menopausa';
+    
     const client: Client = await getDb();
     let contentId: string | null = null;
 
-    // LÓGICA 1: Rota Automática (Settings) - NOVA PRIORIDADE
+    // LÓGICA 1: Rota Automática (Settings) - MAIOR PRIORIDADE
+    console.log("Verificando auto routes...");
     const autoRoutesResult = await client.query('SELECT value FROM settings WHERE key = $1', ['autoRoutes']);
+    
     if (autoRoutesResult.rows.length > 0) {
       const autoRoutes: { [slug: string]: string } = autoRoutesResult.rows[0].value;
       console.log("AutoRoutes encontradas:", autoRoutes);
@@ -82,39 +92,65 @@ export default async function DynamicPage({
       
       if (autoRoutes[slugKey]) {
         contentId = autoRoutes[slugKey];
-        console.log("Rota automática encontrada:", slugKey, "→", contentId);
+        console.log("🎯 Rota automática encontrada:", slugKey, "→", contentId);
+      }
+    } else {
+      console.log("Nenhuma auto route encontrada no banco");
+    }
+
+    // LÓGICA 2: Páginas Estáticas (exceto se 'menopausa' já teve auto route)
+    if (!contentId && !isMenopause) {
+      console.log("Verificando páginas estáticas...");
+      if (STATIC_PAGE_IDS.includes(slugKey)) {
+        contentId = slugKey;
+        console.log("✅ Página estática encontrada:", contentId);
       }
     }
 
-    // LÓGICA 2: Tabela de Rotas (só se não encontrar em autoRoutes)
+    // LÓGICA 3: Se 'menopausa' NÃO teve auto route, renderiza o conteúdo original
+    if (!contentId && isMenopause) {
+      console.log("Menopausa sem auto route - renderizando conteúdo original");
+      contentId = 'menopausa';
+    }
+
+    // LÓGICA 4: Tabela de Rotas (só se não encontrar em auto routes nem estáticas)
     if (!contentId) {
+      console.log("Verificando tabela de rotas...");
       const routeResult = await client.query(
         'SELECT content_id as "contentId" FROM routes WHERE path = $1', 
         [path]
       );
       if (routeResult.rows[0]) {
         contentId = routeResult.rows[0].contentId;
+        console.log("✅ Rota encontrada na tabela:", contentId);
       }
     }
 
-    // LÓGICA 3: UUID Direto (só se não encontrar em autoRoutes nem routes)
-    if (!contentId && isUUID(slugKey) && !STATIC_PAGE_IDS.includes(slugKey)) {
+    // LÓGICA 5: UUID Direto
+    if (!contentId && isUUID(slugKey)) {
+      console.log("Verificando UUID direto...");
       const advertorialResult = await client.query('SELECT id FROM custom_advertorials WHERE id = $1', [slugKey]);
       if (advertorialResult.rows.length > 0) {
         contentId = slugKey;
+        console.log("✅ UUID encontrado:", contentId);
       }
     }
 
-    console.log("Resultado final da busca:", { path, slugKey, contentId });
+    console.log("=== RESULTADO FINAL ===");
+    console.log("Path:", path);
+    console.log("SlugKey:", slugKey);
+    console.log("ContentId:", contentId);
 
     if (!contentId) {
-      console.log("Conteúdo não encontrado para:", path);
+      console.log("❌ Conteúdo não encontrado para:", path);
       return notFound();
     }
 
+    console.log("🎉 Renderizando ContentSwitcher com:", contentId);
     return <ContentSwitcher contentId={contentId} />;
   } catch (error) {
-    console.error("DynamicPage Error:", error);
+    console.error("=== ERRO NO DynamicPage ===");
+    console.error(error);
     return notFound();
   }
 }
