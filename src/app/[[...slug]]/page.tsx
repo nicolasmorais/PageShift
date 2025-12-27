@@ -73,16 +73,20 @@ export default async function DynamicPage({
     const client: Client = await getDb();
     let contentId: string | null = null;
 
-    // LÓGICA 1: Rota Automática (Settings)
+    // LÓGICA 1: Rota Automática (Settings) - NOVA PRIORIDADE
     const autoRoutesResult = await client.query('SELECT value FROM settings WHERE key = $1', ['autoRoutes']);
     if (autoRoutesResult.rows.length > 0) {
       const autoRoutes: { [slug: string]: string } = autoRoutesResult.rows[0].value;
+      console.log("AutoRoutes encontradas:", autoRoutes);
+      console.log("Buscando slug:", slugKey);
+      
       if (autoRoutes[slugKey]) {
         contentId = autoRoutes[slugKey];
+        console.log("Rota automática encontrada:", slugKey, "→", contentId);
       }
     }
 
-    // LÓGICA 2: Tabela de Rotas
+    // LÓGICA 2: Tabela de Rotas (só se não encontrar em autoRoutes)
     if (!contentId) {
       const routeResult = await client.query(
         'SELECT content_id as "contentId" FROM routes WHERE path = $1', 
@@ -93,7 +97,7 @@ export default async function DynamicPage({
       }
     }
 
-    // LÓGICA 3: UUID Direto
+    // LÓGICA 3: UUID Direto (só se não encontrar em autoRoutes nem routes)
     if (!contentId && isUUID(slugKey) && !STATIC_PAGE_IDS.includes(slugKey)) {
       const advertorialResult = await client.query('SELECT id FROM custom_advertorials WHERE id = $1', [slugKey]);
       if (advertorialResult.rows.length > 0) {
@@ -101,7 +105,10 @@ export default async function DynamicPage({
       }
     }
 
+    console.log("Resultado final da busca:", { path, slugKey, contentId });
+
     if (!contentId) {
+      console.log("Conteúdo não encontrado para:", path);
       return notFound();
     }
 
