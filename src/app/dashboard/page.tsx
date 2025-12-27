@@ -14,11 +14,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Route, ExternalLink, RefreshCw, ArrowRightLeft } from 'lucide-react';
+import { Plus, Route, ExternalLink, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CreateRouteDialog } from '@/components/dashboard/CreateRouteDialog';
 import { UTMLinkGenerator } from '@/components/dashboard/UTMLinkGenerator';
 import { RouteCard } from '@/components/dashboard/RouteCard';
+import { AutoRouteManager } from '@/components/dashboard/AutoRouteManager';
 
 interface CustomAdvertorial {
   id: string;
@@ -31,44 +32,53 @@ interface ExistingRoute {
   contentId: string;
 }
 
+interface AutoRoute {
+  [slug: string]: string; // slug -> advertorialId
+}
+
 // Conteúdos estáticos disponíveis
 const STATIC_CONTENT_OPTIONS: CustomAdvertorial[] = [
     { id: 'v1', name: 'Advertorial V1 (Original)' },
     { id: 'v2', name: 'Advertorial V2' },
     { id: 'v3', name: 'Advertorial V3' },
     { id: 'ap', name: 'Página de Aprovação (AP)' },
+    { id: 'menopausa', name: 'Menopausa Nunca Mais' },
 ];
 
 export default function DashboardPage() {
   const [advertorials, setAdvertorials] = useState<CustomAdvertorial[]>([]);
   const [existingRoutes, setExistingRoutes] = useState<ExistingRoute[]>([]);
+  const [autoRoutes, setAutoRoutes] = useState<AutoRoute>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const allContentOptions = [...STATIC_CONTENT_OPTIONS, ...advertorials];
 
-  const fetchAdvertorialsAndRoutes = async (): Promise<void> => {
+  const fetchAllData = async (): Promise<void> => {
     setIsLoading(true);
     try {
       console.log("Dashboard: Buscando dados...");
       
-      const [advRes, routeRes] = await Promise.all([
+      const [advRes, routeRes, autoRouteRes] = await Promise.all([
+        fetch('/api/custom-advertorials'),
         fetch('/api/routes'),
-        fetch('/api/custom-advertorials')
+        fetch('/api/auto-routes')
       ]);
 
-      console.log("Dashboard: Respostas recebidas - Adv:", advRes.status, "Routes:", routeRes.status);
+      console.log("Dashboard: Respostas recebidas - Adv:", advRes.status, "Routes:", routeRes.status, "AutoRoutes:", autoRouteRes.status);
 
-      if (!advRes.ok || !routeRes.ok) {
-        throw new Error(`Falha ao buscar dados. Adv: ${advRes.status}, Routes: ${routeRes.status}`);
+      if (!advRes.ok || !routeRes.ok || !autoRouteRes.ok) {
+        throw new Error(`Falha ao buscar dados. Adv: ${advRes.status}, Routes: ${routeRes.status}, AutoRoutes: ${autoRouteRes.status}`);
       }
 
       const routeData: ExistingRoute[] = await routeRes.json();
       const advData: CustomAdvertorial[] = await advRes.json();
+      const autoRouteData: AutoRoute = await autoRouteRes.json();
       
-      console.log("Dashboard: Dados recebidos - Advertoriais:", advData.length, "Rotas:", routeData.length);
+      console.log("Dashboard: Dados recebidos - Advertoriais:", advData.length, "Rotas:", routeData.length, "AutoRotas:", Object.keys(autoRouteData).length);
 
       setAdvertorials(advData);
       setExistingRoutes(routeData);
+      setAutoRoutes(autoRouteData);
 
       if (advData.length === 0) {
         toast.warning("Nenhum advertorial dinâmico encontrado. Crie um novo em 'Meus Advertoriais'.");
@@ -83,7 +93,7 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    fetchAdvertorialsAndRoutes();
+    fetchAllData();
   }, []);
 
   const handleSaveRoute = async (path: string, contentId: string, name?: string): Promise<void> => {
@@ -105,7 +115,7 @@ export default function DashboardPage() {
 
       const result = await response.json();
       toast.success(`Rota ${path} atualizada com sucesso!`);
-      fetchAdvertorialsAndRoutes(); // Atualiza a lista de rotas
+      fetchAllData(); // Atualiza todos os dados
     } catch (error) {
       console.error("Erro ao salvar rota:", error);
       toast.error(error instanceof Error ? error.message : "Falha ao salvar a rota.");
@@ -130,7 +140,7 @@ export default function DashboardPage() {
       }
 
       toast.success(`Rota ${path} excluída com sucesso!`);
-      fetchAdvertorialsAndRoutes(); // Atualiza a lista de rotas
+      fetchAllData(); // Atualiza todos os dados
     } catch (error) {
       console.error("Erro ao excluir rota:", error);
       toast.error("Falha ao excluir a rota.");
@@ -155,28 +165,36 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Gerenciamento de Rotas</h1>
             <p className="mt-1 text-gray-500 dark:text-zinc-400">Crie novas rotas ou atribua conteúdo de advertoriais a URLs existentes.</p>
         </div>
-        <Button onClick={fetchAdvertorialsAndRoutes} variant="outline" className={borderColor}>
+        <Button onClick={fetchAllData} variant="outline" className={borderColor}>
           <RefreshCw className="mr-2 h-4 w-4" />
           Atualizar Lista
         </Button>
       </header>
 
       <main className="space-y-8">
+        
+        {/* NOVO: Auto Route Manager */}
+        <AutoRouteManager 
+          autoRoutes={autoRoutes}
+          contentOptions={allContentOptions}
+          onRefresh={fetchAllData}
+        />
+
         {/* Card 1: Criar Nova Rota */}
         <Card className={cn(cardBg, borderColor, textColor)}>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <Plus className="h-5 w-5" />
-                    Criar Nova Rota
+                    Rotas Fixas (Legado)
                 </CardTitle>
                 <CardDescription className="text-gray-500 dark:text-zinc-400">
-                    Crie um novo caminho (URL) e atribua conteúdo a ele.
+                    Crie rotas permanentes no banco de dados. Use as "Rotas Automáticas" acima para redirecionamentos dinâmicos.
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <CreateRouteDialog 
                     contentOptions={allContentOptions}
-                    onRouteCreated={fetchAdvertorialsAndRoutes}
+                    onRouteCreated={fetchAllData}
                 />
             </CardContent>
         </Card>
@@ -200,9 +218,9 @@ export default function DashboardPage() {
         {/* Card 3: Rotas Existentes */}
         <Card className={cn(cardBg, borderColor, textColor)}>
             <CardHeader>
-                <CardTitle>Rotas Existentes</CardTitle>
+                <CardTitle>Rotas Fixas Existentes</CardTitle>
                 <CardDescription className="text-gray-500 dark:text-zinc-400">
-                    Lista de todas as URLs mapeadas no sistema.
+                    Lista de todas as URLs permanentes mapeadas no sistema.
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -214,13 +232,13 @@ export default function DashboardPage() {
                     </div>
                 ) : existingRoutes.length === 0 ? (
                     <p className="text-center text-gray-500 dark:text-zinc-500">
-                        Nenhuma rota encontrada. Crie uma nova acima.
+                        Nenhuma rota fixa encontrada. Crie uma nova acima.
                     </p>
                 ) : (
                     <div className="space-y-6">
                         {existingRoutes.map((route) => (
                             <RouteCard
-                                key={route.path} // Adicionada key única aqui
+                                key={route.path}
                                 route={route}
                                 contentOptions={allContentOptions}
                                 onSave={handleSaveRoute}

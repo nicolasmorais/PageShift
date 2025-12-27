@@ -81,3 +81,48 @@ export async function POST(req: Request): Promise<NextResponse> {
         return NextResponse.json({ message: 'Erro Interno do Servidor' }, { status: 500 });
     }
 }
+
+// DELETE: Excluir uma rota automática
+export async function DELETE(req: Request): Promise<NextResponse> {
+    try {
+        const { slug } = await req.json() as { slug: string };
+
+        if (!slug) {
+            return NextResponse.json({ message: 'O slug é obrigatório' }, { status: 400 });
+        }
+
+        const client: Client = await getDb();
+
+        // Busca o mapeamento de rotas atual
+        const currentRoutesResult = await client.query('SELECT value FROM settings WHERE key = $1', ['autoRoutes']);
+        
+        if (currentRoutesResult.rows.length === 0) {
+            return NextResponse.json({ message: 'Nenhuma rota automática encontrada' }, { status: 404 });
+        }
+
+        const currentRoutes: AutoRouteMapping = currentRoutesResult.rows[0].value;
+        
+        // Verifica se a rota existe
+        if (!currentRoutes[slug]) {
+            return NextResponse.json({ message: 'Rota não encontrada' }, { status: 404 });
+        }
+
+        // Remove a rota do mapeamento
+        delete currentRoutes[slug];
+
+        // Salva o mapeamento atualizado no banco
+        await client.query(
+            'INSERT INTO settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO UPDATE SET value = $2',
+            ['autoRoutes', JSON.stringify(currentRoutes)]
+        );
+
+        return NextResponse.json({ 
+            message: 'Rota excluída com sucesso', 
+            slug: slug
+        });
+
+    } catch (error) {
+        console.error('Failed to delete auto route:', error);
+        return NextResponse.json({ message: 'Erro Interno do Servidor' }, { status: 500 });
+    }
+}
