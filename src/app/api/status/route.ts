@@ -45,11 +45,11 @@ export async function GET(): Promise<NextResponse> {
         }
       }
       
-      // 5. Status de autenticação (Garantindo que authData não seja nulo)
+      // 5. Status de autenticação
       const authResult = await client.query('SELECT value FROM settings WHERE key = $1', ['auth']);
       if (authResult.rows.length > 0) {
         const authData = authResult.rows[0].value;
-        if (authData && typeof authData === 'object' && 'passwordHash' in authData) {
+        if (authData && typeof authData === 'object') {
           response.authStatus = authData.passwordHash ? 'Configurado' : 'Padrão/Não Configurado';
         }
       }
