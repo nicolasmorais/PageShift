@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Settings, Wand2, LayoutGrid } from "lucide-react";
 import { usePathname } from "next/navigation";
