@@ -38,7 +38,7 @@ const systemNavItems = [
   {
     href: "/dashboard/db-test",
     icon: Database,
-    label: "Teste de Banco",
+    label: "Status Banco",
   },
 ];
 
