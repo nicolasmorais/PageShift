@@ -90,6 +90,9 @@ export const FooterEditor = ({
                             <div><Label className={labelColor}>Texto do Aviso {index + 1}</Label><Textarea className={cn(inputBg, borderColor, textColor)} value={disclaimer.text} onChange={e => handleFooterArrayChange<Disclaimer>('disclaimers', index, 'text', e.target.value)} rows={3} /></div>
                         </div>
                     ))}
+                    <Button variant="outline" size="sm" onClick={() => handleAddFooterItem('disclaimers')} className="w-full">
+                        <Plus className="h-4 w-4 mr-2" /> Adicionar Aviso
+                    </Button>
                 </div>
 
                 {/* Policies */}
@@ -103,6 +106,9 @@ export const FooterEditor = ({
                             <div><Label className={labelColor}>Conteúdo da Política {index + 1}</Label><Textarea className={cn(inputBg, borderColor, textColor)} value={policy.content} onChange={e => handleFooterArrayChange<Policy>('policies', index, 'content', e.target.value)} rows={8} /></div>
                         </div>
                     ))}
+                    <Button variant="outline" size="sm" onClick={() => handleAddFooterItem('policies')} className="w-full">
+                        <Plus className="h-4 w-4 mr-2" /> Adicionar Política
+                    </Button>
                 </div>
                 
                 {/* Copyright */}
