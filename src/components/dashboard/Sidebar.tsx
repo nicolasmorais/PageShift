@@ -9,9 +9,22 @@ import { LogoutButton } from "@/components/auth/LogoutButton";
 const mainNavItems = [
   {
     href: "/dashboard",
+    icon: LayoutGrid,
+    label: "Meus Advertoriais",
+  },
+  {
+    href: "/dashboard/approval-page",
+    icon: Wand2,
+    label: "Página de Aprovação",
+  },
+  {
+    href: "/dashboard",
     icon: Settings,
     label: "Route Control",
   },
+];
+
+const systemNavItems = [
   {
     href: "/dashboard/status",
     icon: CheckCircle,
@@ -22,18 +35,10 @@ const mainNavItems = [
     icon: Monitor,
     label: "Configurações",
   },
-];
-
-const pagesNavItems = [
   {
-    href: "/dashboard/custom-advertorials",
-    icon: LayoutGrid,
-    label: "Meus Advertoriais",
-  },
-  {
-    href: "/dashboard/approval-page",
-    icon: Wand2,
-    label: "Página de Aprovação",
+    href: "/dashboard/db-test",
+    icon: Database,
+    label: "Teste de Banco",
   },
 ];
 
@@ -120,10 +125,10 @@ export const Sidebar = () => {
         </div>
         <div>
           <h3 className={cn("mb-2 px-3 text-xs font-semibold uppercase", lightTextColor, darkTextColor)}>
-            Advertoriais
+            Sistema
           </h3>
           <div className="space-y-1">
-            {pagesNavItems.map((item) => (
+            {systemNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
