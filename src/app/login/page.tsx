@@ -45,15 +45,6 @@ export default function LoginPage() {
           </div>
           
           <LoginFormOffline />
-
-          <div className="pt-4 text-center">
-            <a 
-              href="/init-database" 
-              className="text-sm text-gray-500 hover:text-[#6B16ED] transition-colors"
-            >
-              Configurar banco de dados
-            </a>
-          </div>
         </div>
       </div>
     </>
