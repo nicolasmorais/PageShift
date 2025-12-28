@@ -13,6 +13,7 @@ export async function GET() {
 
     const pool = new Pool({
       connectionString: process.env.DATABASE_URL,
+      // Desabilitamos SSL por padrão, mas se for um banco na nuvem pode ser necessário ssl: true
       ssl: false,
     })
 
