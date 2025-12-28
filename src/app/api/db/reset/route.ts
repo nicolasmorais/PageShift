@@ -16,18 +16,14 @@ export async function POST() {
       DROP TABLE IF EXISTS examples CASCADE;
     `);
 
-    // 2. A função getDb() já chama ensureTablesExist() e insertDefaultData() 
-    // quando conecta, mas vamos garantir a execução aqui para o novo banco.
-    // Como as tabelas foram dropadas, precisamos reconectar ou rodar os scripts manualmente.
-    
-    // Recriando tabelas
+    // 2. Recriando tabelas conforme o esquema do projeto
     await client.query(`CREATE TABLE IF NOT EXISTS routes (path VARCHAR(255) PRIMARY KEY, name VARCHAR(255) NOT NULL, content_id VARCHAR(255) NOT NULL);`);
     await client.query(`CREATE TABLE IF NOT EXISTS page_views (id UUID PRIMARY KEY, content_id VARCHAR(255) NOT NULL, path VARCHAR(255) NOT NULL, timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, country VARCHAR(100), region_name VARCHAR(100));`);
     await client.query(`CREATE TABLE IF NOT EXISTS settings (key VARCHAR(255) PRIMARY KEY, value JSONB NOT NULL);`);
     await client.query(`CREATE TABLE IF NOT EXISTS custom_advertorials (id UUID PRIMARY KEY, name VARCHAR(255) NOT NULL, data JSONB NOT NULL);`);
     await client.query(`CREATE TABLE IF NOT EXISTS visits (id UUID PRIMARY KEY, visitor_id UUID NOT NULL, ip VARCHAR(50), city VARCHAR(100), region VARCHAR(100), country VARCHAR(100), latitude NUMERIC(10, 7), longitude NUMERIC(10, 7), device_type VARCHAR(50), os VARCHAR(100), browser VARCHAR(100), user_agent TEXT, created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP);`);
 
-    // Inserindo dados padrão (seeds)
+    // 3. Inserindo dados iniciais (Seed)
     const defaultRoutes = [
         { path: '/', name: 'Página Principal', content_id: 'v1' },
         { path: '/v1', name: 'Rota do Advertorial V1', content_id: 'v1' },
