@@ -15,25 +15,6 @@ export const metadata: Metadata = {
 };
 
 export default function LoginPage() {
-  const logoUrl = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9f
-<dyad-write path="src/app/login/page.tsx">
-import { LoginFormOffline } from '@/components/auth/LoginFormOffline';
-import { Metadata } from 'next';
-import { cn } from '@/lib/utils';
-import { Toaster } from 'sonner';
-import Image from 'next/image';
-
-export const metadata: Metadata = {
-  title: 'Login - PageShift',
-  description: 'Acesse o painel de gerenciamento de advertoriais',
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
-  },
-};
-
-export default function LoginPage() {
   const logoUrl = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29-cWKpykzfXjyKf02ITuUtmE2iq5JYZn.png";
 
   return (
