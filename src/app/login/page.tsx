@@ -1,9 +1,27 @@
-import { LoginForm } from '@/components/auth/LoginForm';
+import { LoginFormOffline } from '@/components/auth/LoginFormOffline';
 import { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import { Toaster } from 'sonner';
 import Image from 'next/image';
-import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Login - PageShift',
+  description: 'Acesse o painel de gerenciamento de advertoriais',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+};
+
+export default function LoginPage() {
+  const logoUrl = "https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9f
+<dyad-write path="src/app/login/page.tsx">
+import { LoginFormOffline } from '@/components/auth/LoginFormOffline';
+import { Metadata } from 'next';
+import { cn } from '@/lib/utils';
+import { Toaster } from 'sonner';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Login - PageShift',
@@ -45,15 +63,15 @@ export default function LoginPage() {
             </p>
           </div>
           
-          <LoginForm />
+          <LoginFormOffline />
 
           <div className="pt-4 text-center">
-            <Link 
+            <a 
               href="/init-database" 
               className="text-sm text-gray-500 hover:text-[#6B16ED] transition-colors"
             >
-              Primeiro acesso? <span className="font-bold underline">Inicializar banco de dados</span>
-            </Link>
+              Configurar banco de dados
+            </a>
           </div>
         </div>
       </div>
