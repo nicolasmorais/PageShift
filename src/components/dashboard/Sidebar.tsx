@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Settings, Wand2, LayoutGrid, Database } from "lucide-react";
+import { Settings, Wand2, LayoutGrid, Database, Monitor } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { LogoutButton } from "@/components/auth/LogoutButton";
@@ -13,14 +13,9 @@ const mainNavItems = [
     label: "Route Control",
   },
   {
-    href: "/dashboard/status",
-    icon: Settings,
-    label: "Status do Sistema",
-  },
-  {
-    href: "/dashboard/db-test",
-    icon: Database,
-    label: "Teste de Banco",
+    href: "/dashboard/settings",
+    icon: Monitor,
+    label: "Configurações",
   },
 ];
 
