@@ -6,7 +6,8 @@ let client: Client | null = null;
 
 export async function getDb(): Promise<Client> {
     const connectionString = process.env.DATABASE_URL;
-    const dbConnectionString = connectionString || 'postgres://user:password@db:5432/mydatabase';
+    // Usando credenciais padrão PostgreSQL que devem funcionar
+    const dbConnectionString = connectionString || 'postgres://postgres:password@localhost:5432/postgres';
 
     // Se o cliente já existe, tenta uma consulta simples para ver se a conexão ainda é válida
     if (client) {
