@@ -11,10 +11,8 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Trash2, Save, ExternalLink, Globe } from 'lucide-react';
+import { Trash2, Save } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { toast } from 'sonner';
 
 interface RouteMapping {
   path: string;
@@ -52,66 +50,46 @@ export function RouteCard({ route, onSave, onDelete, contentOptions }: RouteCard
   };
 
   return (
-    <div className="bg-slate-50/50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 space-y-4 transition-all hover:border-slate-200 dark:hover:border-slate-700 group">
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <div className="flex items-center gap-2 overflow-hidden">
-            <Globe className="h-4 w-4 text-[#6B16ED] shrink-0" />
-            <span className="font-mono text-xs font-bold text-slate-500 truncate">{route.path}</span>
-        </div>
-        <div className="flex items-center gap-1">
-            <Link href={route.path} target="_blank">
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-slate-400 hover:text-[#6B16ED]">
-                    <ExternalLink className="h-4 w-4" />
-                </Button>
-            </Link>
-            <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => onDelete(route.path, route.name)}
-                className="h-8 w-8 rounded-lg text-slate-400 hover:text-red-600"
-            >
-                <Trash2 className="h-4 w-4" />
-            </Button>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <div className="space-y-1">
-          <Label className="text-[10px] font-bold uppercase tracking-wider text-slate-400" htmlFor={`name-${route.path}`}>Apelido Interno</Label>
-          <Input 
-            className="h-10 text-sm bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl"
-            id={`name-${route.path}`} 
-            value={routeName}
-            onChange={(e) => setRouteName(e.target.value)}
-          />
-        </div>
-        
-        <div className="space-y-1">
-          <Label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Conteúdo de Destino</Label>
-          <Select value={selectedContent} onValueChange={setSelectedContent}>
-            <SelectTrigger className="h-10 text-sm bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl">
-              <SelectValue placeholder="Selecione o conteúdo" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl border-slate-200 dark:border-slate-800">
-              {contentOptions.map(opt => (
-                <SelectItem key={opt.id} value={opt.id} className="text-sm rounded-lg">
-                  {opt.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+    <div className="space-y-4">
+      <div className="grid gap-2">
+        <Input 
+          className="h-9 text-xs bg-black/20 border-white/5 text-white rounded-xl placeholder:text-slate-600"
+          value={routeName}
+          onChange={(e) => setRouteName(e.target.value)}
+          placeholder="Apelido da rota"
+        />
+        <Select value={selectedContent} onValueChange={setSelectedContent}>
+          <SelectTrigger className="h-9 text-xs bg-black/20 border-white/5 text-white rounded-xl">
+            <SelectValue placeholder="Conteúdo" />
+          </SelectTrigger>
+          <SelectContent className="rounded-xl bg-slate-900 border-white/10 text-white">
+            {contentOptions.map(opt => (
+              <SelectItem key={opt.id} value={opt.id} className="text-xs focus:bg-white/10 focus:text-white">
+                {opt.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       
-      {isChanged && (
+      <div className="flex gap-2">
+        {isChanged && (
+            <Button 
+                onClick={handleSave} 
+                disabled={isSaving}
+                className="flex-1 h-8 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest"
+            >
+                {isSaving ? "..." : "Salvar"}
+            </Button>
+        )}
         <Button 
-          onClick={handleSave} 
-          disabled={isSaving}
-          className="w-full h-10 bg-[#6B16ED] hover:bg-[#5512C7] text-white rounded-xl font-bold text-xs animate-in slide-in-from-top-2"
+            variant="ghost" 
+            onClick={() => onDelete(route.path, route.name)}
+            className="h-8 px-3 rounded-xl text-red-400 hover:text-red-500 hover:bg-red-500/10 text-[10px] uppercase font-bold"
         >
-          {isSaving ? "Salvando..." : "Salvar Alterações"}
+            Excluir
         </Button>
-      )}
+      </div>
     </div>
   );
 }
