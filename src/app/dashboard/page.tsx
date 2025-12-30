@@ -1,5 +1,7 @@
+"use client";
+
 import { useState, useEffect, useMemo } from 'react';
-import Link from 'next/link'; // Added missing import
+import Link from 'next/link';
 import {
   Card,
   CardContent,
