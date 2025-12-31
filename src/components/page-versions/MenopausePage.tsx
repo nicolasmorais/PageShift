@@ -28,11 +28,6 @@ import { cn } from '@/lib/utils';
 
 const TESTIMONIAL_VIDEOS = [
   {
-    type: 'video',
-    url: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/729b9773-837a-4701-be78-26a8f00395be-DP3.mp4",
-    poster: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/depoimento1-poster-8a7b3c5d2e9f4b6a1c2d3e4f5a6b7c8d9e0f1.jpg"
-  },
-  {
     type: 'iframe',
     url: "http://vhost-vhost-7d0xji-b4fbf4-147-93-179-152.traefik.me/video/dp-menopausa-001.mp4",
     poster: ""
@@ -40,6 +35,11 @@ const TESTIMONIAL_VIDEOS = [
   {
     type: 'iframe',
     url: "http://vhost-vhost-7d0xji-b4fbf4-147-93-179-152.traefik.me/video/1766972377943-DP2.mp4",
+    poster: ""
+  },
+  {
+    type: 'iframe',
+    url: "http://vhost-vhost-7d0xji-b4fbf4-147-93-179-152.traefik.me/video/1767056651115-DP3.mp4",
     poster: ""
   }
 ];
