@@ -3,26 +3,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Check, 
-  X,
   Star, 
   Clock, 
   ShieldCheck, 
   ArrowRight, 
   AlertTriangle, 
   Users, 
-  HelpCircle,
-  CreditCard,
-  Lock,
   AlertCircle,
-  Target,
   BookOpen,
-  Bell,
   Moon,
-  Dumbbell,
   Zap,
   Smile,
-  Video,
-  Play,
   Gift,
   CheckCircle2,
   TrendingUp,
@@ -30,42 +21,52 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Card, CardContent } from '@/components/ui/card';
 import { PageTracker } from "./PageTracker";
 import { cn } from '@/lib/utils';
 
 const TESTIMONIAL_VIDEOS = [
   {
+    type: 'video',
     url: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/729b9773-837a-4701-be78-26a8f00395be-DP3.mp4",
     poster: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/depoimento1-poster-8a7b3c5d2e9f4b6a1c2d3e4f5a6b7c8d9e0f1.jpg"
   },
   {
-    url: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/e6acb5f6-e381-4d6d-94e4-81538e8856e8-dp-menopausa-001.mp4",
-    poster: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/depoimento2-poster-9b8c7d6e3f2a1b4c5d6e7f8a9b0c1d2e3f4.jpg"
+    type: 'iframe',
+    url: "http://vhost-vhost-7d0xji-b4fbf4-147-93-179-152.traefik.me/video/dp-menopausa-001.mp4",
+    poster: ""
   },
   {
+    type: 'video',
     url: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/bfb848bc-e1f8-4c87-a126-5a8bb2d16495-DP2.mp4",
     poster: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/depoimento3-poster-5d6e7f8a9b2c3d4e5f6a7b8c9d0e1f2a3b4.jpg"
   }
 ];
 
-const VideoPlayer = ({ video, index }: { video: typeof TESTIMONIAL_VIDEOS[0], index: number }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
+const VideoPlayer = ({ video, index }: { video: any, index: number }) => {
   return (
     <div className="group w-full max-w-[300px] animate-in fade-in zoom-in duration-700" style={{ animationDelay: `${index * 150}ms` }}>
       <div className="relative aspect-[9/16] w-full rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.2)] border-[6px] border-white bg-slate-900 transition-transform hover:scale-[1.02]">
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          poster={video.poster}
-          controls
-          playsInline
-          preload="metadata"
-        >
-          <source src={video.url} type="video/mp4" />
-        </video>
-        <div className="absolute top-4 left-4 bg-pink-600/90 backdrop-blur-sm text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest flex items-center gap-1">
+        {video.type === 'iframe' ? (
+          <iframe 
+            src={video.url} 
+            width="100%" 
+            height="100%" 
+            frameBorder="0" 
+            allowFullScreen
+            style={{ border: 'none', background: 'black', aspectRatio: '9/16' }}
+          ></iframe>
+        ) : (
+          <video
+            className="w-full h-full object-cover"
+            poster={video.poster}
+            controls
+            playsInline
+            preload="metadata"
+          >
+            <source src={video.url} type="video/mp4" />
+          </video>
+        )}
+        <div className="absolute top-4 left-4 bg-pink-600/90 backdrop-blur-sm text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest flex items-center gap-1 pointer-events-none">
             <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div> AO VIVO
         </div>
       </div>
@@ -103,7 +104,7 @@ export function MenopausePage() {
       
       <div className="bg-white text-slate-900 font-sans selection:bg-pink-100 antialiased">
         
-        {/* TOP BAR URGÊNCIA - MAIS MODERNA */}
+        {/* TOP BAR URGÊNCIA */}
         <div className="bg-slate-900 text-white py-3 px-4 sticky top-0 z-50 shadow-2xl">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4 text-[10px] md:text-xs font-black uppercase tracking-[0.2em]">
             <div className="flex items-center gap-4">
@@ -124,7 +125,7 @@ export function MenopausePage() {
           </div>
         </div>
 
-        {/* HERO SECTION - EFEITO GRADIENTE PREMIUM */}
+        {/* HERO SECTION */}
         <header className="relative pt-16 pb-24 px-6 overflow-hidden bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-pink-50 via-white to-white">
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-pink-100/30 to-transparent pointer-events-none"></div>
           <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -153,7 +154,7 @@ export function MenopausePage() {
           </div>
         </header>
 
-        {/* DEPOIMENTOS EM VÍDEO - VISUAL MODERNO */}
+        {/* DEPOIMENTOS EM VÍDEO */}
         <section className="py-24 px-6 bg-slate-50">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-20 space-y-4">
@@ -174,7 +175,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* DOR AMPLIFICADA - DESIGN DE ALERTA */}
+        {/* DOR AMPLIFICADA */}
         <section className="py-24 px-6">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-black text-center mb-16 uppercase tracking-widest text-slate-400">Me responda com sinceridade:</h2>
@@ -210,7 +211,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* PROMESSA ✨ - GLASSMORPHISM */}
+        {/* PROMESSA */}
         <section className="py-24 px-6 bg-slate-950 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
           <div className="max-w-5xl mx-auto">
@@ -251,7 +252,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* O QUE VOCÊ RECEBE - CARDS DE PRODUTO */}
+        {/* O QUE VOCÊ RECEBE */}
         <section className="py-32 px-6 bg-white">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-20">
@@ -321,7 +322,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* PROVA SOCIAL ⭐ - VISUAL PREMIUM */}
+        {/* PROVA SOCIAL */}
         <section className="py-32 px-6 bg-pink-50 relative overflow-hidden">
           <div className="max-w-6xl mx-auto relative z-10">
             <div className="text-center mb-24 space-y-6">
@@ -362,7 +363,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* COMPARAÇÃO ⚖️ - TABELA LIMPA */}
+        {/* COMPARAÇÃO */}
         <section className="py-32 px-6">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-black text-center mb-20 tracking-tighter text-slate-900 leading-tight">Por Que Outras <br /> Soluções <span className="text-red-500">Falharam?</span></h2>
@@ -393,7 +394,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* PRECIFICAÇÃO 🔥 - CARD DE ALTA CONVERSÃO */}
+        {/* PRECIFICAÇÃO */}
         <section id="pricing" className="py-32 px-6 bg-slate-950 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 to-transparent opacity-50"></div>
           <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -445,7 +446,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* GARANTIA REVERSA 🛡️ - VISUAL DE CERTIFICADO */}
+        {/* GARANTIA REVERSA */}
         <section className="py-32 px-6 bg-white">
           <div className="max-w-4xl mx-auto">
             <div className="bg-slate-50 border-[6px] border-dashed border-pink-500 p-12 md:p-24 rounded-[4rem] text-center shadow-2xl relative overflow-hidden">
@@ -460,7 +461,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* FAQ ❓ - VISUAL CLEAN */}
+        {/* FAQ */}
         <section className="py-32 px-6 bg-slate-50">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-black text-center mb-24 tracking-tighter text-slate-900">Dúvidas Frequentes</h2>
@@ -485,40 +486,7 @@ export function MenopausePage() {
           </div>
         </section>
 
-        {/* CTA FINAL ⏰ - PRESSÃO TOTAL */}
-        <section className="py-32 px-6 bg-pink-600 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/20 to-transparent opacity-30"></div>
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <h2 className="text-4xl md:text-7xl font-black mb-12 tracking-tighter leading-tight">Qual caminho <br /> você escolhe?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left mb-16">
-              <div className="p-10 bg-black/10 backdrop-blur-md rounded-[3rem] border border-white/10 opacity-60">
-                <p className="font-black text-red-300 text-xs uppercase tracking-widest mb-4">OPÇÃO 01</p>
-                <p className="text-lg font-bold text-white/80 leading-relaxed italic">Continuar acordando às 3h suando, irritada, cansada e gastando fortunas em consultas sem solução definitiva.</p>
-              </div>
-              <div className="p-10 bg-white text-pink-600 rounded-[3rem] shadow-2xl border-[6px] border-pink-400 relative overflow-hidden scale-105">
-                <div className="absolute top-0 right-0 p-4 opacity-10"><Zap size={100} /></div>
-                <p className="font-black text-xs uppercase tracking-widest mb-4">OPÇÃO 02</p>
-                <p className="text-2xl font-black leading-tight">Investir R$ 19,90 agora, zerar os calorões em 3 dias e recuperar sua alegria de viver.</p>
-              </div>
-            </div>
-            
-            <a href="https://oneconversion.pro/checkout?product_id=26455e6c-ddf9-4304-a72e-66a7ffa6beac" target="_blank" rel="noopener noreferrer">
-                <Button className="w-full h-28 bg-white text-pink-600 text-2xl md:text-4xl font-black rounded-[2.5rem] shadow-2xl transition-all hover:scale-[1.05] active:scale-95 group">
-                <div className="flex flex-col items-center">
-                    <span className="flex items-center gap-4 uppercase tracking-tighter">QUERO MEU ACESSO POR R$ 19,90!</span>
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-60 mt-2">Garantia Blindada de Satisfação</span>
-                </div>
-                </Button>
-            </a>
-            
-            <div className="mt-12 space-y-6 text-center max-w-xl mx-auto text-white/80 font-black text-xs uppercase tracking-[0.2em]">
-              <p>P.S.: Sério, são R$ 19,90. Isso pode mudar TUDO na sua vida.</p>
-              <p className="text-amber-400">⚠️ Vagas limitadas. O preço voltará para R$ 47 em breve.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* FOOTER - VISUAL CORPORATIVO */}
+        {/* FOOTER */}
         <footer className="py-24 bg-white border-t border-slate-100 text-center">
           <div className="max-w-4xl mx-auto px-6 space-y-12">
             <div className="flex justify-center gap-12 text-slate-300">
