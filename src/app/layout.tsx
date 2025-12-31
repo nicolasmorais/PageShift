@@ -42,11 +42,9 @@ export const metadata: Metadata = {
   description: "Plataforma completa para gerenciar e otimizar seus advertoriais dinamicamente.",
   icons: {
     icon: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
+    shortcut: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
+    apple: 'https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/94e94392-0815-4bb4-9cfa-ca4362c3495f%20%281%29%20%281%29%20%281%29-3fiBqRARoxDTImBJrinAorCbtuk9as.png',
   },
-  other: {
-    "rel": "stylesheet",
-    "href": "https://fonts.cdnfonts.com/css/graphik-trial"
-  }
 };
 
 export default function RootLayout({
@@ -55,8 +53,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${spaceGrotesk.variable} ${roboto.variable} ${openSans.variable} font-sans antialiased`}>
+    <html lang="pt-BR">
+      <head>
+        <link href="https://fonts.cdnfonts.com/css/graphik-trial" rel="stylesheet" />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} ${spaceGrotesk.variable} ${roboto.variable} ${openSans.variable} font-sans antialiased`}
+      >
         <AuthProvider>
           {children}
         </AuthProvider>
