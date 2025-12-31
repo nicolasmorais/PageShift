@@ -430,7 +430,7 @@ export function MenopausePage() {
                 ))}
               </div>
 
-              <a href="https://oneconversion.pro/checkout?product_id=26455e6c-ddf9-4304-a72e-66a7ffa6beac" target="_blank" rel="noopener noreferrer">
+              <a href="https://pay.oneconversion.pro/checkout?product_id=d912bd88-7bb4-4be9-ae2e-f3bbd40d9ac8" target="_blank" rel="noopener noreferrer">
                 <Button className="w-full h-auto py-6 min-h-[112px] md:h-28 bg-green-600 hover:bg-green-700 text-white rounded-[2.5rem] shadow-[0_20px_40px_-10px_rgba(22,163,74,0.4)] transition-all hover:scale-[1.03] active:scale-95 group overflow-hidden">
                     <div className="flex flex-col items-center px-4">
                         <span className="flex items-center gap-2 sm:gap-4 text-lg sm:text-xl md:text-4xl font-black">
