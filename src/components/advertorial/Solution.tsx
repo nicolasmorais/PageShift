@@ -1,121 +1,102 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Leaf, Dna, Globe, Check } from "lucide-react";
+import { Leaf, Dna, Globe, Check, ShieldCheck, Microscope } from "lucide-react";
 
 export const Solution = () => {
   return (
-    <section className="my-12 space-y-8 text-xl leading-relaxed">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold font-sans">
-          O Pâncreas de um Diabético Tipo 2 Não Está Morto. Ele Está Adormecido.
+    <section className="my-20 space-y-12 text-xl leading-relaxed">
+      <div className="text-center max-w-3xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          O Pâncreas Não Está Morto. Ele Está <span className="text-blue-600 underline decoration-blue-500/30 decoration-8 underline-offset-4">Adormecido.</span>
         </h2>
-        <p className="text-2xl mt-2 text-gray-600 dark:text-gray-300">
-          E sim: existe uma forma de estimular essas células a voltarem a
-          funcionar.
+        <p className="text-2xl mt-6 text-slate-500 font-medium italic">
+          Existe uma forma natural de estimular a regeneração dessas células.
         </p>
       </div>
 
-      <div className="p-6 border rounded-lg overflow-hidden">
-        <img
-          src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2020_24_07-CegP8MFAadFJUCgpK40pYN2w5o7Ilv.png"
-          alt="Bebida medicinal japonesa em uma xícara com ingredientes ao redor"
-          className="w-full h-auto -m-6 mb-6"
-        />
-        <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
-          <Leaf className="h-7 w-7 text-green-600" />
-          Um Protocolo Natural, Validado pela Medicina Oriental
+      <div className="p-10 border border-slate-100 rounded-[3rem] bg-white shadow-2xl space-y-8">
+        <div className="rounded-2xl overflow-hidden shadow-lg">
+            <img
+              src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2020_24_07-CegP8MFAadFJUCgpK40pYN2w5o7Ilv.png"
+              alt="Bebida ancestral"
+              className="w-full h-auto"
+            />
+        </div>
+        <h3 className="text-3xl font-black text-slate-900 flex items-center gap-4">
+          <div className="bg-green-600 p-2 rounded-xl text-white">
+            <Leaf className="h-7 w-7" />
+          </div>
+          Protocolo Oriental Validado
         </h3>
-        <p>
-          Dr. Yano descobriu que existe uma{" "}
-          <span className="font-bold">
-            bebida medicinal japonesa ancestral
-          </span>
-          , que age em três pontos-chave do organismo:
+        <p className="text-slate-700">
+          Dr. Yano revelou uma <span className="font-black text-slate-900">bebida medicinal japonesa ancestral</span> que age em três pilares fundamentais:
         </p>
-        <ul className="list-disc list-inside space-y-2 my-4">
-          <li>
-            Desinflama o tecido pancreático, permitindo que as células beta
-            voltem a se regenerar.
-          </li>
-          <li>
-            Reativa a produção natural de insulina, com efeito gradual e
-            duradouro.
-          </li>
-          <li>
-            Estabiliza os níveis de glicose no sangue, sem causar hipoglicemia
-            ou sobrecarga dos rins e fígado.
-          </li>
-        </ul>
-        <p className="font-bold">
-          Em 28 dias, os exames de Seu Manoel se normalizaram e sua glicose
-          estabilizou em 98 mg/dL.
-        </p>
+        <div className="grid gap-4">
+          {[
+            "Desinflama o tecido pancreático e as células beta",
+            "Reativa a produção endógena de insulina",
+            "Estabiliza os níveis glicêmicos sem efeitos colaterais"
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-4 p-5 bg-green-50 rounded-2xl border border-green-100">
+              <Check className="h-6 w-6 text-green-600" />
+              <span className="font-bold text-green-800">{item}</span>
+            </div>
+          ))}
+        </div>
+        <div className="p-6 bg-slate-900 text-white rounded-2xl text-center">
+            <p className="font-bold text-xl">Em 28 dias, os exames de Manoel se normalizaram: 98 mg/dL.</p>
+        </div>
       </div>
 
-      <div className="p-6 border rounded-lg overflow-hidden">
-        <img
-          src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2021_10_34-NTd4IPZ5iz7r2y4Z8tthkLa05ZVN6Y.png"
-          alt="Gráfico mostrando a estabilização da glicose ao longo do tempo"
-          className="w-full h-auto -m-6 mb-6"
-        />
-        <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
-          <Dna className="h-7 w-7 text-blue-600" />A Validação Científica
+      <div className="p-10 border border-slate-100 rounded-[3rem] bg-slate-50 space-y-8">
+        <div className="rounded-2xl overflow-hidden shadow-lg">
+            <img
+              src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/ChatGPT%20Image%203%20de%20dez.%20de%202025%2C%2021_10_34-NTd4IPZ5iz7r2y4Z8tthkLa05ZVN6Y.png"
+              alt="Gráfico científico"
+              className="w-full h-auto"
+            />
+        </div>
+        <h3 className="text-3xl font-black text-slate-900 flex items-center gap-4">
+          <div className="bg-blue-600 p-2 rounded-xl text-white">
+            <Microscope className="h-7 w-7" />
+          </div>
+          Evidências Científicas
         </h3>
         <p>
-          Pesquisas publicadas no{" "}
-          <span className="italic">Journal of Medicinal Food </span> e no{" "}
-          <span className="italic">
-            International Journal of Endocrinology
-          </span>{" "}
-          apontam que o uso regular da combinação de ativos do chá:
+          Pesquisas no <span className="italic font-bold">Journal of Medicinal Food</span> confirmam que os compostos ativos do chá reduzem marcadores inflamatórios e aumentam a sensibilidade celular à insulina.
         </p>
-        <ul className="list-disc list-inside space-y-2 my-4">
-          <li>Reduz os marcadores inflamatórios no tecido pancreático.</li>
-          <li>Aumenta a sensibilidade à insulina.</li>
-          <li>Estimula a regeneração gradual das células beta danificadas.</li>
-        </ul>
         <Badge
-          variant="secondary"
-          className="text-lg p-4 font-bold w-full text-center bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200"
+          className="text-xl p-8 font-black w-full text-center bg-blue-600 text-white rounded-2xl shadow-xl hover:bg-blue-700 transition-colors block"
         >
-          Em estudos de campo, mais de 82% dos pacientes apresentaram
-          estabilização glicêmica abaixo de 100 mg/dL nas primeiras 3 semanas.
+          Mais de 82% dos pacientes estabilizaram abaixo de 100 mg/dL em 3 semanas.
         </Badge>
       </div>
 
-      <div className="p-6 border rounded-lg">
-        <h3 className="text-2xl font-bold mb-4 font-sans flex items-center gap-2">
-          <Globe className="h-7 w-7 text-purple-600" />
-          Reconhecimento Internacional e Resultados Reais
+      <div className="p-10 border border-slate-200 rounded-[3rem] bg-white shadow-sm">
+        <h3 className="text-3xl font-black mb-8 text-slate-900 flex items-center gap-4">
+          <div className="bg-purple-600 p-2 rounded-xl text-white">
+            <Globe className="h-7 w-7" />
+          </div>
+          Alcance Global
         </h3>
-        <p>
-          Nos últimos dois anos, mais de 26 mil pacientes no Brasil testaram o
-          protocolo com acompanhamento remoto. Relatórios clínicos apontam que:
+        <p className="mb-8">
+          Mais de 26 mil brasileiros já testaram o protocolo com resultados surpreendentes:
         </p>
-        <ul className="space-y-3 mt-4">
-          <li className="flex items-start gap-3">
-            <Check className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-            <span>
-              <span className="font-bold">7 em cada 10 usuários</span> reduziram
-              ou eliminaram o uso de insulina em até 90 dias.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <Check className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-            <span>
-              <span className="font-bold">91% relataram melhora</span> em
-              sintomas como fadiga, tonturas e formigamento.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <Check className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-            <span>
-              <span className="font-bold">84% tiveram melhora</span> expressiva
-              na cicatração e controle da pressão arterial.
-            </span>
-          </li>
-        </ul>
+        <div className="space-y-4">
+          {[
+            { t: "7 em cada 10 usuários", d: "eliminaram o uso de insulina em 90 dias." },
+            { t: "91% de melhora", d: "na fadiga, tonturas e formigamentos." },
+            { t: "84% de melhora", d: "expressiva na cicatrição e pressão arterial." }
+          ].map((item, i) => (
+            <div key={i} className="flex items-start gap-4 p-6 rounded-2xl border border-slate-100 hover:border-purple-200 transition-colors">
+              <ShieldCheck className="h-8 w-8 text-purple-600 mt-1 flex-shrink-0" />
+              <p className="text-slate-700">
+                <span className="font-black text-slate-900">{item.t}</span> {item.d}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,66 +1,63 @@
 "use client";
 
-import { BookOpen, Video, FileText, Calendar } from "lucide-react";
+import { BookOpen, Video, FileText, Calendar, CheckCircle2 } from "lucide-react";
 
 const productItems = [
   {
     icon: BookOpen,
-    title: "MANUAL COMPLETO DO CHÁ JAPONÊS (E-book PDF - 58 páginas)",
-    description:
-      "A fórmula secreta completa revelada, métodos de preparo, onde comprar os ingredientes e muito mais.",
+    title: "MANUAL COMPLETO DO CHÁ JAPONÊS",
+    description: "PDF Digital - 58 páginas com a fórmula exata revelada.",
   },
   {
     icon: Video,
-    title: "VÍDEO-AULA EXCLUSIVA: Preparo Tradicional Japonês (22 minutos)",
-    description:
-      "Dr. Yano mostra na prática o passo a passo do ritual de preparo do chá medicinal.",
+    title: "VÍDEO-AULA EXCLUSIVA: PREPARO",
+    description: "Dr. Yano mostra na prática o ritual de preparo japonês.",
   },
   {
     icon: FileText,
-    title: "DIÁRIO DE CONTROLE GLICÊMICO (PDF Editável)",
-    description:
-      "Acompanhe sua evolução diária e veja sua glicose baixando semana após semana.",
+    title: "DIÁRIO DE CONTROLE GLICÊMICO",
+    description: "Ferramenta para acompanhar sua evolução diária.",
   },
   {
     icon: BookOpen,
-    title: "GUIA ALIMENTAR SINÉRGICO (E-book PDF - 34 páginas)",
-    description:
-      "Lista de alimentos que potencializam o efeito do chá, cardápio sugestivo e receitas.",
+    title: "GUIA ALIMENTAR SINÉRGICO",
+    description: "Alimentos que potenciam o efeito regenerativo do chá.",
   },
   {
     icon: Calendar,
-    title: "PROTOCOLO DE 90 DIAS (Cronograma Completo)",
-    description:
-      "Um plano estruturado, dia a dia, mostrando exatamente o que fazer em cada fase do tratamento.",
+    title: "PROTOCOLO DE 90 DIAS",
+    description: "Cronograma estruturado para resultados permanentes.",
   },
 ];
 
 export const Offer = () => {
   return (
-    <section
-      id="offer"
-      className="my-12 space-y-8 text-xl leading-relaxed"
-    >
-      <div className="text-center p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
-        <h2 className="text-3xl font-extrabold font-sans">
-          O Protocolo do Chá Japonês agora está disponível em formato digital
+    <section id="offer" className="my-24 space-y-12">
+      <div className="text-center p-12 bg-slate-900 text-white rounded-[3rem] shadow-2xl">
+        <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tight">
+          O Protocolo do Chá Japonês
         </h2>
-        <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mt-4 font-sans">
-          Protocolo do Chá Japonês Regenerativo
+        <p className="text-5xl font-black text-blue-400 font-sans tracking-tight">
+          Edição Digital Regenerativa
         </p>
       </div>
 
-      <div className="p-6 border rounded-lg">
-        <h3 className="text-2xl font-bold mb-6 font-sans text-center">
+      <div className="p-10 border border-slate-100 rounded-[3rem] bg-white shadow-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-12 opacity-[0.03]">
+            <CheckCircle2 size={180} />
+        </div>
+        <h3 className="text-2xl font-black mb-10 text-center uppercase tracking-widest text-slate-400">
           O QUE VOCÊ RECEBE IMEDIATAMENTE:
         </h3>
-        <div className="space-y-6">
+        <div className="grid gap-8">
           {productItems.map((item, i) => (
-            <div key={i} className="flex items-start gap-4">
-              <item.icon className="h-8 w-8 text-blue-500 mt-1 flex-shrink-0" />
-              <div>
-                <p className="font-bold font-sans">{item.title}</p>
-                <p className="text-lg text-gray-600 dark:text-gray-300">
+            <div key={i} className="flex items-start gap-6 group">
+              <div className="bg-blue-50 p-4 rounded-2xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                <item.icon className="h-8 w-8" />
+              </div>
+              <div className="py-1">
+                <p className="font-black text-xl text-slate-900 mb-1">{item.title}</p>
+                <p className="text-lg text-slate-500 font-medium">
                   {item.description}
                 </p>
               </div>

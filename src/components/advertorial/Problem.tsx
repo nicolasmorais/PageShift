@@ -1,124 +1,99 @@
 "use client";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertTriangle, TrendingDown } from "lucide-react";
+import { AlertTriangle, TrendingDown, ArrowRight } from "lucide-react";
 
 export const Problem = () => {
   return (
-    <section className="space-y-8 text-xl leading-relaxed">
-      <p>
+    <section className="space-y-10 text-xl leading-relaxed text-slate-800 font-normal">
+      <p className="first-letter:text-5xl first-letter:font-black first-letter:text-slate-900 first-letter:mr-3 first-letter:float-left">
         Você já parou para pensar o por que da sua glicose continuar alta, mesmo
         tomando os remédios receitados corretamente, fazendo o que os médicos
         pedem e até mesmo comendo um pouco menos açúcar?
       </p>
-      <img
-        src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/metformina-6DhI93KiQK2MaPncdPNDTznhGiePYK.jpg"
-        alt="Médico apontando para uma caixa de Metformina com um X vermelho sobre ela"
-        className="w-full h-auto rounded-lg my-6 shadow-md"
-      />
-      <p className="font-bold">Pois saiba que isso não é sua culpa.</p>
-      <Alert className="bg-yellow-100 dark:bg-yellow-900/30 border-yellow-500 border-l-4 p-6">
-        <AlertTriangle className="h-7 w-7 text-yellow-600" />
-        <AlertTitle className="font-bold text-yellow-800 dark:text-yellow-200 text-2xl mb-2">
-          Atenção
+      
+      <div className="group overflow-hidden rounded-3xl shadow-2xl transition-all hover:scale-[1.01]">
+          <img
+            src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/metformina-6DhI93KiQK2MaPncdPNDTznhGiePYK.jpg"
+            alt="Análise de Metformina"
+            className="w-full h-auto"
+          />
+      </div>
+
+      <p className="font-bold text-2xl text-slate-900 border-l-4 border-red-500 pl-6 py-2">Pois saiba que isso não é sua culpa.</p>
+      
+      <Alert className="bg-amber-50 dark:bg-amber-900/20 border-amber-500 border-l-[6px] p-8 rounded-2xl shadow-sm">
+        <AlertTriangle className="h-8 w-8 text-amber-600 mb-4" />
+        <AlertTitle className="font-black text-amber-900 dark:text-amber-200 text-3xl mb-4 tracking-tight">
+          LEITURA OBRIGATÓRIA
         </AlertTitle>
-        <AlertDescription className="text-yellow-700 dark:text-yellow-300 text-xl">
+        <AlertDescription className="text-amber-800 dark:text-amber-300 text-xl leading-relaxed font-medium">
           Este pode ser o texto mais importante que você já leu sobre a Diabetes
           Tipo 2. O que você fará nos próximos 5 minutos pode decidir se você
           irá vencer essa doença silenciosa ou continuar rumo a amputações,
-          cegueira e dependência eterna de remédios. Leia com atenção.
+          cegueira e dependência eterna de remédios. <span className="underline decoration-amber-500/50 decoration-4">Leia com atenção redobrada.</span>
         </AlertDescription>
       </Alert>
+
       <p>
-        <strong>
-          Um novo estudo conduzido por pesquisadores Japoneses
-        </strong>{" "}
-        na Universidade de Tóquio (Bunkyō), foi recebido pela Universidade de
-        São Paulo (USP) aqui no brasil, e{" "}
-        <strong>
-          revelou que 7 em cada 10 pacientes diabéticos tipo 2 estão seguindo um
-          protocolo de tratamento ultrapassado
-        </strong>
-        , ineficaz — e em muitos casos, perigoso.
+        <strong className="text-slate-900">Um novo estudo conduzido por pesquisadores Japoneses</strong> na Universidade de Tóquio (Bunkyō), foi recebido pela Universidade de São Paulo (USP) aqui no brasil, e revelou que <strong className="text-slate-900">7 em cada 10 pacientes diabéticos tipo 2 estão seguindo um protocolo de tratamento ultrapassado</strong>, ineficaz — e em muitos casos, perigoso.
       </p>
+
       <img
         src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/1_20250716143121-jkwImCoFGKN9UfW8l7MpZ8MkwC7a2S.jpg"
-        alt="Gráfico mostrando a ineficácia de tratamentos convencionais para diabetes tipo 2"
-        className="w-full h-auto rounded-lg my-6 shadow-md"
+        alt="Gráfico de eficácia"
+        className="w-full h-auto rounded-3xl shadow-xl border border-slate-100"
       />
-      <h2 className="text-3xl font-bold text-center py-4 font-sans">
-        O nome disso? Erro médico sistemático.
+
+      <h2 className="text-4xl font-black text-center py-8 text-slate-900 tracking-tight">
+        O nome disso? <span className="text-red-600">Erro médico sistemático.</span>
       </h2>
+
       <p>
         Os remédios receitados como Metformina, Glifage, Glicazida por vezes
         trazem aquela falsa sensação de que você está fazendo a coisa certa,
         parecem controlar momentaneamente o problema, mas por dentro você sabe:
         seu corpo continua entrando em colapso.
       </p>
-      <div className="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+
+      <div className="p-8 bg-slate-50 dark:bg-slate-800/50 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 shadow-inner">
         <img
           src="https://iv2jb3repd5xzuuy.public.blob.vercel-storage.com/enhanced_441b7b5d-8850-444d-af70-488f594d5c22-aBTZK4gzJYBzRRy8spjG8H089khVpA.png"
           alt="Dr. Roberto Kazushigue Yano"
-          className="w-full h-auto rounded-lg mb-4 shadow-md"
+          className="w-full h-auto rounded-2xl mb-8 shadow-2xl"
         />
-        <p>
-          Quem afirma isso é o{" "}
-          <span className="font-bold">Dr. Roberto Kazushigue Yano</span>, figura
-          importante da medicina brasileira, ativo em redes sociais contando com
-          mais de 7 milhões de seguidores, com cerca de 26 anos de experiência
-          em medicina alternativa integrativa, reconhecido tanto no Brasil
-          quanto internacionalmente, onde já participou de estudos avançados
-          sobre diabetes tipo 2 e regeneração pancreática.
-        </p>
-        <blockquote className="mt-4 border-l-4 border-blue-500 pl-4 italic">
-          <p>
-            "Depois de acompanhar centenas de pacientes, tantas amputações que
-            poderiam ter sido evitadas, tantos casos de cegueira parcial ou
-            completa... vi com meus próprios olhos: os medicamentos só empurram
-            a glicose para dentro das células à força!!!"
-          </p>
-          <cite className="mt-2 block not-italic font-semibold">— Dr. Yano</cite>
-        </blockquote>
+        <div className="space-y-4">
+            <p className="text-lg">
+              Quem afirma isso é o <span className="font-black text-slate-900 underline decoration-blue-500/30 decoration-4">Dr. Roberto Kazushigue Yano</span>, figura importante da medicina brasileira com mais de 7 milhões de seguidores e 26 anos de experiência.
+            </p>
+            <blockquote className="mt-6 border-l-4 border-blue-600 pl-8 py-2 italic text-2xl text-slate-700 dark:text-slate-300 font-medium">
+              "Depois de acompanhar centenas de pacientes, tantas amputações evitáveis... vi com meus próprios olhos: os medicamentos só empurram a glicose para dentro das células à força, sem tratar a causa real."
+            </blockquote>
+        </div>
       </div>
-      <p>
-        O problema é que a maioria das pessoas no fundo sabem que não, mas são
-        forçadas pelo sistema a acreditarem que sim. Porque foi o que o médico
-        indicou. Porque “é assim mesmo”. Porque “diabetes não tem cura”.
-      </p>
-      <p className="font-bold">
-        Mas e se essa história estiver errada desde o começo?
-      </p>
-      <div className="p-6 border-t border-b border-gray-200 dark:border-gray-700">
-        <h3 className="text-2xl font-bold text-center mb-6 font-sans">
-          O erro de foco no seu tratamento que ninguém te contou...
+
+      <div className="py-12 border-y border-slate-100">
+        <h3 className="text-3xl font-black text-center mb-10 text-slate-900 tracking-tight">
+          O erro de foco no seu tratamento...
         </h3>
-        <p className="mb-4">
+        <p className="mb-8">
           A medicina tradicional foca obsessivamente em baixar os níveis de
-          glicose no sangue. Mas a glicose alta não é a causa da doença, e sim a{" "}
-          <span className="font-bold">
-            consequência de algo muito mais profundo
-          </span>{" "}
-          que está acontecendo no seu pâncreas.
+          glicose no sangue. Mas a glicose alta não é a causa da doença, e sim a consequence de algo muito mais profundo.
         </p>
-        <p className="mb-6">
-          Medicamentos tradicionais forçam o corpo a empurrar a glicose para
-          dentro das células com “brutalidade bioquímica”, mas não tratam a
-          inflamação nem desbloqueiam as células beta. Pelo contrário: vão
-          sobrecarregando o sistema do seu corpo a cada dose. E isso leva ao
-          efeito dominó:
-        </p>
-        <div className="space-y-3">
+        <div className="grid gap-4">
           {[
-            "Glicose descontrolada",
-            "Ganho de peso e gordura visceral",
-            "Substituição por insulina",
-            "Complicações circulatórias",
-            "Neuropatia, amputações, cegueira",
-            'E a pior frase de todas: "você vai ter que conviver com isso pra sempre"',
+            "Glicose descontrolada crônica",
+            "Ganho de peso e acúmulo de gordura visceral",
+            "Dependência progressiva de insulina",
+            "Complicações circulatórias graves",
+            "Neuropatia, risco de amputações e cegueira",
+            'A frase que destrói esperanças: "você vai conviver com isso pra sempre"',
           ].map((step, index) => (
-            <div key={index} className="flex items-center gap-3">
-              <TrendingDown className="h-6 w-6 text-red-500 flex-shrink-0" />
-              <span>{step}</span>
+            <div key={index} className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm transition-transform hover:translate-x-2">
+              <div className="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                <TrendingDown className="h-5 w-5" />
+              </div>
+              <span className="font-bold text-slate-700">{step}</span>
             </div>
           ))}
         </div>
