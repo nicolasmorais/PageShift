@@ -38,9 +38,9 @@ const TESTIMONIAL_VIDEOS = [
     poster: ""
   },
   {
-    type: 'video',
-    url: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/bfb848bc-e1f8-4c87-a126-5a8bb2d16495-DP2.mp4",
-    poster: "https://ydo1oposreyoyzh5.public.blob.vercel-storage.com/depoimento3-poster-5d6e7f8a9b2c3d4e5f6a7b8c9d0e1f2a3b4.jpg"
+    type: 'iframe',
+    url: "http://vhost-vhost-7d0xji-b4fbf4-147-93-179-152.traefik.me/video/1766972377943-DP2.mp4",
+    poster: ""
   }
 ];
 
