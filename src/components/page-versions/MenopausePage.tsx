@@ -17,7 +17,9 @@ import {
   Gift,
   CheckCircle2,
   TrendingUp,
-  Gem
+  Gem,
+  CreditCard,
+  Lock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
